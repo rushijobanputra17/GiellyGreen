@@ -1,0 +1,49 @@
+<div class="container-fluid">
+    <!-- Row -->
+        <div class="col-xl-12">
+            <div class="card border-0">
+                <!-- start card-body -->
+                <div class="card-body p-0">
+                    <div class="row no-gutters">
+                        <div class="col-md-7 d-none d-lg-inline-block">
+                            <div class="image-block  rounded-right" style="background-image:url(assets/login_banner.png)">
+                                <div class="overlay rounded-right"></div>
+                                <div class="account-testimonial">
+                                    <img src="assets/img_logo.png" class="img-white-logo" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 P-5 form-container">
+                            <img src="assets/logo.png" class="logo_img">
+                            <p class="lead custom-title mb-5"><b>WELCOME, LET'S GET STARTED</b></p>
+                            <form  nz-form [formGroup]="validateForm" class="ms-2" (ngSubmit)="submitForm()">
+                                <nz-form-item class="mb-3">
+                                  <nz-form-control nzErrorTip="Please input your username!">
+                                    <nz-input-group>
+                                    <label class="mt-2">EMAIL ADDRESS</label>
+                                      <input type="text" nz-input formControlName="userName"  />
+                                    </nz-input-group>
+                                  </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item class="mb-4">
+                                  <nz-form-control nzErrorTip="Please input your Password!">
+                                    <nz-input-group>
+                                      <label>PASSWORD</label>
+                                      <input type="password" nz-input formControlName="password"  />
+                                    </nz-input-group>
+                                  </nz-form-control>
+                                </nz-form-item>
+                                <br>
+                                <nz-form-item>
+                                <button nz-button class="button-custom mt-4">LOG IN</button>
+                                </nz-form-item>
+                              </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- end card-body -->
+            </div>
+        </div>
+        <!-- end col -->
+    <!-- Row -->
+</div>

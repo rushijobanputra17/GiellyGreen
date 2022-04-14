@@ -1,0 +1,39 @@
+.trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .trigger:hover {
+    color: #1890ff;
+  }
+
+  nz-layout{
+      height: 100%;
+  }
+
+  nz-sider{
+      background-color:#2C2B29!important;
+      width: 100% !important;
+  }
+
+  ul{
+    background-color:#2C2B29!important;
+  }
+
+  li{
+      font-size:16px;
+      font-family: dax;
+      color:#C99D4A;
+  }
+
+  .logo{
+   height: 70px;
+   width: 189px;
+  }
+
+  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #2C2B29!important;
+}
