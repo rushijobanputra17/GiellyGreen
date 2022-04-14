@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Team2_GiellyGreenModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="SupplierId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SupplierReferenceNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="BusinessAddress" Type="nvarchar" MaxLength="150" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="320" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
+          <Property Name="CompanyRegisteredNumber" Type="nvarchar" MaxLength="15" />
+          <Property Name="VATNumber" Type="nvarchar" MaxLength="15" />
+          <Property Name="TAXReference" Type="nvarchar" MaxLength="15" />
+          <Property Name="CompanyRegisteredAddress" Type="nvarchar" MaxLength="15" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Logo" Type="varbinary(max)" />
+        </EntityType>
+        <Function Name="DeleteSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetActiveSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="InsertUpdateSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="SupplierName" Type="nvarchar" Mode="In" />
+          <Parameter Name="SupplierReferenceNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="BusinessAddress" Type="nvarchar" Mode="In" />
+          <Parameter Name="EmailAddress" Type="nvarchar" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="CompanyRegisteredNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="VATNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="TAXReference" Type="nvarchar" Mode="In" />
+          <Parameter Name="CompanyRegisteredAddress" Type="nvarchar" Mode="In" />
+          <Parameter Name="IsActive" Type="bit" Mode="In" />
+          <Parameter Name="Logo" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <EntityContainer Name="Team2_GiellyGreenModelStoreContainer">
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Team2_GiellyGreenModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="SupplierId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SupplierReferenceNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BusinessAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" MaxLength="320" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyRegisteredNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="VATNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="TAXReference" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyRegisteredAddress" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityContainer Name="Team2_GiellyGreenEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <FunctionImport Name="DeleteSupplier">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetActiveSupplier" ReturnType="Collection(Team2_GiellyGreenModel.GetActiveSupplier_Result)" />
+          <FunctionImport Name="GetAllSupplier" ReturnType="Collection(Team2_GiellyGreenModel.GetAllSupplier_Result)" />
+          <FunctionImport Name="InsertUpdateSupplier">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="SupplierName" Mode="In" Type="String" />
+            <Parameter Name="SupplierReferenceNumber" Mode="In" Type="String" />
+            <Parameter Name="BusinessAddress" Mode="In" Type="String" />
+            <Parameter Name="EmailAddress" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="CompanyRegisteredNumber" Mode="In" Type="String" />
+            <Parameter Name="VATNumber" Mode="In" Type="String" />
+            <Parameter Name="TAXReference" Mode="In" Type="String" />
+            <Parameter Name="CompanyRegisteredAddress" Mode="In" Type="String" />
+            <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+            <Parameter Name="Logo" Mode="In" Type="Binary" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetActiveSupplier_Result">
+          <Property Type="Int32" Name="SupplierId" Nullable="false" />
+          <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="SupplierReferenceNumber" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="BusinessAddress" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="320" />
+          <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="CompanyRegisteredNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="VATNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="TAXReference" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="CompanyRegisteredAddress" Nullable="true" MaxLength="15" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Binary" Name="Logo" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetAllSupplier_Result">
+          <Property Type="Int32" Name="SupplierId" Nullable="false" />
+          <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="SupplierReferenceNumber" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="BusinessAddress" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="320" />
+          <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="CompanyRegisteredNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="VATNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="TAXReference" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="CompanyRegisteredAddress" Nullable="true" MaxLength="15" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Binary" Name="Logo" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Team2_GiellyGreenModelStoreContainer" CdmEntityContainer="Team2_GiellyGreenEntities2">
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="Team2_GiellyGreenModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="SupplierReferenceNumber" ColumnName="SupplierReferenceNumber" />
+                <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="CompanyRegisteredNumber" ColumnName="CompanyRegisteredNumber" />
+                <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
+                <ScalarProperty Name="TAXReference" ColumnName="TAXReference" />
+                <ScalarProperty Name="CompanyRegisteredAddress" ColumnName="CompanyRegisteredAddress" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteSupplier" FunctionName="Team2_GiellyGreenModel.Store.DeleteSupplier" />
+          <FunctionImportMapping FunctionImportName="GetActiveSupplier" FunctionName="Team2_GiellyGreenModel.Store.GetActiveSupplier">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetActiveSupplier_Result">
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="SupplierReferenceNumber" ColumnName="SupplierReferenceNumber" />
+                <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="CompanyRegisteredNumber" ColumnName="CompanyRegisteredNumber" />
+                <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
+                <ScalarProperty Name="TAXReference" ColumnName="TAXReference" />
+                <ScalarProperty Name="CompanyRegisteredAddress" ColumnName="CompanyRegisteredAddress" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllSupplier" FunctionName="Team2_GiellyGreenModel.Store.GetAllSupplier">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetAllSupplier_Result">
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="SupplierReferenceNumber" ColumnName="SupplierReferenceNumber" />
+                <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="CompanyRegisteredNumber" ColumnName="CompanyRegisteredNumber" />
+                <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
+                <ScalarProperty Name="TAXReference" ColumnName="TAXReference" />
+                <ScalarProperty Name="CompanyRegisteredAddress" ColumnName="CompanyRegisteredAddress" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertUpdateSupplier" FunctionName="Team2_GiellyGreenModel.Store.InsertUpdateSupplier" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
