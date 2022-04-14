@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interface\ISupplierRepository.cs" />
     <Compile Include="Model\GetActiveSupplier_Result.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>
