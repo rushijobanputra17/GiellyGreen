@@ -8,7 +8,7 @@ using System.Web.Http;
 namespace GiellyGreen.Controllers
 {
     [Authorize]
-    public class ValuesController : BaseController
+    public class ValuesController : ApiController
     {
         // GET api/values
         public IEnumerable<string> Get()

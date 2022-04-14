@@ -10,7 +10,7 @@ using System.Web.Http.Cors;
 
 namespace GiellyGreen.Controllers
 {
-    public class LoginController : BaseController
+    public class LoginController : ApiController
     {
         // POST /login
         [Route("login")]
@@ -31,7 +31,7 @@ namespace GiellyGreen.Controllers
                 {
                     ResponseStatus = 2,
                     Result = "Fail",
-                    Message = "Login Fail!"
+                    Message = "Invalid user credentials!"
                 };
             }    
         }
