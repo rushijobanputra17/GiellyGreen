@@ -30,6 +30,8 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { SuppliersComponent } from './suppliers/suppliers.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 
 
@@ -62,7 +64,9 @@ registerLocaleData(en);
     NzMessageModule,
     NzModalModule,
     NzRadioModule,
-    NzLayoutModule
+    NzLayoutModule,
+    FontAwesomeModule,
+    NzSwitchModule
 
 
   ],

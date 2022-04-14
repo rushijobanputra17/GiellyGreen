@@ -14,7 +14,7 @@ export class DataParsingService {
       'Username':email,
       'Password':password
     }
-      return this.http.post<any>(`https://0354-106-201-236-89.ngrok.io/login`,body);
+      return this.http.post<any>(`https://91f7-106-201-236-89.ngrok.io/login`,body);
     }
 
     logintoken(email: string,password: string){
@@ -24,7 +24,7 @@ export class DataParsingService {
       body.set('grant_type',"password");
 
       const header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-      return this.http.post<any>(`https://0354-106-201-236-89.ngrok.io/Token`,body,{headers:header});
+      return this.http.post<any>(`https://91f7-106-201-236-89.ngrok.io/Token`,body,{headers:header});
 
     }
  

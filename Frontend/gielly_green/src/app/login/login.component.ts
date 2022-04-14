@@ -26,7 +26,11 @@ export class LoginComponent implements OnInit {
 
             this.httpService.logintoken(UserLoginDetail["userName"].value,UserLoginDetail["password"].value).subscribe(
               (response) => {
-               console.log(response);
+                this.message.success('Successfully Login', {
+                  nzDuration: 2000
+                }),
+                sessionStorage.setItem("logged_user",response.access_token);
+                this.router.navigate(['/suppliers']);
               },
               (error: any) => {
                 this.message.error("Server Error! Please Reload Your Page", {
@@ -35,11 +39,7 @@ export class LoginComponent implements OnInit {
               },
               () => console.log("success")
             );
-
-            this.message.success('Successfully Login', {
-              nzDuration: 2000
-            }),
-            this.router.navigate(['/suppliers']);
+            
           }
           else{
 

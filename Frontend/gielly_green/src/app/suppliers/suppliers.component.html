@@ -1,13 +1,109 @@
 <nz-layout>
-    <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
-      <div class="d-flex mt-3"><img src="assets/logo.png" class="logo"></div>
-      <ul nz-menu class="mt-5" nzMode="inline">
-        <li>
-          <ul>
-            <li nz-menu-item>MONTHOLY INVOICE</li>
-            <li nz-menu-item>SUPPLIER LIST</li>
-          </ul>
-        </li>
-      </ul>
+    <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null" [nzWidth]="250">
+        <div class="d-flex mt-3"><img src="assets/logo.png" class="logo"></div>
+        <ul nz-menu class="mt-5" nzMode="inline">
+            <li>
+                <ul>
+                    <li nz-menu-item style="padding-left:50px">MONTHOLY INVOICE</li>
+                    <li nz-menu-item style="padding-left:65px">SUPPLIER LIST</li>
+                </ul>
+            </li>
+        </ul>
     </nz-sider>
-<nz-layout>
+    <nz-content>
+        <div class="main-container">
+            <div class="search-box row p-3">
+                <div class='col-5'>
+                    <p class="title-design">Suppliers List</p>
+                </div>
+                <div class="col-5">
+                    <nz-input-group nzPrefixIcon="search">
+                        <input type="text" nz-input placeholder="Search here.." (keyup)="search()"
+                            [(ngModel)]="searchValue" />
+                    </nz-input-group>
+                </div>
+                <div class="col-2">
+                    <nz-input-group>
+                        <button nz-button class="custom-button" (click)="showModal()">ADD SUPPLIER</button>
+                    </nz-input-group>
+                </div>
+                <div col-12>
+                    <nz-table class="table-design" [nzData]="supplierList" nzDark [nzPageSize]="10" nzShowPagination #hhtpTable>
+                        <thead class="border thead-design">
+                            <tr>
+                                <th>Supplier Reference</th>
+                                <th>Supplier Name</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody><tr>
+                            <!-- <tr *ngFor="let data of hhtpTable.data"> -->
+                                <td>123456</td>
+                                <td>Prince Patel</td>
+                                <td><nz-switch nzSize="small" [ngModel]="true"></nz-switch></td> 
+                                <!-- <td>{{data.Id}}</td>
+                                <td>{{data.Name}}</td>
+                                <td>{{data.Description}}</td> -->
+                                <td>
+                                    <i nz-icon nzType="edit" class="icon-custom p-2" (click)="EditProduct()"></i>
+                                    <i nz-icon nzType="delete" nz-popconfirm
+                                        nzPopconfirmTitle="Sure to delete?" class="icon-custom p-3" (nzOnConfirm)="DeleteProduct()"></i>
+                                </td>
+    
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                </div>
+            </div>
+        </div>
+
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="Add Product" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+            <ng-container *nzModalContent>
+                <form nz-form [formGroup]="validateSupplierForm" class="login-form">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>Product Name</nz-form-label>
+                      <nz-form-control nzErrorTip="Please input your Product Name!">
+                        <nz-input-group>
+                          <input type="text" nz-input formControlName="Name" placeholder="Product Name" />
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label  [nzSm]="7" [nzXs]="24" nzRequired>Description</nz-form-label>
+                      <nz-form-control nzErrorTip="Please input your Product Description!">
+                        <nz-input-group>
+                          <textarea nz-input formControlName="Description" placeholder="Description" ></textarea>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>Quantity</nz-form-label>
+                        <nz-form-control  nzErrorTip="Please input product Quantity!">
+                          <input type="text" nz-input formControlName="Quantity" placeholder="Quantity" />
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>Status</nz-form-label>
+                        <nz-form-control  nzErrorTip="Please select Status!">
+                          <nz-radio-group nz-input formControlName="Status">
+                            <label nz-radio nzValue="true">Active</label>
+                            <label nz-radio nzValue="false">Inactive</label>
+                          </nz-radio-group>
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>Price</nz-form-label>
+                        <nz-form-control  nzErrorTip="Please enter your eventpriority!">
+                            <nz-input-group>
+                                <input type="number" nz-input formControlName="Price" placeholder="Price" />
+                              </nz-input-group>
+                        </nz-form-control>
+                      </nz-form-item>
+                  </form>
+            </ng-container>
+          </nz-modal>
+
+
+    </nz-content>
+    <nz-layout>
