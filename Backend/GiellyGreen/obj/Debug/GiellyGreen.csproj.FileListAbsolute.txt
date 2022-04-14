@@ -116,3 +116,8 @@ D:\GiellyGreen\Backend\GiellyGreen\obj\Debug\GiellyGreen.csproj.CopyComplete
 D:\GiellyGreen\Backend\GiellyGreen\obj\Debug\GiellyGreen.dll
 D:\GiellyGreen\Backend\GiellyGreen\obj\Debug\GiellyGreen.pdb
 D:\GiellyGreen\Backend\GiellyGreen\bin\Swashbuckle.Core.dll
+D:\GiellyGreen\Backend\GiellyGreen\bin\Microsoft.Owin.Cors.dll
+D:\GiellyGreen\Backend\GiellyGreen\bin\System.Web.Cors.dll
+D:\GiellyGreen\Backend\GiellyGreen\bin\Microsoft.Owin.Cors.xml
+D:\GiellyGreen\Backend\GiellyGreen\bin\System.Web.Http.Cors.dll
+D:\GiellyGreen\Backend\GiellyGreen\bin\System.Web.Http.Cors.xml
