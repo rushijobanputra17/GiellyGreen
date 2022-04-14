@@ -10,8 +10,7 @@ using System.Web.Http.Cors;
 
 namespace GiellyGreen.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class LoginController : ApiController
+    public class LoginController : BaseController
     {
         // POST /login
         [Route("login")]
