@@ -1,3 +1,4 @@
+
 <nz-layout>
     <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null" [nzWidth]="250">
         <div class="d-flex mt-3"><img src="assets/logo.png" class="logo"></div>
@@ -11,7 +12,7 @@
         </ul>
     </nz-sider>
     <nz-content>
-        <div class="main-container">
+        <div class="main-container" [ngClass]="{'blurPage': showLoader}">
             <div class="search-box row p-3">
                 <div class='col-5'>
                     <p class="title-design">Suppliers List</p>
@@ -38,17 +39,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let data of hhtpTable.data">
+                            <tr class="tr-custom" *ngFor="let data of hhtpTable.data">
                                 <!-- <td>123456</td>
                                 <td>Prince Patel</td>
                                 <td><nz-switch [ngModel]="true"></nz-switch></td>  -->
-                                <td>{{data.reference}}</td>
-                                <td>{{data.name}}</td>
-                                <td><nz-switch [ngModel]="data.status"></nz-switch></td>
+                                <td nzEllipsis>{{data.SupplierReferenceNumber}}</td>
+                                <td nzEllipsis>{{data.SupplierName}}</td>
+                                <td ><nz-switch [(ngModel)]="data.IsActive" (ngModelChange)="supplierStatus(data)"></nz-switch></td>
                                 <td>
                                     <i nz-icon nzType="edit" class="icon-custom p-2" (click)="EditProduct()"></i>
                                     <i nz-icon nzType="delete" nz-popconfirm
-                                        nzPopconfirmTitle="Sure to delete?" class="icon-custom p-3" (nzOnConfirm)="DeleteProduct()"></i>
+                                        nzPopconfirmTitle="Sure to delete?" class="icon-custom p-3" (nzOnConfirm)="DeleteSupplier(data)"></i>
                                 </td>
     
                             </tr>
@@ -56,6 +57,12 @@
                     </nz-table>
                 </div>
             </div>
+        </div>
+
+        <div *ngIf="showLoader">
+          <div style="display:flex;justify-content:center;align-items:center;" class="loader-container">
+            <i nz-icon [nzType]="'loading'" class="customLoader"></i>
+          </div>
         </div>
 
         <nz-modal [(nzVisible)]="isVisible" [nzWidth]="650" nzTitle="Add New Supplier" [nzFooter]="modalFooter" nzCentered (nzOnCancel)="handleCancel()">
@@ -66,10 +73,18 @@
                     <div class="col-6">
                       <label>Supplier Name</label>
                       <nz-form-item>
-                      <nz-form-control nzErrorTip="Please input your Supplier Name!">
+                      <nz-form-control [nzErrorTip]="supplierNameError">
                         <nz-input-group>
                           <input type="text" nz-input class="input-design" formControlName="Name"/>
                         </nz-input-group>
+                        <ng-template  #supplierNameError let-control>
+                          <ng-container *ngIf="control.hasError('required')">
+                            Please input supplier Names.
+                          </ng-container>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Only alpanumeric input allowed.
+                          </ng-container>
+                        </ng-template>
                       </nz-form-control>
                     </nz-form-item>
                     </div>
@@ -100,10 +115,19 @@
                     <div class="col-6">
                       <label>Email Address</label>
                       <nz-form-item>
-                      <nz-form-control nzErrorTip="Please enter valid email!">
+                      <nz-form-control  [nzErrorTip]="supplieremailError">
                         <nz-input-group>
                           <input type="email" nz-input class="input-design" formControlName="email"/>
                         </nz-input-group>
+                       
+                        <ng-template  #supplieremailError let-control>
+                           <ng-container *ngIf="control.hasError('required')">
+                          Please input supplier Names.
+                        </ng-container>
+                          <ng-container *ngIf="control.hasError('email')">
+                            Please enter valid email.
+                          </ng-container>
+                        </ng-template>
                       </nz-form-control>
                     </nz-form-item>
                     </div>
@@ -169,7 +193,7 @@
                       <label>Upload Invoice Logo</label>
                       <nz-form-item>
                       <nz-form-control>
-                        <nz-upload  nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"  nzListType="picture"
+                        <nz-upload  nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" [nzFileType]="'image/png,image/jpeg,image/gif'" nzListType="picture"
                           formControlName="filename">
                           <button nz-button>
                             <span>
@@ -192,7 +216,6 @@
                     </nz-form-item>
                     </div>
                   </div>
-
                 </div>
                   </form>
             </ng-container>
@@ -201,8 +224,6 @@
               <button nz-button (click)="handleCancel()">Cancel</button>
             </ng-template>
           </nz-modal>
-          
-       
-
     </nz-content>
-    <nz-layout>
+  </nz-layout>
+      
