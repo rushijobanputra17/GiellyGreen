@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Team2_GiellyGreenModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" />
+    <Property Name="SupplierId" Type="Int32" Nullable="false" />
+    <Property Name="HairServices" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="BeautyServices" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CustomService1" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CustomService2" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CustomService3" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CustomService4" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CustomService5" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Net" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="VAT" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Gross" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="AdvancePaid" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="BalanceDue" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Approved" Type="Boolean" />
+    <Property Name="InvoiceMonth" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Supplier" Relationship="Team2_GiellyGreenModel.FK_Invoice_Supplier" FromRole="Invoice" ToRole="Supplier" />
+  </EntityType>
+  <EntityContainer Name="Team2_GiellyGreenEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Invoices" EntityType="Self.Invoice" />
+    <FunctionImport Name="DeleteSupplier" ReturnType="Collection(Team2_GiellyGreenModel.DeleteSupplier_Result)">
+      <Parameter Name="SupplierId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="InsertUpdateSupplier">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+      <Parameter Name="SupplierName" Mode="In" Type="String" />
+      <Parameter Name="SupplierReferenceNumber" Mode="In" Type="String" />
+      <Parameter Name="BusinessAddress" Mode="In" Type="String" />
+      <Parameter Name="EmailAddress" Mode="In" Type="String" />
+      <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+      <Parameter Name="CompanyRegisteredNumber" Mode="In" Type="String" />
+      <Parameter Name="VATNumber" Mode="In" Type="String" />
+      <Parameter Name="TAXReference" Mode="In" Type="String" />
+      <Parameter Name="CompanyRegisteredAddress" Mode="In" Type="String" />
+      <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+      <Parameter Name="Logo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateStatus">
+      <Parameter Name="Status" Mode="In" Type="Boolean" />
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="Suppliers" EntityType="Team2_GiellyGreenModel.Supplier" />
+    <AssociationSet Name="FK_Invoice_Supplier" Association="Team2_GiellyGreenModel.FK_Invoice_Supplier">
+      <End Role="Supplier" EntitySet="Suppliers" />
+      <End Role="Invoice" EntitySet="Invoices" />
+    </AssociationSet>
+    <FunctionImport Name="GetAllInvoiceDetail" ReturnType="Collection(Team2_GiellyGreenModel.GetAllInvoiceDetail_Result)">
+      <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="GetSupplier" EntitySet="Suppliers" ReturnType="Collection(Team2_GiellyGreenModel.Supplier)">
+      <Parameter Name="Status" Mode="In" Type="Boolean" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="SupplierId" />
+    </Key>
+    <Property Name="SupplierId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SupplierName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SupplierReferenceNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="BusinessAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="320" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyRegisteredNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="VATNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="TAXReference" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyRegisteredAddress" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="Logo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="IsInvoicePresent" Type="Boolean" />
+    <NavigationProperty Name="Invoices" Relationship="Team2_GiellyGreenModel.FK_Invoice_Supplier" FromRole="Supplier" ToRole="Invoice" />
+  </EntityType>
+  <Association Name="FK_Invoice_Supplier">
+    <End Type="Team2_GiellyGreenModel.Supplier" Role="Supplier" Multiplicity="1" />
+    <End Type="Team2_GiellyGreenModel.Invoice" Role="Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supplier">
+        <PropertyRef Name="SupplierId" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="DeleteSupplier_Result">
+    <Property Type="Int32" Name="ResponseStatus" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GetAllInvoiceDetail_Result">
+    <Property Type="Int32" Name="InvoiceId" Nullable="false" />
+    <Property Type="Int32" Name="SupplierId" Nullable="false" />
+    <Property Type="Decimal" Name="HairServices" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="BeautyServices" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomService1" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomService2" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomService3" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomService4" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomService5" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="Net" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="VAT" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="Gross" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="AdvancePaid" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="BalanceDue" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Boolean" Name="Approved" Nullable="true" />
+    <Property Type="DateTime" Name="InvoiceMonth" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="GetSupplier_Result">
+    <Property Type="Int32" Name="SupplierId" Nullable="false" />
+    <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="200" />
+    <Property Type="String" Name="SupplierReferenceNumber" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="BusinessAddress" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="320" />
+    <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="CompanyRegisteredNumber" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="VATNumber" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="TAXReference" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="CompanyRegisteredAddress" Nullable="true" MaxLength="15" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="String" Name="Logo" Nullable="true" MaxLength="200" />
+    <Property Type="Boolean" Name="IsInvoicePresent" Nullable="true" />
+  </ComplexType>
+</Schema>

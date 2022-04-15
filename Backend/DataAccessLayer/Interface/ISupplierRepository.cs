@@ -11,10 +11,12 @@ namespace DataAccessLayer.Interface
     {
         List<Supplier> GetSuppliers(bool isActive);
 
-        bool AddSupplier(Supplier supplier);
+        int AddSupplier(Supplier supplier);
 
-        bool UpdateSupplier(Supplier supplierToUpdate, Supplier updatedSupplier, int supplierId);
+        //bool UpdateSupplier(Supplier supplierToUpdate, Supplier updatedSupplier, int supplierId);
 
-        bool DeleteSupplier(int supplierId);
+        int? DeleteSupplier(int supplierId);
+
+        int UpdateStatus(bool status, int supplierId);
     }
 }

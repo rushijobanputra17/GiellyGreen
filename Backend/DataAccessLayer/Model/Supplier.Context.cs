@@ -15,10 +15,10 @@ namespace DataAccessLayer.Model
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class Team2_GiellyGreenEntities2 : DbContext
+    public partial class Team2_GiellyGreenEntities : DbContext
     {
-        public Team2_GiellyGreenEntities2()
-            : base("name=Team2_GiellyGreenEntities2")
+        public Team2_GiellyGreenEntities()
+            : base("name=Team2_GiellyGreenEntities")
         {
         }
     
@@ -27,28 +27,19 @@ namespace DataAccessLayer.Model
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
     
-        public virtual int DeleteSupplier(Nullable<int> id)
+        public virtual ObjectResult<DeleteSupplier_Result> DeleteSupplier(Nullable<int> supplierId)
         {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
+            var supplierIdParameter = supplierId.HasValue ?
+                new ObjectParameter("SupplierId", supplierId) :
+                new ObjectParameter("SupplierId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteSupplier", idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DeleteSupplier_Result>("DeleteSupplier", supplierIdParameter);
         }
     
-        public virtual ObjectResult<GetActiveSupplier_Result> GetActiveSupplier()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveSupplier_Result>("GetActiveSupplier");
-        }
-    
-        public virtual ObjectResult<GetAllSupplier_Result> GetAllSupplier()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllSupplier_Result>("GetAllSupplier");
-        }
-    
-        public virtual int InsertUpdateSupplier(Nullable<int> id, string supplierName, string supplierReferenceNumber, string businessAddress, string emailAddress, string phoneNumber, string companyRegisteredNumber, string vATNumber, string tAXReference, string companyRegisteredAddress, Nullable<bool> isActive, byte[] logo)
+        public virtual int InsertUpdateSupplier(Nullable<int> id, string supplierName, string supplierReferenceNumber, string businessAddress, string emailAddress, string phoneNumber, string companyRegisteredNumber, string vATNumber, string tAXReference, string companyRegisteredAddress, Nullable<bool> isActive, string logo)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -96,9 +87,49 @@ namespace DataAccessLayer.Model
     
             var logoParameter = logo != null ?
                 new ObjectParameter("Logo", logo) :
-                new ObjectParameter("Logo", typeof(byte[]));
+                new ObjectParameter("Logo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUpdateSupplier", idParameter, supplierNameParameter, supplierReferenceNumberParameter, businessAddressParameter, emailAddressParameter, phoneNumberParameter, companyRegisteredNumberParameter, vATNumberParameter, tAXReferenceParameter, companyRegisteredAddressParameter, isActiveParameter, logoParameter);
+        }
+    
+        public virtual int UpdateStatus(Nullable<bool> status, Nullable<int> id)
+        {
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(bool));
+    
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateStatus", statusParameter, idParameter);
+        }
+    
+        public virtual ObjectResult<GetAllInvoiceDetail_Result> GetAllInvoiceDetail(Nullable<System.DateTime> invoiceMonth)
+        {
+            var invoiceMonthParameter = invoiceMonth.HasValue ?
+                new ObjectParameter("InvoiceMonth", invoiceMonth) :
+                new ObjectParameter("InvoiceMonth", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllInvoiceDetail_Result>("GetAllInvoiceDetail", invoiceMonthParameter);
+        }
+    
+        public virtual ObjectResult<Supplier> GetSupplier(Nullable<bool> status)
+        {
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Supplier>("GetSupplier", statusParameter);
+        }
+    
+        public virtual ObjectResult<Supplier> GetSupplier(Nullable<bool> status, MergeOption mergeOption)
+        {
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Supplier>("GetSupplier", mergeOption, statusParameter);
         }
     }
 }
