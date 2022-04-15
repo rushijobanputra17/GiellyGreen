@@ -124,3 +124,5 @@ D:\GiellyGreen\Backend\GiellyGreen\bin\System.Web.Http.Cors.xml
 D:\GiellyGreen\Backend\GiellyGreen\bin\DataAccessLayer.dll
 D:\GiellyGreen\Backend\GiellyGreen\bin\DataAccessLayer.pdb
 D:\GiellyGreen\Backend\GiellyGreen\bin\DataAccessLayer.dll.config
+D:\GiellyGreen\Backend\GiellyGreen\bin\AutoMapper.dll
+D:\GiellyGreen\Backend\GiellyGreen\bin\AutoMapper.xml

@@ -51,6 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\ISupplierRepository.cs" />
+    <Compile Include="Model\DeleteSupplier_Result.cs">
+      <DependentUpon>Supplier.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetAllInvoiceDetail_Result.cs">
+      <DependentUpon>Supplier.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\GetSupplier_Result.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>

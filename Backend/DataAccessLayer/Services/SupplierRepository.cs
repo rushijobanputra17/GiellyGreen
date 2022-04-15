@@ -22,23 +22,31 @@ namespace DataAccessLayer.Services
             return objDataAccess.InsertUpdateSupplier(null, supplier.SupplierName, supplier.SupplierReferenceNumber, supplier.BusinessAddress, supplier.EmailAddress, supplier.PhoneNumber, supplier.CompanyRegisteredNumber, supplier.VATNumber, supplier.TAXReference, supplier.CompanyRegisteredAddress, supplier.IsActive, supplier.Logo);
         }
 
-        public int UpdateSupplier(Supplier supplier)
-        {
+        //public int UpdateSupplier(Supplier supplier)
+        //{
 
-        }
+        //}
 
-        public int DeleteSupplier(int supplierId)
+        public int? DeleteSupplier(int supplierId)
         {
-            return objDataAccess.DeleteSupplier(supplierId);
+            return objDataAccess.DeleteSupplier(supplierId).FirstOrDefault().ResponseStatus;
+
         }
 
         public List<Supplier> GetSuppliers(bool isActive)
         {
-            if(!isActive)
-            {
-                return objDataAccess.Suppliers.ToList();
-            }
-            return objDataAccess.Suppliers.Where(x => x.IsActive == isActive).ToList();
+            return objDataAccess.GetSupplier(isActive).ToList();
+            //if (!isActive)
+            //{
+            //    return objDataAccess.Suppliers.ToList();
+            //}
+            //return objDataAccess.Suppliers.Where(x => x.IsActive == isActive).ToList();
         }
+
+        public int UpdateStatus(bool status, int supplierId)
+        {
+            return objDataAccess.UpdateStatus(status, supplierId);
+        }
+
     }
 }

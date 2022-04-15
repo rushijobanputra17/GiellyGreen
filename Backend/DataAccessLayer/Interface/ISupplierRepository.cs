@@ -15,6 +15,8 @@ namespace DataAccessLayer.Interface
 
         //bool UpdateSupplier(Supplier supplierToUpdate, Supplier updatedSupplier, int supplierId);
 
-        int DeleteSupplier(int supplierId);
+        int? DeleteSupplier(int supplierId);
+
+        int UpdateStatus(bool status, int supplierId);
     }
 }

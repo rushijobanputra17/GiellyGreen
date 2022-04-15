@@ -25,6 +25,6 @@ namespace DataAccessLayer.Model
         public string CompanyRegisteredAddress { get; set; }
         public bool IsActive { get; set; }
         public string Logo { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<bool> IsInvoicePresent { get; set; }
     }
 }
