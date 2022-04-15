@@ -31,20 +31,20 @@
                     <nz-table class="table-design" [nzData]="supplierList" nzDark [nzPageSize]="10" nzShowPagination #hhtpTable>
                         <thead class="border thead-design">
                             <tr>
-                                <th>Supplier Reference</th>
-                                <th>Supplier Name</th>
+                                <th [nzSortFn]="sortRefFn">Supplier Reference</th>
+                                <th [nzSortFn]="sortNamefn">Supplier Name</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody><tr>
-                            <!-- <tr *ngFor="let data of hhtpTable.data"> -->
-                                <td>123456</td>
+                        <tbody>
+                            <tr *ngFor="let data of hhtpTable.data">
+                                <!-- <td>123456</td>
                                 <td>Prince Patel</td>
-                                <td><nz-switch nzSize="small" [ngModel]="true"></nz-switch></td> 
-                                <!-- <td>{{data.Id}}</td>
-                                <td>{{data.Name}}</td>
-                                <td>{{data.Description}}</td> -->
+                                <td><nz-switch [ngModel]="true"></nz-switch></td>  -->
+                                <td>{{data.reference}}</td>
+                                <td>{{data.name}}</td>
+                                <td><nz-switch [ngModel]="data.status"></nz-switch></td>
                                 <td>
                                     <i nz-icon nzType="edit" class="icon-custom p-2" (click)="EditProduct()"></i>
                                     <i nz-icon nzType="delete" nz-popconfirm
@@ -58,52 +58,151 @@
             </div>
         </div>
 
-        <nz-modal [(nzVisible)]="isVisible" nzTitle="Add Product" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-            <ng-container *nzModalContent>
-                <form nz-form [formGroup]="validateSupplierForm" class="login-form">
-                    <nz-form-item>
-                        <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>Product Name</nz-form-label>
-                      <nz-form-control nzErrorTip="Please input your Product Name!">
+        <nz-modal [(nzVisible)]="isVisible" [nzWidth]="650" nzTitle="Add New Supplier" [nzFooter]="modalFooter" nzCentered (nzOnCancel)="handleCancel()">
+            <ng-container  *nzModalContent>
+                <form nz-form [formGroup]="validateSupplierForm" class="login-form" >
+                  <div class="modal-container">
+                  <div class="row">
+                    <div class="col-6">
+                      <label>Supplier Name</label>
+                      <nz-form-item>
+                      <nz-form-control nzErrorTip="Please input your Supplier Name!">
                         <nz-input-group>
-                          <input type="text" nz-input formControlName="Name" placeholder="Product Name" />
+                          <input type="text" nz-input class="input-design" formControlName="Name"/>
                         </nz-input-group>
                       </nz-form-control>
                     </nz-form-item>
-                    <nz-form-item>
-                        <nz-form-label  [nzSm]="7" [nzXs]="24" nzRequired>Description</nz-form-label>
-                      <nz-form-control nzErrorTip="Please input your Product Description!">
+                    </div>
+                    <div class="col-6">
+                      <label>Supplier Reference</label>
+                      <nz-form-item>
+                      <nz-form-control nzErrorTip="Please input your Supplier Reference">
                         <nz-input-group>
-                          <textarea nz-input formControlName="Description" placeholder="Description" ></textarea>
+                          <input  type="text" nz-input  class="input-design" formControlName="Reference"/>
                         </nz-input-group>
                       </nz-form-control>
                     </nz-form-item>
-                    <nz-form-item>
-                        <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>Quantity</nz-form-label>
-                        <nz-form-control  nzErrorTip="Please input product Quantity!">
-                          <input type="text" nz-input formControlName="Quantity" placeholder="Quantity" />
-                        </nz-form-control>
-                      </nz-form-item>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12">
+                      <label>Business Address</label>
                       <nz-form-item>
-                        <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>Status</nz-form-label>
-                        <nz-form-control  nzErrorTip="Please select Status!">
-                          <nz-radio-group nz-input formControlName="Status">
-                            <label nz-radio nzValue="true">Active</label>
-                            <label nz-radio nzValue="false">Inactive</label>
-                          </nz-radio-group>
+                        <nz-form-control  nzErrorTip="Please input Supplier Address!">
+                          <textarea nz-input formControlName="Address"></textarea>
                         </nz-form-control>
                       </nz-form-item>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <label>Email Address</label>
                       <nz-form-item>
-                        <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired>Price</nz-form-label>
-                        <nz-form-control  nzErrorTip="Please enter your eventpriority!">
-                            <nz-input-group>
-                                <input type="number" nz-input formControlName="Price" placeholder="Price" />
-                              </nz-input-group>
+                      <nz-form-control nzErrorTip="Please enter valid email!">
+                        <nz-input-group>
+                          <input type="email" nz-input class="input-design" formControlName="email"/>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                    </div>
+                    <div class="col-6">
+                      <label>Phone Number</label>
+                      <nz-form-item>
+                      <nz-form-control nzErrorTip="Please input your Phone Number">
+                        <nz-input-group>
+                          <input  type="text" nz-input  class="input-design" formControlName="phone"/>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <label>Company Registered Number</label>
+                      <nz-form-item>
+                      <nz-form-control nzErrorTip="Please input company registered number!">
+                        <nz-input-group>
+                          <input type="email" nz-input class="input-design" formControlName="comapanyNumber"/>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                    </div>
+                    <div class="col-6">
+                      <label>VAT Number</label>
+                      <nz-form-item>
+                      <nz-form-control nzErrorTip="Please input your VAT Number">
+                        <nz-input-group>
+                          <input  type="text" nz-input  class="input-design" formControlName="VAT"/>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12">
+                      <label>Tax Reference</label>
+                      <nz-form-item>
+                        <nz-form-control  nzErrorTip="Please input Tax Reference!">
+                          <input type="text" nz-input formControlName="taxRef"/>
                         </nz-form-control>
                       </nz-form-item>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12">
+                      <label>Company Registered Address</label>
+                      <nz-form-item>
+                        <nz-form-control  nzErrorTip="Please input company registered address !">
+                          <textarea nz-input formControlName="ComapanyAddress"></textarea>
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <label>Upload Invoice Logo</label>
+                      <nz-form-item>
+                      <nz-form-control>
+                        <nz-upload  nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"  nzListType="picture"
+                          formControlName="filename">
+                          <button nz-button>
+                            <span>
+                              <i nz-icon nzType="upload"></i>
+                              Upload
+                            </span>
+                          </button>
+                        </nz-upload>
+                      </nz-form-control>
+                    </nz-form-item>
+                    </div>
+                    <div class="col-6">   
+                      <nz-form-item>
+                      <nz-form-control>
+                        <nz-input-group>
+                          <label style="padding-right:10px;">Is Active?</label>
+                          <nz-switch [ngModel]="true"></nz-switch>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                    </div>
+                  </div>
+
+                </div>
                   </form>
             </ng-container>
+            <ng-template #modalFooter>
+              <button nz-button class="save-btn"(click)="handleOk()">Save</button>
+              <button nz-button (click)="handleCancel()">Cancel</button>
+            </ng-template>
           </nz-modal>
-
+          
+       
 
     </nz-content>
     <nz-layout>
