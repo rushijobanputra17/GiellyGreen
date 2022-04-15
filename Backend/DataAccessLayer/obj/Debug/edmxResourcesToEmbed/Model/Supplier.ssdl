@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Team2_GiellyGreenModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="int" Nullable="false" />
+    <Property Name="SupplierId" Type="int" Nullable="false" />
+    <Property Name="HairServices" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="BeautyServices" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CustomService1" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CustomService2" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CustomService3" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CustomService4" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CustomService5" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Net" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="VAT" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Gross" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="AdvancePaid" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="BalanceDue" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Approved" Type="bit" />
+    <Property Name="InvoiceMonth" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="SupplierId" />
+    </Key>
+    <Property Name="SupplierId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SupplierName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="SupplierReferenceNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="BusinessAddress" Type="nvarchar" MaxLength="150" />
+    <Property Name="EmailAddress" Type="nvarchar" MaxLength="320" Nullable="false" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
+    <Property Name="CompanyRegisteredNumber" Type="nvarchar" MaxLength="15" />
+    <Property Name="VATNumber" Type="nvarchar" MaxLength="15" />
+    <Property Name="TAXReference" Type="nvarchar" MaxLength="15" />
+    <Property Name="CompanyRegisteredAddress" Type="nvarchar" MaxLength="15" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="Logo" Type="nvarchar" MaxLength="200" />
+    <Property Name="IsInvoicePresent" Type="bit" />
+  </EntityType>
+  <Association Name="FK_Invoice_Supplier">
+    <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+    <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supplier">
+        <PropertyRef Name="SupplierId" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="DeleteSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SupplierId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Status" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="InsertUpdateSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+    <Parameter Name="SupplierName" Type="nvarchar" Mode="In" />
+    <Parameter Name="SupplierReferenceNumber" Type="nvarchar" Mode="In" />
+    <Parameter Name="BusinessAddress" Type="nvarchar" Mode="In" />
+    <Parameter Name="EmailAddress" Type="nvarchar" Mode="In" />
+    <Parameter Name="PhoneNumber" Type="nvarchar" Mode="In" />
+    <Parameter Name="CompanyRegisteredNumber" Type="nvarchar" Mode="In" />
+    <Parameter Name="VATNumber" Type="nvarchar" Mode="In" />
+    <Parameter Name="TAXReference" Type="nvarchar" Mode="In" />
+    <Parameter Name="CompanyRegisteredAddress" Type="nvarchar" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+    <Parameter Name="Logo" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="UpdateStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Status" Type="bit" Mode="In" />
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="Team2_GiellyGreenModelStoreContainer">
+    <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Invoice_Supplier" Association="Self.FK_Invoice_Supplier">
+      <End Role="Supplier" EntitySet="Supplier" />
+      <End Role="Invoice" EntitySet="Invoice" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

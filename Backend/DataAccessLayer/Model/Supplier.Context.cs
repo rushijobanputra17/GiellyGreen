@@ -15,10 +15,10 @@ namespace DataAccessLayer.Model
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class Team2_GiellyGreenEntities2 : DbContext
+    public partial class Team2_GiellyGreenEntities : DbContext
     {
-        public Team2_GiellyGreenEntities2()
-            : base("name=Team2_GiellyGreenEntities2")
+        public Team2_GiellyGreenEntities()
+            : base("name=Team2_GiellyGreenEntities")
         {
         }
     
@@ -27,28 +27,28 @@ namespace DataAccessLayer.Model
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
     
-        public virtual int DeleteSupplier(Nullable<int> id)
+        public virtual int DeleteSupplier(Nullable<int> supplierId)
         {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
+            var supplierIdParameter = supplierId.HasValue ?
+                new ObjectParameter("SupplierId", supplierId) :
+                new ObjectParameter("SupplierId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteSupplier", idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteSupplier", supplierIdParameter);
         }
     
-        public virtual ObjectResult<GetActiveSupplier_Result> GetActiveSupplier()
+        public virtual ObjectResult<GetSupplier_Result> GetSupplier(Nullable<bool> status)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveSupplier_Result>("GetActiveSupplier");
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSupplier_Result>("GetSupplier", statusParameter);
         }
     
-        public virtual ObjectResult<GetAllSupplier_Result> GetAllSupplier()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllSupplier_Result>("GetAllSupplier");
-        }
-    
-        public virtual int InsertUpdateSupplier(Nullable<int> id, string supplierName, string supplierReferenceNumber, string businessAddress, string emailAddress, string phoneNumber, string companyRegisteredNumber, string vATNumber, string tAXReference, string companyRegisteredAddress, Nullable<bool> isActive, byte[] logo)
+        public virtual int InsertUpdateSupplier(Nullable<int> id, string supplierName, string supplierReferenceNumber, string businessAddress, string emailAddress, string phoneNumber, string companyRegisteredNumber, string vATNumber, string tAXReference, string companyRegisteredAddress, Nullable<bool> isActive, string logo)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -96,9 +96,22 @@ namespace DataAccessLayer.Model
     
             var logoParameter = logo != null ?
                 new ObjectParameter("Logo", logo) :
-                new ObjectParameter("Logo", typeof(byte[]));
+                new ObjectParameter("Logo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUpdateSupplier", idParameter, supplierNameParameter, supplierReferenceNumberParameter, businessAddressParameter, emailAddressParameter, phoneNumberParameter, companyRegisteredNumberParameter, vATNumberParameter, tAXReferenceParameter, companyRegisteredAddressParameter, isActiveParameter, logoParameter);
+        }
+    
+        public virtual int UpdateStatus(Nullable<bool> status, Nullable<int> id)
+        {
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(bool));
+    
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateStatus", statusParameter, idParameter);
         }
     }
 }

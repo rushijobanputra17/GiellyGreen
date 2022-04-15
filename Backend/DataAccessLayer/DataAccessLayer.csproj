@@ -51,10 +51,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\ISupplierRepository.cs" />
-    <Compile Include="Model\GetActiveSupplier_Result.cs">
+    <Compile Include="Model\GetSupplier_Result.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\GetAllSupplier_Result.cs">
+    <Compile Include="Model\Invoice.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Supplier.Context.cs">
@@ -76,6 +76,7 @@
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SupplierRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
@@ -91,6 +92,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Model\Supplier.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

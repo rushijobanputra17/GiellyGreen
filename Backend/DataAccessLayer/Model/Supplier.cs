@@ -14,6 +14,12 @@ namespace DataAccessLayer.Model
     
     public partial class Supplier
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Supplier()
+        {
+            this.Invoices = new HashSet<Invoice>();
+        }
+    
         public int SupplierId { get; set; }
         public string SupplierName { get; set; }
         public string SupplierReferenceNumber { get; set; }
@@ -25,6 +31,10 @@ namespace DataAccessLayer.Model
         public string TAXReference { get; set; }
         public string CompanyRegisteredAddress { get; set; }
         public bool IsActive { get; set; }
-        public byte[] Logo { get; set; }
+        public string Logo { get; set; }
+        public Nullable<bool> IsInvoicePresent { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Invoice> Invoices { get; set; }
     }
 }
