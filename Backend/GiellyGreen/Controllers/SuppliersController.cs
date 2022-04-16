@@ -101,12 +101,12 @@ namespace GiellyGreen.Controllers
         {
             try
             {
-
-                if (supplierRepository.DeleteSupplier(id) == 1)
+                var responseStatus = supplierRepository.DeleteSupplier(id);
+                if (responseStatus == 1)
                 {
                     objResponse = JsonResponseHelper.GetJsonResponse(1, "Record deleted successfully", id);
                 }
-                else if (supplierRepository.DeleteSupplier(id) == 2)
+                else if (responseStatus == 2)
                 {
                     objResponse = JsonResponseHelper.GetJsonResponse(3, "Delete failed because invoice is present for the supplier", null);
                 }
