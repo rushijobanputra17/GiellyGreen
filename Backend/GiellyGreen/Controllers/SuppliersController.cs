@@ -4,11 +4,8 @@ using DataAccessLayer.Services;
 using GiellyGreen.Helpers;
 using GiellyGreen.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 
@@ -95,18 +92,14 @@ namespace GiellyGreen.Controllers
                 objResponse = JsonResponseHelper.GetJsonResponse(2, "Error", ex.Message);
             }
             return objResponse;
-
-
         }
-
-
 
         // PUT api/values/5
         public void Put(int id, SupplierViewModel model)
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     model.SupplierId = id;
                     if (supplierRepository.UpdateSupplier(mapper.Map<Supplier>(model)) == 1)
@@ -117,14 +110,13 @@ namespace GiellyGreen.Controllers
                     {
                         objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while updating record", null);
                     }
-
                 }
                 else
                 {
                     objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while updating record", ModelState.Values.SelectMany(v => v.Errors));
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 objResponse = JsonResponseHelper.GetJsonResponse(2, "Error", ex.Message);
             }
