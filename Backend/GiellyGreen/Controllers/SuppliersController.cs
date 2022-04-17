@@ -5,9 +5,11 @@ using GiellyGreen.Helpers;
 using GiellyGreen.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace GiellyGreen.Controllers
@@ -18,7 +20,7 @@ namespace GiellyGreen.Controllers
         public static SupplierRepository supplierRepository = new SupplierRepository();
         public static MapperConfiguration config = new MapperConfiguration(cgf => cgf.CreateMap<SupplierViewModel, Supplier>());
         public static Mapper mapper = new Mapper(config);
-       public static Team2_GiellyGreenEntities objDataAccess = new Team2_GiellyGreenEntities();
+        //public static Team2_GiellyGreenEntities objDataAccess = new Team2_GiellyGreenEntities();
 
         public JsonResponse objResponse;
 
@@ -28,6 +30,22 @@ namespace GiellyGreen.Controllers
             try
             {
                 var suppliers = supplierRepository.GetSuppliers(isActive);/*bjDataAccess.GetSupplier(isActive).ToList(); *///
+                String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                suppliers.ForEach(supplier =>
+                {
+                    if (!string.IsNullOrEmpty(supplier.Logo) && supplier.Logo != "null")
+                    {
+                        string imgPath = Path.Combine(path, supplier.Logo);
+                        byte[] imgBytes = File.ReadAllBytes(imgPath);
+                        supplier.Logo = Convert.ToBase64String(imgBytes);
+                    }
+                });
+
                 objResponse = JsonResponseHelper.GetJsonResponse(1, "Records found : " + suppliers.Count(), suppliers);
             }
             catch (Exception ex)
@@ -43,8 +61,21 @@ namespace GiellyGreen.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
+                    String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    string imgName = model.SupplierName + ".jpeg";
+                    string imgPath = Path.Combine(path, imgName);
+                    byte[] imgBytes = Convert.FromBase64String(model.Logo);
+                    File.WriteAllBytes(imgPath, imgBytes);
+
+                    model.Logo = imgName;
+
                     if (supplierRepository.AddSupplier(mapper.Map<Supplier>(model)) == 1)
                     {
                         objResponse = JsonResponseHelper.GetJsonResponse(1, "Record added successfully", model);
@@ -58,11 +89,10 @@ namespace GiellyGreen.Controllers
                 {
                     objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while adding record", ModelState.Values.SelectMany(v => v.Errors));
                 }
-                
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                objResponse = JsonResponseHelper.GetJsonResponse(2, "Error",ex.Message);
+                objResponse = JsonResponseHelper.GetJsonResponse(2, "Error", ex.Message);
             }
             return objResponse;
 

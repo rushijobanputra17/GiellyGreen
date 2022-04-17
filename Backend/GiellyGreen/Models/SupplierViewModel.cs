@@ -20,7 +20,7 @@ namespace GiellyGreen.Models
         }
         private string _SupplierReferenceNumber;
         [Required(ErrorMessage = "Supplier reference number is required")]
-        [RegularExpression("@^[a-zA-Z0-9]*$", ErrorMessage = "Invalid Supplier reference number")]
+        //[RegularExpression("@^[a-zA-Z0-9]*$", ErrorMessage = "Invalid Supplier reference number")]
         public string SupplierReferenceNumber
         {
             get { return _SupplierReferenceNumber; }
