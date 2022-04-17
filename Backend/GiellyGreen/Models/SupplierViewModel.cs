@@ -9,7 +9,7 @@ namespace GiellyGreen.Models
 {
     public class SupplierViewModel
     {
-        public int SupplierId { get; set; }
+        public int SupplierId { get; set; } = 0;
 
         private string _SupplierName;
         [Required(ErrorMessage = "Supplier name is required")]
