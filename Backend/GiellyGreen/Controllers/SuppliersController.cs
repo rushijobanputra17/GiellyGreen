@@ -99,31 +99,35 @@ namespace GiellyGreen.Controllers
 
         }
 
-        //public JsonResponse Post(SupplierViewModel model)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            var product = supplierRepository.AddSupplier(mapper.Map<Supplier>(model));
-        //            objResponse = .GetResponse(1, "Record added successfully", product);
-        //        }
-        //        else
-        //        {
-        //            objResponse = Helpers.ResponseHelper.GetResponse(0, "Error", ModelState.Values.SelectMany(v => v.Errors));
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        objResponse = Helpers.ResponseHelper.GetResponse(2, "Exception", ex.Message);
-        //    }
 
-        //    return objResponse;
-        //}
 
         // PUT api/values/5
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, SupplierViewModel model)
         {
+            try
+            {
+                if(ModelState.IsValid)
+                {
+                    model.SupplierId = id;
+                    if (supplierRepository.UpdateSupplier(mapper.Map<Supplier>(model)) == 1)
+                    {
+                        objResponse = JsonResponseHelper.GetJsonResponse(1, "Record updated successfully", model);
+                    }
+                    else
+                    {
+                        objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while updating record", null);
+                    }
+
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while updating record", ModelState.Values.SelectMany(v => v.Errors));
+                }
+            }
+            catch(Exception ex)
+            {
+                objResponse = JsonResponseHelper.GetJsonResponse(2, "Error", ex.Message);
+            }
         }
 
         // DELETE suppliers/delete/5
