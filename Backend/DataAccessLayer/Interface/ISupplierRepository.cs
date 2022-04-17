@@ -13,7 +13,7 @@ namespace DataAccessLayer.Interface
 
         int AddSupplier(Supplier supplier);
 
-        //bool UpdateSupplier(Supplier supplierToUpdate, Supplier updatedSupplier, int supplierId);
+        int UpdateSupplier(Supplier supplier);
 
         int? DeleteSupplier(int supplierId);
 

@@ -22,10 +22,10 @@ namespace DataAccessLayer.Services
             return objDataAccess.InsertUpdateSupplier(null, supplier.SupplierName, supplier.SupplierReferenceNumber, supplier.BusinessAddress, supplier.EmailAddress, supplier.PhoneNumber, supplier.CompanyRegisteredNumber, supplier.VATNumber, supplier.TAXReference, supplier.CompanyRegisteredAddress, supplier.IsActive, supplier.Logo);
         }
 
-        //public int UpdateSupplier(Supplier supplier)
-        //{
-
-        //}
+        public int UpdateSupplier(Supplier supplier)
+        {
+            return objDataAccess.InsertUpdateSupplier(supplier.SupplierId, supplier.SupplierName, supplier.SupplierReferenceNumber, supplier.BusinessAddress, supplier.EmailAddress, supplier.PhoneNumber, supplier.CompanyRegisteredNumber, supplier.VATNumber, supplier.TAXReference, supplier.CompanyRegisteredAddress, supplier.IsActive, supplier.Logo);
+        }
 
         public int? DeleteSupplier(int supplierId)
         {
