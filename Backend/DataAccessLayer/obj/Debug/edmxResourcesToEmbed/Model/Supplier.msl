@@ -32,7 +32,25 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="GetSupplier" FunctionName="Team2_GiellyGreenModel.Store.GetSupplier" />
+    <FunctionImportMapping FunctionImportName="GetSupplier" FunctionName="Team2_GiellyGreenModel.Store.GetSupplier">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetSupplier_Result">
+          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+          <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+          <ScalarProperty Name="SupplierReferenceNumber" ColumnName="SupplierReferenceNumber" />
+          <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="CompanyRegisteredNumber" ColumnName="CompanyRegisteredNumber" />
+          <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
+          <ScalarProperty Name="TAXReference" ColumnName="TAXReference" />
+          <ScalarProperty Name="CompanyRegisteredAddress" ColumnName="CompanyRegisteredAddress" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Logo" ColumnName="Logo" />
+          <ScalarProperty Name="IsInvoicePresent" ColumnName="IsInvoicePresent" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <EntitySetMapping Name="InvoiceDetails">
       <EntityTypeMapping TypeName="Team2_GiellyGreenModel.InvoiceDetail">
         <MappingFragment StoreEntitySet="InvoiceDetails">

@@ -22,3 +22,5 @@ F:\GiellyGreen\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreComp
 F:\GiellyGreen\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
 F:\GiellyGreen\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.dll
 F:\GiellyGreen\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\GiellyGreen\Backend\DataAccessLayer\bin\Debug\AutoMapper.dll
+D:\GiellyGreen\Backend\DataAccessLayer\bin\Debug\AutoMapper.xml

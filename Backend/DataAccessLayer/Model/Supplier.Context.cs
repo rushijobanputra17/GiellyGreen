@@ -115,22 +115,13 @@ namespace DataAccessLayer.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllInvoiceDetail_Result>("GetAllInvoiceDetail", invoiceMonthParameter);
         }
     
-        public virtual ObjectResult<Supplier> GetSupplier(Nullable<bool> status)
+        public virtual ObjectResult<GetSupplier_Result> GetSupplier(Nullable<bool> status)
         {
             var statusParameter = status.HasValue ?
                 new ObjectParameter("Status", status) :
                 new ObjectParameter("Status", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Supplier>("GetSupplier", statusParameter);
-        }
-    
-        public virtual ObjectResult<Supplier> GetSupplier(Nullable<bool> status, MergeOption mergeOption)
-        {
-            var statusParameter = status.HasValue ?
-                new ObjectParameter("Status", status) :
-                new ObjectParameter("Status", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Supplier>("GetSupplier", mergeOption, statusParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSupplier_Result>("GetSupplier", statusParameter);
         }
     }
 }

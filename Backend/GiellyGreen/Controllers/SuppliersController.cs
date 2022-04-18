@@ -15,9 +15,9 @@ namespace GiellyGreen.Controllers
     public class SuppliersController : ApiController
     {
         public static SupplierRepository supplierRepository = new SupplierRepository();
-        public static MapperConfiguration config = new MapperConfiguration(cgf => cgf.CreateMap<SupplierViewModel, Supplier>());
+        public static AutoMapper.MapperConfiguration config = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<SupplierViewModel, Supplier>());
         public static Mapper mapper = new Mapper(config);
-        //public static Team2_GiellyGreenEntities objDataAccess = new Team2_GiellyGreenEntities();
+        public static Team2_GiellyGreenEntities objDataAccess = new Team2_GiellyGreenEntities();
 
         public JsonResponse objResponse;
 
@@ -26,7 +26,7 @@ namespace GiellyGreen.Controllers
         {
             try
             {
-                var suppliers = supplierRepository.GetSuppliers(isActive);/*bjDataAccess.GetSupplier(isActive).ToList(); *///
+                var suppliers = supplierRepository.GetSuppliers(isActive); /*objDataAccess.GetSupplier(isActive).ToList();*////* *///
                 String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
                 if (!Directory.Exists(path))
                 {

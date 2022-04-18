@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.Interface;
+﻿using AutoMapper;
+using DataAccessLayer.Interface;
 using DataAccessLayer.Model;
 using System;
 using System.Collections.Generic;
@@ -35,12 +36,9 @@ namespace DataAccessLayer.Services
 
         public List<Supplier> GetSuppliers(bool isActive)
         {
-            return objDataAccess.GetSupplier(isActive).ToList();
-            //if (!isActive)
-            //{
-            //    return objDataAccess.Suppliers.ToList();
-            //}
-            //return objDataAccess.Suppliers.Where(x => x.IsActive == isActive).ToList();
+            AutoMapper.MapperConfiguration configList = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<GetSupplier_Result, Supplier>());
+            Mapper mapper = new Mapper(configList);
+            return mapper.Map<List<Supplier>>(objDataAccess.GetSupplier(isActive).ToList());
         }
 
         public int UpdateStatus(bool status, int supplierId)

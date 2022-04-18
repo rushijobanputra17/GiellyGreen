@@ -25,7 +25,7 @@
     <FunctionImport Name="GetAllInvoiceDetail" ReturnType="Collection(Team2_GiellyGreenModel.GetAllInvoiceDetail_Result)">
       <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
     </FunctionImport>
-    <FunctionImport Name="GetSupplier" EntitySet="Suppliers" ReturnType="Collection(Team2_GiellyGreenModel.Supplier)">
+    <FunctionImport Name="GetSupplier" ReturnType="Collection(Team2_GiellyGreenModel.GetSupplier_Result)">
       <Parameter Name="Status" Mode="In" Type="Boolean" />
     </FunctionImport>
     <EntitySet Name="InvoiceDetails" EntityType="Team2_GiellyGreenModel.InvoiceDetail" />
@@ -143,4 +143,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <ComplexType Name="GetSupplier_Result">
+    <Property Type="Int32" Name="SupplierId" Nullable="false" />
+    <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="200" />
+    <Property Type="String" Name="SupplierReferenceNumber" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="BusinessAddress" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="EmailAddress" Nullable="true" MaxLength="320" />
+    <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="CompanyRegisteredNumber" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="VATNumber" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="TAXReference" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="CompanyRegisteredAddress" Nullable="true" MaxLength="15" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="String" Name="Logo" Nullable="true" MaxLength="200" />
+    <Property Type="Boolean" Name="IsInvoicePresent" Nullable="true" />
+  </ComplexType>
 </Schema>
