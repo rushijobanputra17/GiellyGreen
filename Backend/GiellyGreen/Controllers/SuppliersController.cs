@@ -84,7 +84,7 @@ namespace GiellyGreen.Controllers
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while adding record", ModelState.Values.SelectMany(v => v.Errors));
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while adding record", ModelState.Values.SelectMany(v => v.Errors).Select(v=>v.ErrorMessage).ToList());
                 }
             }
             catch (Exception ex)
@@ -95,12 +95,24 @@ namespace GiellyGreen.Controllers
         }
 
         // PUT api/values/5
-        public void Put(int id, SupplierViewModel model)
+        public JsonResponse Put(int id, SupplierViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    string imgName = model.SupplierName + ".jpeg";
+                    string imgPath = Path.Combine(path, imgName);
+                    byte[] imgBytes = Convert.FromBase64String(model.Logo);
+                    File.WriteAllBytes(imgPath, imgBytes);
+
+                    model.Logo = imgName;
                     model.SupplierId = id;
                     if (supplierRepository.UpdateSupplier(mapper.Map<Supplier>(model)) == 1)
                     {
@@ -113,13 +125,15 @@ namespace GiellyGreen.Controllers
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while updating record", ModelState.Values.SelectMany(v => v.Errors));
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while adding record", ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList());
                 }
             }
             catch (Exception ex)
             {
                 objResponse = JsonResponseHelper.GetJsonResponse(2, "Error", ex.Message);
             }
+
+            return objResponse;
         }
 
         // DELETE suppliers/delete/5
@@ -165,7 +179,7 @@ namespace GiellyGreen.Controllers
             }
             catch (Exception ex)
             {
-                objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
+                objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception",ex.Message);
             }
 
             return objResponse;
