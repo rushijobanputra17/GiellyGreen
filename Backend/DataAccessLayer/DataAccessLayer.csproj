@@ -57,10 +57,10 @@
     <Compile Include="Model\GetAllInvoiceDetail_Result.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\GetSupplier_Result.cs">
+    <Compile Include="Model\Invoice.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Invoice.cs">
+    <Compile Include="Model\InvoiceDetail.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Supplier.Context.cs">

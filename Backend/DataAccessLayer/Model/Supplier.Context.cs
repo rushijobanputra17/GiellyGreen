@@ -27,6 +27,7 @@ namespace DataAccessLayer.Model
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
     

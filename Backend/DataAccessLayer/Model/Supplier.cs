@@ -17,7 +17,7 @@ namespace DataAccessLayer.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Supplier()
         {
-            this.Invoices = new HashSet<Invoice>();
+            this.InvoiceDetails = new HashSet<InvoiceDetail>();
         }
     
         public int SupplierId { get; set; }
@@ -35,6 +35,6 @@ namespace DataAccessLayer.Model
         public Nullable<bool> IsInvoicePresent { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Invoice> Invoices { get; set; }
+        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
     }
 }

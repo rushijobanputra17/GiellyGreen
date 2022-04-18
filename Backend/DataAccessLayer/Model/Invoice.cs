@@ -14,23 +14,23 @@ namespace DataAccessLayer.Model
     
     public partial class Invoice
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Invoice()
+        {
+            this.InvoiceDetails = new HashSet<InvoiceDetail>();
+        }
+    
         public int InvoiceId { get; set; }
-        public int SupplierId { get; set; }
-        public Nullable<decimal> HairServices { get; set; }
-        public Nullable<decimal> BeautyServices { get; set; }
-        public Nullable<decimal> CustomService1 { get; set; }
-        public Nullable<decimal> CustomService2 { get; set; }
-        public Nullable<decimal> CustomService3 { get; set; }
-        public Nullable<decimal> CustomService4 { get; set; }
-        public Nullable<decimal> CustomService5 { get; set; }
-        public Nullable<decimal> Net { get; set; }
-        public Nullable<decimal> VAT { get; set; }
-        public Nullable<decimal> Gross { get; set; }
-        public Nullable<decimal> AdvancePaid { get; set; }
-        public Nullable<decimal> BalanceDue { get; set; }
-        public Nullable<bool> Approved { get; set; }
+        public string CustomHeader1 { get; set; }
+        public string CustomHeader2 { get; set; }
+        public string CustomHeader3 { get; set; }
+        public string CustomHeader4 { get; set; }
+        public string CustomHeader5 { get; set; }
+        public string InvoiceRef { get; set; }
+        public Nullable<System.DateTime> InvoiceDate { get; set; }
         public Nullable<System.DateTime> InvoiceMonth { get; set; }
     
-        public virtual Supplier Supplier { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
     }
 }

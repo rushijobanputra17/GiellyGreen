@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="Team2_GiellyGreenModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="Invoice">
+  <EntityType Name="InvoiceDetails">
     <Key>
-      <PropertyRef Name="InvoiceId" />
+      <PropertyRef Name="InvoiceDetailId" />
     </Key>
-    <Property Name="InvoiceId" Type="int" Nullable="false" />
+    <Property Name="InvoiceDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SupplierId" Type="int" Nullable="false" />
     <Property Name="HairServices" Type="decimal" Precision="18" Scale="2" />
     <Property Name="BeautyServices" Type="decimal" Precision="18" Scale="2" />
@@ -19,7 +19,22 @@
     <Property Name="AdvancePaid" Type="decimal" Precision="18" Scale="2" />
     <Property Name="BalanceDue" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Approved" Type="bit" />
-    <Property Name="InvoiceMonth" Type="datetime" />
+    <Property Name="SupplierName" Type="nvarchar" MaxLength="100" />
+    <Property Name="InvoiceId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Invoices">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomHeader1" Type="nvarchar" MaxLength="50" />
+    <Property Name="CustomHeader2" Type="nvarchar" MaxLength="50" />
+    <Property Name="CustomHeader3" Type="nvarchar" MaxLength="50" />
+    <Property Name="CustomHeader4" Type="nvarchar" MaxLength="50" />
+    <Property Name="CustomHeader5" Type="nvarchar" MaxLength="50" />
+    <Property Name="InvoiceRef" Type="nvarchar" MaxLength="15" />
+    <Property Name="InvoiceDate" Type="date" />
+    <Property Name="InvoiceMonth" Type="date" />
   </EntityType>
   <EntityType Name="Supplier">
     <Key>
@@ -29,7 +44,7 @@
     <Property Name="SupplierName" Type="nvarchar" MaxLength="200" Nullable="false" />
     <Property Name="SupplierReferenceNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="BusinessAddress" Type="nvarchar" MaxLength="150" />
-    <Property Name="EmailAddress" Type="nvarchar" MaxLength="320" Nullable="false" />
+    <Property Name="EmailAddress" Type="nvarchar" MaxLength="320" />
     <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
     <Property Name="CompanyRegisteredNumber" Type="nvarchar" MaxLength="15" />
     <Property Name="VATNumber" Type="nvarchar" MaxLength="15" />
@@ -41,13 +56,25 @@
   </EntityType>
   <Association Name="FK_Invoice_Supplier">
     <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
-    <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+    <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Supplier">
         <PropertyRef Name="SupplierId" />
       </Principal>
-      <Dependent Role="Invoice">
+      <Dependent Role="InvoiceDetails">
         <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoiceDetails_Invoices">
+    <End Role="Invoices" Type="Self.Invoices" Multiplicity="1" />
+    <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoices">
+        <PropertyRef Name="InvoiceId" />
+      </Principal>
+      <Dependent Role="InvoiceDetails">
+        <PropertyRef Name="InvoiceId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -79,11 +106,16 @@
     <Parameter Name="id" Type="int" Mode="In" />
   </Function>
   <EntityContainer Name="Team2_GiellyGreenModelStoreContainer">
-    <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Invoices" EntityType="Self.Invoices" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Invoice_Supplier" Association="Self.FK_Invoice_Supplier">
       <End Role="Supplier" EntitySet="Supplier" />
-      <End Role="Invoice" EntitySet="Invoice" />
+      <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoiceDetails_Invoices" Association="Self.FK_InvoiceDetails_Invoices">
+      <End Role="Invoices" EntitySet="Invoices" />
+      <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
     </AssociationSet>
   </EntityContainer>
 </Schema>
