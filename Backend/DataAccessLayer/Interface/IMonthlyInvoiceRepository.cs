@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Interface
 {
-    internal interface IMonthlyInvoiceRepository
+    public interface IMonthlyInvoiceRepository
     {
-        List<object> GetSuppliers(DateTime InvoiceMonth);
+        List<object> GetAllInvoice(DateTime InvoiceMonth);
     }
 }

@@ -58,7 +58,6 @@ namespace GiellyGreen.Controllers
         {
             try
             {
-                model.SupplierReferenceNumber = "ruashi";
                 model.IsInvoicePresent = false;
                 if (ModelState.IsValid)
                 {
@@ -91,7 +90,7 @@ namespace GiellyGreen.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.InnerException.Message != null)
+                if (ex.InnerException!= null)
                 {
                     objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
                 }
@@ -139,7 +138,7 @@ namespace GiellyGreen.Controllers
             }
             catch (Exception ex)
             {
-                if(ex.InnerException.Message!=null)
+                if(ex.InnerException!=null)
                 {
                     objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
                 }
