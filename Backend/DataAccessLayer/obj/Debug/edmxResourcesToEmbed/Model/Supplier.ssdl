@@ -81,8 +81,40 @@
   <Function Name="DeleteSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SupplierId" Type="int" Mode="In" />
   </Function>
+  <Function Name="GetAllInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="InvoiceMonth" Type="date" Mode="In" />
+  </Function>
   <Function Name="GetSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Status" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="InsertInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="InvoiceId" Type="int" Mode="In" />
+    <Parameter Name="InvoiceRef" Type="nvarchar" Mode="In" />
+    <Parameter Name="InvoiceDate" Type="date" Mode="In" />
+    <Parameter Name="CustomCol1" Type="nvarchar" Mode="In" />
+    <Parameter Name="CustomCol2" Type="nvarchar" Mode="In" />
+    <Parameter Name="CustomCol3" Type="nvarchar" Mode="In" />
+    <Parameter Name="CustomCol4" Type="nvarchar" Mode="In" />
+    <Parameter Name="CustomCol5" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="InsertUpdateInvoiceDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="InvoiceDetailId" Type="int" Mode="In" />
+    <Parameter Name="SupplierId" Type="int" Mode="In" />
+    <Parameter Name="SupplierName" Type="nvarchar" Mode="In" />
+    <Parameter Name="HairServices" Type="decimal" Mode="In" />
+    <Parameter Name="BeautyServices" Type="decimal" Mode="In" />
+    <Parameter Name="CustomService1" Type="decimal" Mode="In" />
+    <Parameter Name="CustomService2" Type="decimal" Mode="In" />
+    <Parameter Name="CustomService3" Type="decimal" Mode="In" />
+    <Parameter Name="CustomService4" Type="decimal" Mode="In" />
+    <Parameter Name="CustomService5" Type="decimal" Mode="In" />
+    <Parameter Name="Net" Type="decimal" Mode="In" />
+    <Parameter Name="VAT" Type="decimal" Mode="In" />
+    <Parameter Name="Gross" Type="decimal" Mode="In" />
+    <Parameter Name="AdvancePaid" Type="decimal" Mode="In" />
+    <Parameter Name="BalanceDue" Type="decimal" Mode="In" />
+    <Parameter Name="Approved" Type="bit" Mode="In" />
+    <Parameter Name="InvoiceId" Type="int" Mode="In" />
   </Function>
   <Function Name="InsertUpdateSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="id" Type="int" Mode="In" />
