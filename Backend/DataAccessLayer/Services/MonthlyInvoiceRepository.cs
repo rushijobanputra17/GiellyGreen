@@ -18,12 +18,23 @@ namespace DataAccessLayer.Services
             objDataAccess = new Team2_GiellyGreenEntities();
         }
 
-        public List<object> GetAllInvoice(DateTime InvoiceMonth)
+        public int AddInvoice(dynamic model)
         {
-            AutoMapper.MapperConfiguration configList = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<GetAllInvoice_Result, object>());
-            Mapper mapper = new Mapper(configList);
-            return mapper.Map<List<object>>(objDataAccess.GetAllInvoice(InvoiceMonth).ToList());
+            var rtv2 = Enumerable.FirstOrDefault(objDataAccess.InsertInvoice(0, model.InvoiceRef, model.InvoiceDate, model.CustomHeader1, model.CustomHeader2, model.CustomHeader3, model.CustomHeader4, model.CustomHeader5)).InvoiceId;
+
+            foreach (dynamic invoieDetail in model.invoiceDetails)
+            {
+                objDataAccess.InsertUpdateInvoiceDetails(null, invoieDetail.SupplierId, invoieDetail.HairServices, invoieDetail.BeautyServices, invoieDetail.CustomService1, invoieDetail.CustomService2, invoieDetail.CustomService3, invoieDetail.CustomService4, invoieDetail.CustomService5, invoieDetail.Net, invoieDetail.VAT, invoieDetail.Gross, invoieDetail.AdvancePaid, invoieDetail.BalanceDue, invoieDetail.Approved, rtv2);
+            }
+            return 0;
         }
+
+        public dynamic GetAllInvoice(DateTime InvoiceMonth)
+        {
+            return objDataAccess.GetAllInvoice(InvoiceMonth).ToList();
+        }
+        
+
 
     }
 }

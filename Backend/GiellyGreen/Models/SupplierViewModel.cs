@@ -59,7 +59,7 @@ namespace GiellyGreen.Models
         [MaxLength(150)]
         public string CompanyRegisteredAddress { get; set; }
         public bool IsActive { get; set; } = false;
-        public string Logo { get; set; }
+        public string Logo { get; set; } = null;
         public Nullable<bool> IsInvoicePresent { get; set; } = false;
     } 
 }

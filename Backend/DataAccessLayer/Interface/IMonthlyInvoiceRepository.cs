@@ -9,6 +9,8 @@ namespace DataAccessLayer.Interface
 {
     public interface IMonthlyInvoiceRepository
     {
-        List<object> GetAllInvoice(DateTime InvoiceMonth);
+        dynamic GetAllInvoice(DateTime InvoiceMonth);
+
+        int AddInvoice(dynamic invoiceModel);
     }
 }
