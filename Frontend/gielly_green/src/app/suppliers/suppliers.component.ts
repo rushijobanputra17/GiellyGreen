@@ -28,7 +28,7 @@ export class SuppliersComponent implements OnInit {
   file: File;
   baseURL: any;
   supplierLogo: any;
-  isEdit: any;
+  isEdit=false;
   EditedSupplier: any;
   uploadedlogo:any;
 
@@ -52,7 +52,7 @@ export class SuppliersComponent implements OnInit {
       taxRef: [null, [Validators.pattern("^[a-zA-Z0-9]{1,15}$")]],
       ComapanyAddress: [null, [Validators.pattern("[A-Za-z0-9 ]{3,150}$")]],
       filename: [null],
-      status: [false],
+      status:[false],
     });
 
     this.getUserData();
@@ -181,7 +181,6 @@ export class SuppliersComponent implements OnInit {
   }
 
   showModal(): void {
-    this.validateSupplierForm.reset();
     this.isVisible = true;
   }
 
@@ -195,6 +194,7 @@ export class SuppliersComponent implements OnInit {
   }
 
   handleOk() {
+    debugger
     if (this.isEdit != true) {
       if (this.validateSupplierForm.valid) {
         this.showLoader = true;
