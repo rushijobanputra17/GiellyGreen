@@ -30,7 +30,7 @@ SupplierBody=
       'Username':email,
       'Password':password
     }
-      return this.http.post<any>(`https://3e22-106-201-236-89.ngrok.io//login`,body);
+      return this.http.post<any>(`https://f239-106-201-236-89.ngrok.io//login`,body);
     }
 
     logintoken(email: string,password: string){
@@ -40,34 +40,41 @@ SupplierBody=
       body.set('grant_type',"password");
 
       const header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-      return this.http.post<any>(`https://3e22-106-201-236-89.ngrok.io//Token`,body,{headers:header});
+      return this.http.post<any>(`https://f239-106-201-236-89.ngrok.io//Token`,body,{headers:header});
 
     }
 
     getProductData(): Observable<any>{
       let token=sessionStorage.getItem("logged_user");
       const header=new HttpHeaders().set("authorization", "bearer "+ token);
-      return this.http.get<any>(`https://3e22-106-201-236-89.ngrok.io/api/Suppliers?isActive=False`,{headers:header});
+      return this.http.get<any>(`https://f239-106-201-236-89.ngrok.io/api/Suppliers?isActive=False`,{headers:header});
     }
  
 
     delSupplier(ID:any): Observable<any>{
       let token=sessionStorage.getItem("logged_user");
       const header=new HttpHeaders().set("authorization", "bearer "+ token);
-      return this.http.delete<any>(`https://3e22-106-201-236-89.ngrok.io/api/Suppliers/${ID}`,{headers:header});
+      return this.http.delete<any>(`https://f239-106-201-236-89.ngrok.io/api/Suppliers/${ID}`,{headers:header});
     }
   
     supplierStatusUpdate(status:any,id:any): Observable<any>{
       let token=sessionStorage.getItem("logged_user");
       const header=new HttpHeaders().set("authorization", "bearer "+ token);
-      return this.http.patch<any>(`https://3e22-106-201-236-89.ngrok.io/api/Suppliers?status=${status}&supplierId=${id}`,{headers:header});
+      return this.http.patch<any>(`https://f239-106-201-236-89.ngrok.io/api/Suppliers?status=${status}&supplierId=${id}`,{headers:header});
     }
   
     AddSupplier(): Observable<any>{
       let token=sessionStorage.getItem("logged_user");
       const header=new HttpHeaders().set("authorization", "bearer "+ token);
-      return this.http.patch<any>(`https://3e22-106-201-236-89.ngrok.io//api/Suppliers`,this.SupplierBody,{headers:header});
+      return this.http.post<any>(`https://f239-106-201-236-89.ngrok.io//api/Suppliers`,this.SupplierBody,{headers:header});
     }
+
+    
+  editSupplier(ID:any): Observable<any>{
+    let token=sessionStorage.getItem("logged_user");
+    const header=new HttpHeaders().set("authorization", "bearer "+ token);
+    return this.http.put<any>(`http://f239-106-201-236-89.ngrok.io//api/Suppliers/${ID}`,this.SupplierBody,{headers:header});
+  }
   
 
 }

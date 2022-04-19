@@ -7,26 +7,31 @@
   }
 
  
+  .ant-table-tbody[_ngcontent-hgx-c187] > tr[_ngcontent-hgx-c187] > td[_ngcontent-hgx-c187] {
+    padding: 50px!important;
+  }
+
   .trigger:hover {
     color: #1890ff;
   }
 
   nz-layout{
-      height: 100%;
+      height: 100%!important;
+      width: 100%!important;
+      overflow-x:hidden!important;
+      overflow-y:hidden!important;
   }
 
   nz-sider{
       background-color:#2C2B29!important;
-      width: 100% !important;
+      width: 100%!important;
+      min-height: 100%!important;  
   }
 
   ul{
     background-color:#2C2B29!important;
   }
 
-  nz-sider{
-      width:400px;
-  }
 
 
   li{
@@ -62,6 +67,7 @@
 
 .main-container{
     width: 80vw;
+    font-family:'Dax-Regular'!important;
 }
 
 
@@ -87,21 +93,30 @@
     font-size:29px;
     font-family:'Dax-Regular'!important;
 }
+
 .table-design{
   width: 120vw;
+  height:600px;
+  overflow-y:scroll!important;
+  overflow-x:hidden!important;
 }
 
 .thead-design{
  background: color #2c2b29!important;
+ position: sticky!important;
+ top:0;
 }
+
 th {
     color: white!important;
     background-color:#2C2B29!important;
     font-family:'Dax-Regular'!important;
+    
 }
 
-tr{
-  padding:5px!important;
+tr {
+  padding:25px!important;
+  font-size:17px!important;
 }
 
 .icon-custom{
@@ -126,10 +141,23 @@ label{
   overflow-x:hidden!important;
 }
 
+.fixTableHead {
+  overflow-y: auto;
+  height: 110px;
+}
+.fixTableHead thead th {
+  position: sticky;
+  top: 0;
+}
+table {
+  border-collapse: collapse;        
+  width: 100%;
+}
+
 
 
 ::-webkit-scrollbar {
-    width: 2px;
+    width: 4px;
     height: 5px;
   }
   
@@ -140,9 +168,8 @@ label{
    
 
   ::-webkit-scrollbar-thumb {
-    background: #888; 
+    background:#2C2B29;
   }
-  
 
   ::-webkit-scrollbar-thumb:hover {
     background: #555; 
