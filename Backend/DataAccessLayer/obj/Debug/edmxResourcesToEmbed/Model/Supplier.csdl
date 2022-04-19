@@ -106,14 +106,14 @@
     </Key>
     <Property Name="SupplierId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="SupplierName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="SupplierReferenceNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="SupplierReferenceNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
     <Property Name="BusinessAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="EmailAddress" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
+    <Property Name="EmailAddress" Type="String" MaxLength="320" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
     <Property Name="CompanyRegisteredNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
     <Property Name="VATNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
     <Property Name="TAXReference" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-    <Property Name="CompanyRegisteredAddress" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyRegisteredAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <Property Name="Logo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="IsInvoicePresent" Type="Boolean" />

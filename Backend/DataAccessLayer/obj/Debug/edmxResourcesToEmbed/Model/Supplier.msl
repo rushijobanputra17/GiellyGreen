@@ -10,28 +10,6 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="InsertUpdateSupplier" FunctionName="Team2_GiellyGreenModel.Store.InsertUpdateSupplier" />
     <FunctionImportMapping FunctionImportName="UpdateStatus" FunctionName="Team2_GiellyGreenModel.Store.UpdateStatus" />
-    <FunctionImportMapping FunctionImportName="GetAllInvoiceDetail" FunctionName="Team2_GiellyGreenModel.Store.GetAllInvoiceDetail">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetAllInvoiceDetail_Result">
-          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
-          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-          <ScalarProperty Name="HairServices" ColumnName="HairServices" />
-          <ScalarProperty Name="BeautyServices" ColumnName="BeautyServices" />
-          <ScalarProperty Name="CustomService1" ColumnName="CustomService1" />
-          <ScalarProperty Name="CustomService2" ColumnName="CustomService2" />
-          <ScalarProperty Name="CustomService3" ColumnName="CustomService3" />
-          <ScalarProperty Name="CustomService4" ColumnName="CustomService4" />
-          <ScalarProperty Name="CustomService5" ColumnName="CustomService5" />
-          <ScalarProperty Name="Net" ColumnName="Net" />
-          <ScalarProperty Name="VAT" ColumnName="VAT" />
-          <ScalarProperty Name="Gross" ColumnName="Gross" />
-          <ScalarProperty Name="AdvancePaid" ColumnName="AdvancePaid" />
-          <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
-          <ScalarProperty Name="Approved" ColumnName="Approved" />
-          <ScalarProperty Name="InvoiceMonth" ColumnName="InvoiceMonth" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="GetSupplier" FunctionName="Team2_GiellyGreenModel.Store.GetSupplier">
       <ResultMapping>
         <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetSupplier_Result">

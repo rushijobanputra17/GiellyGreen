@@ -47,14 +47,14 @@
           </Key>
           <Property Name="SupplierId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SupplierName" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="SupplierReferenceNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="SupplierReferenceNumber" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="BusinessAddress" Type="nvarchar" MaxLength="150" />
-          <Property Name="EmailAddress" Type="nvarchar" MaxLength="320" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="320" Nullable="false" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
           <Property Name="CompanyRegisteredNumber" Type="nvarchar" MaxLength="15" />
           <Property Name="VATNumber" Type="nvarchar" MaxLength="15" />
           <Property Name="TAXReference" Type="nvarchar" MaxLength="15" />
-          <Property Name="CompanyRegisteredAddress" Type="nvarchar" MaxLength="15" />
+          <Property Name="CompanyRegisteredAddress" Type="nvarchar" MaxLength="150" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="Logo" Type="nvarchar" MaxLength="200" />
           <Property Name="IsInvoicePresent" Type="bit" />
@@ -85,9 +85,6 @@
         </Association>
         <Function Name="DeleteSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SupplierId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetAllInvoiceDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="InvoiceMonth" Type="datetime" Mode="In" />
         </Function>
         <Function Name="GetSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Status" Type="bit" Mode="In" />
@@ -233,14 +230,14 @@
           </Key>
           <Property Name="SupplierId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SupplierName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="SupplierReferenceNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierReferenceNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="BusinessAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="EmailAddress" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" MaxLength="320" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="CompanyRegisteredNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="VATNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="TAXReference" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyRegisteredAddress" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyRegisteredAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="Logo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="IsInvoicePresent" Type="Boolean" />
@@ -300,28 +297,6 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertUpdateSupplier" FunctionName="Team2_GiellyGreenModel.Store.InsertUpdateSupplier" />
           <FunctionImportMapping FunctionImportName="UpdateStatus" FunctionName="Team2_GiellyGreenModel.Store.UpdateStatus" />
-          <FunctionImportMapping FunctionImportName="GetAllInvoiceDetail" FunctionName="Team2_GiellyGreenModel.Store.GetAllInvoiceDetail">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetAllInvoiceDetail_Result">
-                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-                <ScalarProperty Name="HairServices" ColumnName="HairServices" />
-                <ScalarProperty Name="BeautyServices" ColumnName="BeautyServices" />
-                <ScalarProperty Name="CustomService1" ColumnName="CustomService1" />
-                <ScalarProperty Name="CustomService2" ColumnName="CustomService2" />
-                <ScalarProperty Name="CustomService3" ColumnName="CustomService3" />
-                <ScalarProperty Name="CustomService4" ColumnName="CustomService4" />
-                <ScalarProperty Name="CustomService5" ColumnName="CustomService5" />
-                <ScalarProperty Name="Net" ColumnName="Net" />
-                <ScalarProperty Name="VAT" ColumnName="VAT" />
-                <ScalarProperty Name="Gross" ColumnName="Gross" />
-                <ScalarProperty Name="AdvancePaid" ColumnName="AdvancePaid" />
-                <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
-                <ScalarProperty Name="Approved" ColumnName="Approved" />
-                <ScalarProperty Name="InvoiceMonth" ColumnName="InvoiceMonth" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetSupplier" FunctionName="Team2_GiellyGreenModel.Store.GetSupplier">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetSupplier_Result">

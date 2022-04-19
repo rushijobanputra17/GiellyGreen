@@ -58,6 +58,8 @@ namespace GiellyGreen.Controllers
         {
             try
             {
+                model.SupplierReferenceNumber = "ruashi";
+                model.IsInvoicePresent = false;
                 if (ModelState.IsValid)
                 {
                     String path = HttpContext.Current.Server.MapPath("~/ImageStorage");

@@ -42,14 +42,14 @@
     </Key>
     <Property Name="SupplierId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SupplierName" Type="nvarchar" MaxLength="200" Nullable="false" />
-    <Property Name="SupplierReferenceNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="SupplierReferenceNumber" Type="nvarchar" MaxLength="15" Nullable="false" />
     <Property Name="BusinessAddress" Type="nvarchar" MaxLength="150" />
-    <Property Name="EmailAddress" Type="nvarchar" MaxLength="320" />
+    <Property Name="EmailAddress" Type="nvarchar" MaxLength="320" Nullable="false" />
     <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
     <Property Name="CompanyRegisteredNumber" Type="nvarchar" MaxLength="15" />
     <Property Name="VATNumber" Type="nvarchar" MaxLength="15" />
     <Property Name="TAXReference" Type="nvarchar" MaxLength="15" />
-    <Property Name="CompanyRegisteredAddress" Type="nvarchar" MaxLength="15" />
+    <Property Name="CompanyRegisteredAddress" Type="nvarchar" MaxLength="150" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="Logo" Type="nvarchar" MaxLength="200" />
     <Property Name="IsInvoicePresent" Type="bit" />
@@ -80,9 +80,6 @@
   </Association>
   <Function Name="DeleteSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SupplierId" Type="int" Mode="In" />
-  </Function>
-  <Function Name="GetAllInvoiceDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="InvoiceMonth" Type="datetime" Mode="In" />
   </Function>
   <Function Name="GetSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Status" Type="bit" Mode="In" />
