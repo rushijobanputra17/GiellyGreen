@@ -5,7 +5,7 @@
         <ul nz-menu class="mt-5" nzMode="inline">
             <li>
                 <ul>
-                    <li nz-menu-item style="padding-left:50px" routerLink="/monthly-invoice">MONTHOLY INVOICE</li>
+                    <li nz-menu-item style="padding-left:50px" routerLink="/monthly-invoice">MONTHLY INVOICE</li>
                     <li nz-menu-item style="padding-left:65px">SUPPLIER LIST</li>
                 </ul>
             </li>
@@ -64,7 +64,7 @@
           </div>
         </div>
 
-        <nz-modal [(nzVisible)]="isVisible" [nzWidth]="650" nzTitle="Add New Supplier" [nzFooter]="modalFooter" nzCentered (nzOnCancel)="handleCancel()">
+        <nz-modal [nzMaskClosable]="false" [(nzVisible)]="isVisible" [nzWidth]="650" nzTitle="Add New Supplier" [nzFooter]="modalFooter" nzCentered (nzOnCancel)="handleCancel()">
             <ng-container  *nzModalContent>
                 <form nz-form [formGroup]="validateSupplierForm" class="login-form" >
                   <div class="modal-container">
