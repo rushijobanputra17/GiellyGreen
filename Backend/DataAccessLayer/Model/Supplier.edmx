@@ -24,7 +24,6 @@
           <Property Name="AdvancePaid" Type="decimal" Precision="18" Scale="2" />
           <Property Name="BalanceDue" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Approved" Type="bit" />
-          <Property Name="SupplierName" Type="nvarchar" MaxLength="100" />
           <Property Name="InvoiceId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Invoices">
@@ -55,7 +54,7 @@
           <Property Name="VATNumber" Type="nvarchar" MaxLength="15" />
           <Property Name="TAXReference" Type="nvarchar" MaxLength="15" />
           <Property Name="CompanyRegisteredAddress" Type="nvarchar" MaxLength="150" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
           <Property Name="Logo" Type="nvarchar" MaxLength="200" />
           <Property Name="IsInvoicePresent" Type="bit" />
         </EntityType>
@@ -105,7 +104,6 @@
         <Function Name="InsertUpdateInvoiceDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="InvoiceDetailId" Type="int" Mode="In" />
           <Parameter Name="SupplierId" Type="int" Mode="In" />
-          <Parameter Name="SupplierName" Type="nvarchar" Mode="In" />
           <Parameter Name="HairServices" Type="decimal" Mode="In" />
           <Parameter Name="BeautyServices" Type="decimal" Mode="In" />
           <Parameter Name="CustomService1" Type="decimal" Mode="In" />
@@ -184,34 +182,14 @@
           <FunctionImport Name="GetSupplier" ReturnType="Collection(Team2_GiellyGreenModel.GetSupplier_Result)">
           <Parameter Name="Status" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <EntitySet Name="InvoiceDetails" EntityType="Team2_GiellyGreenModel.InvoiceDetail" />
           <EntitySet Name="Invoices" EntityType="Team2_GiellyGreenModel.Invoice" />
           <EntitySet Name="Suppliers" EntityType="Team2_GiellyGreenModel.Supplier" />
-          <AssociationSet Name="FK_Invoice_Supplier" Association="Team2_GiellyGreenModel.FK_Invoice_Supplier">
-            <End Role="Supplier" EntitySet="Suppliers" />
-            <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InvoiceDetails_Invoices" Association="Team2_GiellyGreenModel.FK_InvoiceDetails_Invoices">
-            <End Role="Invoice" EntitySet="Invoices" />
-            <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
-          </AssociationSet>
           <FunctionImport Name="GetAllInvoice" ReturnType="Collection(Team2_GiellyGreenModel.GetAllInvoice_Result)">
-            <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="InsertInvoice" ReturnType="Collection(Int32)">
-            <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
-            <Parameter Name="InvoiceRef" Mode="In" Type="String" />
-            <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
-            <Parameter Name="CustomCol1" Mode="In" Type="String" />
-            <Parameter Name="CustomCol2" Mode="In" Type="String" />
-            <Parameter Name="CustomCol3" Mode="In" Type="String" />
-            <Parameter Name="CustomCol4" Mode="In" Type="String" />
-            <Parameter Name="CustomCol5" Mode="In" Type="String" />
+          <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="InsertUpdateInvoiceDetails">
             <Parameter Name="InvoiceDetailId" Mode="In" Type="Int32" />
             <Parameter Name="SupplierId" Mode="In" Type="Int32" />
-            <Parameter Name="SupplierName" Mode="In" Type="String" />
             <Parameter Name="HairServices" Mode="In" Type="Decimal" />
             <Parameter Name="BeautyServices" Mode="In" Type="Decimal" />
             <Parameter Name="CustomService1" Mode="In" Type="Decimal" />
@@ -226,6 +204,25 @@
             <Parameter Name="BalanceDue" Mode="In" Type="Decimal" />
             <Parameter Name="Approved" Mode="In" Type="Boolean" />
             <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="InvoiceDetails" EntityType="Team2_GiellyGreenModel.InvoiceDetail" />
+          <AssociationSet Name="FK_Invoice_Supplier" Association="Team2_GiellyGreenModel.FK_Invoice_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InvoiceDetails_Invoices" Association="Team2_GiellyGreenModel.FK_InvoiceDetails_Invoices">
+            <End Role="Invoice" EntitySet="Invoices" />
+            <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
+          </AssociationSet>
+          <FunctionImport Name="InsertInvoice" ReturnType="Collection(Team2_GiellyGreenModel.InsertInvoice_Result)">
+            <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
+            <Parameter Name="InvoiceRef" Mode="In" Type="String" />
+            <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
+            <Parameter Name="CustomCol1" Mode="In" Type="String" />
+            <Parameter Name="CustomCol2" Mode="In" Type="String" />
+            <Parameter Name="CustomCol3" Mode="In" Type="String" />
+            <Parameter Name="CustomCol4" Mode="In" Type="String" />
+            <Parameter Name="CustomCol5" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DeleteSupplier_Result">
@@ -249,30 +246,6 @@
           <Property Type="Boolean" Name="Approved" Nullable="true" />
           <Property Type="DateTime" Name="InvoiceMonth" Nullable="true" Precision="23" />
         </ComplexType>
-        <EntityType Name="InvoiceDetail">
-          <Key>
-            <PropertyRef Name="InvoiceDetailId" />
-          </Key>
-          <Property Name="InvoiceDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SupplierId" Type="Int32" Nullable="false" />
-          <Property Name="HairServices" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="BeautyServices" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="CustomService1" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="CustomService2" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="CustomService3" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="CustomService4" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="CustomService5" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Net" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="VAT" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Gross" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="AdvancePaid" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="BalanceDue" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Approved" Type="Boolean" />
-          <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="InvoiceId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Supplier" Relationship="Team2_GiellyGreenModel.FK_Invoice_Supplier" FromRole="InvoiceDetail" ToRole="Supplier" />
-          <NavigationProperty Name="Invoice" Relationship="Team2_GiellyGreenModel.FK_InvoiceDetails_Invoices" FromRole="InvoiceDetail" ToRole="Invoice" />
-        </EntityType>
         <EntityType Name="Invoice">
           <Key>
             <PropertyRef Name="InvoiceId" />
@@ -302,35 +275,11 @@
           <Property Name="VATNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="TAXReference" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="CompanyRegisteredAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
           <Property Name="Logo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="IsInvoicePresent" Type="Boolean" />
           <NavigationProperty Name="InvoiceDetails" Relationship="Team2_GiellyGreenModel.FK_Invoice_Supplier" FromRole="Supplier" ToRole="InvoiceDetail" />
         </EntityType>
-        <Association Name="FK_Invoice_Supplier">
-          <End Type="Team2_GiellyGreenModel.Supplier" Role="Supplier" Multiplicity="1" />
-          <End Type="Team2_GiellyGreenModel.InvoiceDetail" Role="InvoiceDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="SupplierId" />
-            </Principal>
-            <Dependent Role="InvoiceDetail">
-              <PropertyRef Name="SupplierId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InvoiceDetails_Invoices">
-          <End Type="Team2_GiellyGreenModel.Invoice" Role="Invoice" Multiplicity="1" />
-          <End Type="Team2_GiellyGreenModel.InvoiceDetail" Role="InvoiceDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Invoice">
-              <PropertyRef Name="InvoiceId" />
-            </Principal>
-            <Dependent Role="InvoiceDetail">
-              <PropertyRef Name="InvoiceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="GetSupplier_Result">
           <Property Type="Int32" Name="SupplierId" Nullable="false" />
           <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="200" />
@@ -372,6 +321,56 @@
           <Property Type="String" Name="SupplierName" Nullable="true" MaxLength="100" />
           <Property Type="Int32" Name="InvoiceId" Nullable="false" />
         </ComplexType>
+        <EntityType Name="InvoiceDetail">
+          <Key>
+            <PropertyRef Name="InvoiceDetailId" />
+          </Key>
+          <Property Name="InvoiceDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierId" Type="Int32" Nullable="false" />
+          <Property Name="HairServices" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BeautyServices" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CustomService1" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CustomService2" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CustomService3" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CustomService4" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CustomService5" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Net" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="VAT" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Gross" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AdvancePaid" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BalanceDue" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Approved" Type="Boolean" />
+          <Property Name="InvoiceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Supplier" Relationship="Team2_GiellyGreenModel.FK_Invoice_Supplier" FromRole="InvoiceDetail" ToRole="Supplier" />
+          <NavigationProperty Name="Invoice" Relationship="Team2_GiellyGreenModel.FK_InvoiceDetails_Invoices" FromRole="InvoiceDetail" ToRole="Invoice" />
+        </EntityType>
+        <Association Name="FK_Invoice_Supplier">
+          <End Type="Team2_GiellyGreenModel.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="Team2_GiellyGreenModel.InvoiceDetail" Role="InvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="InvoiceDetail">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InvoiceDetails_Invoices">
+          <End Type="Team2_GiellyGreenModel.Invoice" Role="Invoice" Multiplicity="1" />
+          <End Type="Team2_GiellyGreenModel.InvoiceDetail" Role="InvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="InvoiceId" />
+            </Principal>
+            <Dependent Role="InvoiceDetail">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="InsertInvoice_Result">
+          <Property Type="Int32" Name="InvoiceId" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -406,29 +405,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="InvoiceDetails">
-            <EntityTypeMapping TypeName="Team2_GiellyGreenModel.InvoiceDetail">
-              <MappingFragment StoreEntitySet="InvoiceDetails">
-                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
-                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-                <ScalarProperty Name="Approved" ColumnName="Approved" />
-                <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
-                <ScalarProperty Name="AdvancePaid" ColumnName="AdvancePaid" />
-                <ScalarProperty Name="Gross" ColumnName="Gross" />
-                <ScalarProperty Name="VAT" ColumnName="VAT" />
-                <ScalarProperty Name="Net" ColumnName="Net" />
-                <ScalarProperty Name="CustomService5" ColumnName="CustomService5" />
-                <ScalarProperty Name="CustomService4" ColumnName="CustomService4" />
-                <ScalarProperty Name="CustomService3" ColumnName="CustomService3" />
-                <ScalarProperty Name="CustomService2" ColumnName="CustomService2" />
-                <ScalarProperty Name="CustomService1" ColumnName="CustomService1" />
-                <ScalarProperty Name="BeautyServices" ColumnName="BeautyServices" />
-                <ScalarProperty Name="HairServices" ColumnName="HairServices" />
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-                <ScalarProperty Name="InvoiceDetailId" ColumnName="InvoiceDetailId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Invoices">
             <EntityTypeMapping TypeName="Team2_GiellyGreenModel.Invoice">
               <MappingFragment StoreEntitySet="Invoices">
@@ -493,8 +469,36 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="InsertInvoice" FunctionName="Team2_GiellyGreenModel.Store.InsertInvoice" />
           <FunctionImportMapping FunctionImportName="InsertUpdateInvoiceDetails" FunctionName="Team2_GiellyGreenModel.Store.InsertUpdateInvoiceDetails" />
+          <EntitySetMapping Name="InvoiceDetails">
+            <EntityTypeMapping TypeName="Team2_GiellyGreenModel.InvoiceDetail">
+              <MappingFragment StoreEntitySet="InvoiceDetails">
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
+                <ScalarProperty Name="AdvancePaid" ColumnName="AdvancePaid" />
+                <ScalarProperty Name="Gross" ColumnName="Gross" />
+                <ScalarProperty Name="VAT" ColumnName="VAT" />
+                <ScalarProperty Name="Net" ColumnName="Net" />
+                <ScalarProperty Name="CustomService5" ColumnName="CustomService5" />
+                <ScalarProperty Name="CustomService4" ColumnName="CustomService4" />
+                <ScalarProperty Name="CustomService3" ColumnName="CustomService3" />
+                <ScalarProperty Name="CustomService2" ColumnName="CustomService2" />
+                <ScalarProperty Name="CustomService1" ColumnName="CustomService1" />
+                <ScalarProperty Name="BeautyServices" ColumnName="BeautyServices" />
+                <ScalarProperty Name="HairServices" ColumnName="HairServices" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="InvoiceDetailId" ColumnName="InvoiceDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="InsertInvoice" FunctionName="Team2_GiellyGreenModel.Store.InsertInvoice" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.InsertInvoice_Result">
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

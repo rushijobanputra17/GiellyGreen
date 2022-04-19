@@ -30,7 +30,7 @@ namespace DataAccessLayer.Model
         public string VATNumber { get; set; }
         public string TAXReference { get; set; }
         public string CompanyRegisteredAddress { get; set; }
-        public bool IsActive { get; set; }
+        public Nullable<bool> IsActive { get; set; }
         public string Logo { get; set; }
         public Nullable<bool> IsInvoicePresent { get; set; }
     
