@@ -58,6 +58,7 @@ namespace GiellyGreen.Controllers
         {
             try
             {
+                model.IsInvoicePresent = false;
                 if (ModelState.IsValid)
                 {
                     String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
@@ -89,7 +90,14 @@ namespace GiellyGreen.Controllers
             }
             catch (Exception ex)
             {
-                objResponse = JsonResponseHelper.GetJsonResponse(2, "Error", ex.Message);
+                if (ex.InnerException!= null)
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
+                }
             }
             return objResponse;
         }
@@ -130,7 +138,15 @@ namespace GiellyGreen.Controllers
             }
             catch (Exception ex)
             {
-                objResponse = JsonResponseHelper.GetJsonResponse(2, "Error", ex.Message);
+                if(ex.InnerException!=null)
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
+                }
+                
             }
 
             return objResponse;
@@ -157,7 +173,14 @@ namespace GiellyGreen.Controllers
             }
             catch (Exception ex)
             {
-                objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
+                if (ex.InnerException.Message != null)
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
+                }
             }
 
             return objResponse;
@@ -179,7 +202,14 @@ namespace GiellyGreen.Controllers
             }
             catch (Exception ex)
             {
-                objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception",ex.Message);
+                if (ex.InnerException.Message != null)
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
+                }
             }
 
             return objResponse;

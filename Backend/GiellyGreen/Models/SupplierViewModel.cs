@@ -19,8 +19,9 @@ namespace GiellyGreen.Models
             set { _SupplierName = Regex.Replace(value.Trim(), @"\s+", " "); }
         }
         private string _SupplierReferenceNumber;
-        [Required(ErrorMessage = "Supplier reference number is required")]
-        //[RegularExpression("@^[a-zA-Z0-9]*$", ErrorMessage = "Invalid Supplier reference number")]
+        [Required]
+        [RegularExpression(@"^[a-zA-Z0-9]*$", ErrorMessage = "Please enter valid supplier reference number")]
+        [MaxLength(15)]
         public string SupplierReferenceNumber
         {
             get { return _SupplierReferenceNumber; }
@@ -48,17 +49,17 @@ namespace GiellyGreen.Models
         public string CompanyRegisteredNumber { get; set; }
 
         [MaxLength(15)]
-        [RegularExpression(@"^[0-9]*$", ErrorMessage = "Invalid VAT Number.")]
+        [RegularExpression(@"^[a-zA-Z0-9]*$", ErrorMessage = "Invalid VAT Number.")]
         public string VATNumber { get; set; }
 
         [MaxLength(15)]
-        [RegularExpression(@"^[0-9]*$", ErrorMessage = "Invalid TAX Reference .")]
+        [RegularExpression(@"^[a-zA-Z0-9]*$", ErrorMessage = "Invalid TAX Reference .")]
         public string TAXReference { get; set; }
 
         [MaxLength(150)]
         public string CompanyRegisteredAddress { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = false;
         public string Logo { get; set; }
-        public Nullable<bool> IsInvoicePresent { get; set; }
-    }
+        public Nullable<bool> IsInvoicePresent { get; set; } = false;
+    } 
 }
