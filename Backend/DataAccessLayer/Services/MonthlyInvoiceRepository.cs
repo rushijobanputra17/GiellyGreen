@@ -37,8 +37,11 @@ namespace DataAccessLayer.Services
         {
             return objDataAccess.GetAllInvoice(InvoiceMonth).ToList();
         }
-        
 
+        public int? ApproveSelectedInvoices(List<int> selectedIds, DateTime selectedDate)
+        {
+            return objDataAccess.ApproveInvoices(String.Join(",", selectedIds), selectedDate).FirstOrDefault().response;
+        }
 
     }
 }

@@ -67,5 +67,33 @@ namespace GiellyGreen.Controllers
             }
             return objResponse;
         }
+
+        public JsonResponse Patch(List<int> selectedIds, DateTime selectedDate)
+        {
+            try
+            {
+                if (monthlyInvoiceRepository.ApproveSelectedInvoices(selectedIds, selectedDate)>0)
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(1, "Selected invoices approved successfully", null);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Reocrd Not Found", null);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException.Message != null)
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
+                }
+            }
+
+            return objResponse;
+        }
     }
 }

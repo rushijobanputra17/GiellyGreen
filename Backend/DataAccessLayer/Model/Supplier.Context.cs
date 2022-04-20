@@ -230,7 +230,16 @@ namespace DataAccessLayer.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsertInvoice_Result>("InsertInvoice", invoiceIdParameter, invoiceRefParameter, invoiceDateParameter, customCol1Parameter, customCol2Parameter, customCol3Parameter, customCol4Parameter, customCol5Parameter);
         }
     
-        public virtual int ApproveInvoices(string selectedIds, Nullable<System.DateTime> selectedDate)
+        public virtual ObjectResult<GetAllInvoice_Result> GetAllInvoice(Nullable<System.DateTime> invoiceMonth)
+        {
+            var invoiceMonthParameter = invoiceMonth.HasValue ?
+                new ObjectParameter("InvoiceMonth", invoiceMonth) :
+                new ObjectParameter("InvoiceMonth", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllInvoice_Result>("GetAllInvoice", invoiceMonthParameter);
+        }
+    
+        public virtual ObjectResult<ApproveInvoices_Result> ApproveInvoices(string selectedIds, Nullable<System.DateTime> selectedDate)
         {
             var selectedIdsParameter = selectedIds != null ?
                 new ObjectParameter("SelectedIds", selectedIds) :
@@ -240,16 +249,7 @@ namespace DataAccessLayer.Model
                 new ObjectParameter("SelectedDate", selectedDate) :
                 new ObjectParameter("SelectedDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ApproveInvoices", selectedIdsParameter, selectedDateParameter);
-        }
-    
-        public virtual ObjectResult<GetAllInvoice_Result> GetAllInvoice(Nullable<System.DateTime> invoiceMonth)
-        {
-            var invoiceMonthParameter = invoiceMonth.HasValue ?
-                new ObjectParameter("InvoiceMonth", invoiceMonth) :
-                new ObjectParameter("InvoiceMonth", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllInvoice_Result>("GetAllInvoice", invoiceMonthParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ApproveInvoices_Result>("ApproveInvoices", selectedIdsParameter, selectedDateParameter);
         }
     }
 }

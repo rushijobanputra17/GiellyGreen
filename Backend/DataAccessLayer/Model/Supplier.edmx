@@ -225,12 +225,12 @@
             <Parameter Name="CustomCol4" Mode="In" Type="String" />
             <Parameter Name="CustomCol5" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="ApproveInvoices">
+          <FunctionImport Name="GetAllInvoice" ReturnType="Collection(Team2_GiellyGreenModel.GetAllInvoice_Result)">
+          <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ApproveInvoices" ReturnType="Collection(Team2_GiellyGreenModel.ApproveInvoices_Result)">
             <Parameter Name="SelectedIds" Mode="In" Type="String" />
             <Parameter Name="SelectedDate" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="GetAllInvoice" ReturnType="Collection(Team2_GiellyGreenModel.GetAllInvoice_Result)">
-            <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DeleteSupplier_Result">
@@ -380,6 +380,9 @@
           <Property Type="Boolean" Name="Approved" Nullable="true" />
           <Property Type="Int32" Name="InvoiceId" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="ApproveInvoices_Result">
+          <Property Type="Int32" Name="response" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -478,7 +481,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ApproveInvoices" FunctionName="Team2_GiellyGreenModel.Store.ApproveInvoices" />
           <FunctionImportMapping FunctionImportName="GetAllInvoice" FunctionName="Team2_GiellyGreenModel.Store.GetAllInvoice">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetAllInvoice_Result">
@@ -507,6 +509,13 @@
                 <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ApproveInvoices" FunctionName="Team2_GiellyGreenModel.Store.ApproveInvoices" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.ApproveInvoices_Result">
+                <ScalarProperty Name="response" ColumnName="response" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -67,12 +67,12 @@
       <Parameter Name="CustomCol4" Mode="In" Type="String" />
       <Parameter Name="CustomCol5" Mode="In" Type="String" />
     </FunctionImport>
-    <FunctionImport Name="ApproveInvoices">
-      <Parameter Name="SelectedIds" Mode="In" Type="String" />
-      <Parameter Name="SelectedDate" Mode="In" Type="DateTime" />
-    </FunctionImport>
     <FunctionImport Name="GetAllInvoice" ReturnType="Collection(Team2_GiellyGreenModel.GetAllInvoice_Result)">
       <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="ApproveInvoices" ReturnType="Collection(Team2_GiellyGreenModel.ApproveInvoices_Result)">
+      <Parameter Name="SelectedIds" Mode="In" Type="String" />
+      <Parameter Name="SelectedDate" Mode="In" Type="DateTime" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="DeleteSupplier_Result">
@@ -221,5 +221,8 @@
     <Property Type="Decimal" Name="BalanceDue" Nullable="true" Precision="18" Scale="2" />
     <Property Type="Boolean" Name="Approved" Nullable="true" />
     <Property Type="Int32" Name="InvoiceId" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="ApproveInvoices_Result">
+    <Property Type="Int32" Name="response" Nullable="true" />
   </ComplexType>
 </Schema>
