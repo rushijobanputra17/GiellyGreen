@@ -90,6 +90,7 @@ export class SuppliersComponent implements OnInit {
 
 
   uploadLogo(event: any) {
+    this.showLoader=true;
     this.file = event.target.files[0];
     const reader: any = new FileReader();
     reader.readAsDataURL(this.file);
@@ -98,6 +99,7 @@ export class SuppliersComponent implements OnInit {
       this.supplierLogo = this.baseURL[1];
       this.uploadedlogo="data:image/png;base64," + this.supplierLogo;
     };
+    this.showLoader=false;
 
   }
 
@@ -165,11 +167,13 @@ export class SuppliersComponent implements OnInit {
 
 
   supplierStatus(data: any) {
+    this.showLoader = true;
     this.httpService.supplierStatusUpdate(data.IsActive, data.SupplierId).subscribe(
       (response) => {
         this.message.success(response.Message, {
           nzDuration: 5000
         });
+        this.showLoader = false;
       },
       (error: any) => {
         this.message.error("Server Error! Please Reload Your Page", {
@@ -181,11 +185,13 @@ export class SuppliersComponent implements OnInit {
   }
 
   showModal(): void {
+    this.isEdit = false;
     this.isVisible = true;
   }
 
   handleCancel() {
     this.isVisible = false;
+    this.validateSupplierForm.reset();
   }
 
   statuscheck(event: any) {
@@ -271,13 +277,13 @@ export class SuppliersComponent implements OnInit {
     }
 
     else {
-
+      this.showLoader = true;
       if (this.validateSupplierForm.valid){
       const SupplierDetail=this.validateSupplierForm.controls
       const editBody=this.httpService.SupplierBody
       console.log(this.EditedSupplier);
       console.log(editBody);
-
+      this.isVisible = false;
        this.EditedSupplier.SupplierName = editBody.SupplierName = SupplierDetail["Name"].value;
        this.EditedSupplier.SupplierReferenceNumber = editBody.SupplierReferenceNumber = SupplierDetail["Reference"].value;
        this.EditedSupplier.BusinessAddress = editBody.BusinessAddress = SupplierDetail["Address"].value;
@@ -291,27 +297,32 @@ export class SuppliersComponent implements OnInit {
        this.EditedSupplier.Logo = editBody.Logo=this.supplierLogo;
     
       this.httpService.editSupplier(this.EditedSupplier.SupplierId).subscribe(
+        
         (response) => 
         {
           console.log(response);
-            this.showLoader = true;
+           
             try {
               if (response.Result.includes("UQ_Supplier_ReferenceNumer")) {
+                this.isVisible = true;
                 this.message.error("Supplier reference number already exists", {
                   nzDuration: 5000
                 });
               }
               else if (response.Result.includes("idx_VATNumber")) {
+                this.isVisible = true;
                 this.message.error("VAT number already exists", {
                   nzDuration: 5000
                 });
               }
               else if (response.Result.includes("idx_TAXReference")) {
+                this.isVisible = true;
                 this.message.error("TAX reference number already exists", {
                   nzDuration: 5000
                 });
               }
               else if (response.Result.includes("idx_Email")) {
+                this.isVisible = true;
                 this.message.error("Supplier Email  already exists", {
                   nzDuration: 5000
                 });
@@ -326,6 +337,7 @@ export class SuppliersComponent implements OnInit {
               this.validateSupplierForm.reset();
               this.showLoader = false;
             }
+           
         },
         (error: any) => console.log(error),
         () => console.log("successfully Edited")
