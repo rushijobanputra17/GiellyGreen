@@ -11,10 +11,10 @@
     padding: 50px!important;
   }
 
-  .trigger:hover {
-    color: #1890ff;
-  }
-
+  .ant-menu-light .ant-menu-item:hover{
+    color: #c99d4a !important;
+   }
+   
   nz-layout{
       height: 100%!important;
       width: 100%!important;
@@ -96,7 +96,7 @@
 
 .table-design{
   width: 120vw;
-  height:600px;
+  height:570px;
   overflow-y:scroll!important;
   overflow-x:hidden!important;
 }

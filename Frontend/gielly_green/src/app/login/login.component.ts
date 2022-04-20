@@ -10,26 +10,25 @@ import { DataParsingService } from '../data-parsing.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+//Properties
   validateForm!: FormGroup;
+
+//#region submit form and login if valid email and password
 
   submitForm(): void {
     if (this.validateForm.valid) {
-      const UserLoginDetail=this.validateForm.controls
-      
-  
-
-      this.httpService.loginUser(UserLoginDetail["userName"].value,UserLoginDetail["password"].value).subscribe(
+      const UserLoginDetail = this.validateForm.controls
+      this.httpService.loginUser(UserLoginDetail["userName"].value, UserLoginDetail["password"].value).subscribe(
         (response) => {
-          
-          if(response.ResponseStatus==1){
 
-            this.httpService.logintoken(UserLoginDetail["userName"].value,UserLoginDetail["password"].value).subscribe(
+          if (response.ResponseStatus == 1) {
+
+            this.httpService.logintoken(UserLoginDetail["userName"].value, UserLoginDetail["password"].value).subscribe(
               (response) => {
                 this.message.success('Successfully Login', {
                   nzDuration: 2000
                 }),
-                sessionStorage.setItem("logged_user",response.access_token);
+                  sessionStorage.setItem("logged_user", response.access_token);
                 this.router.navigate(['/suppliers']);
               },
               (error: any) => {
@@ -39,33 +38,33 @@ export class LoginComponent implements OnInit {
               },
               () => console.log("success")
             );
-            
+
           }
-          else{
+          else {
 
             this.message.error('Invalid Email or Password', {
               nzDuration: 2000
             });
           }
-           
+
         },
         (error: any) => {
-         
-          if(error.error.error_description==null){
+
+          if (error.error.error_description == null) {
             this.message.error("sometghin went wrong! Plaese Reload Your Page", {
               nzDuration: 1000
             });
           }
-          else{
+          else {
             this.message.error(error.error.error_description, {
               nzDuration: 1000
             });
           }
-         
+
         },
         () => console.log("successfully Login")
       );
-    
+
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
@@ -76,8 +75,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
+//#endregion
 
-  constructor(private fb: FormBuilder,private router: Router,private httpService: DataParsingService,private message: NzMessageService) { }
+  constructor(private fb: FormBuilder, private router: Router, private httpService: DataParsingService, private message: NzMessageService) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({

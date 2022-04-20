@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
 import { DataParsingService } from '../data-parsing.service';
-import { faPlus, faPen ,faTrash} from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -14,11 +14,14 @@ import { faPlus, faPen ,faTrash} from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./suppliers.component.css']
 })
 export class SuppliersComponent implements OnInit {
+
+  //#region Varaibles/Propertites 
   searchValue = '';
   isCollapsed = false;
   sortNamefn = (a: any, b: any) => a.SupplierName.localeCompare(b.SupplierName);
   sortRefFn = (a: any, b: any): number => a.SupplierReferenceNumber - b.SupplierReferenceNumber;
 
+  //icons
   plusIcon = faPlus;
   pen = faPen;
   del = faTrash;
@@ -28,38 +31,40 @@ export class SuppliersComponent implements OnInit {
   file: File;
   baseURL: any;
   supplierLogo: any;
-  isEdit=false;
+  isEdit = false;
   EditedSupplier: any;
-  uploadedlogo:any;
+  uploadedlogo: any;
 
 
 
   isVisible = false;
   validateSupplierForm!: FormGroup;
   showLoader = false;
+  //#endregion
 
   constructor(private fb: FormBuilder, private message: NzMessageService, private router: Router, private httpService: DataParsingService) { }
 
   ngOnInit(): void {
+
+    //validate form
     this.validateSupplierForm = this.fb.group({
       Name: [null, [Validators.required, Validators.pattern("^[a-zA-Z]+[ ]?[a-zA-Z]+$")]],
-      Address: [null, [Validators.required, Validators.pattern("^[A-Za-z0-9 .-]{3,150}$")]],
+      Address: [null, [Validators.required, Validators.pattern("^[A-Za-z0-9 .,*&%$#@!-_]{3,150}$")]],
       email: [null, [Validators.required, Validators.email]],
       phone: [null, [Validators.pattern("^[0-9]{10,15}$")]],
       Reference: [null, [Validators.required, Validators.pattern("^[A-Za-z0-9]{1,15}$")]],
       comapanyNumber: [null, [Validators.pattern("^[0-9]{10,15}$")]],
       VAT: [null, [Validators.pattern("^[a-zA-Z0-9]{1,15}$")]],
       taxRef: [null, [Validators.pattern("^[a-zA-Z0-9]{1,15}$")]],
-      ComapanyAddress: [null, [Validators.pattern("[A-Za-z0-9 ]{3,150}$")]],
+      ComapanyAddress: [null, [Validators.pattern("[A-Za-z0-9 .,*&%$#@!-_]{3,150}$")]],
       filename: [null],
-      status:[false],
+      status: [false],
     });
-
-    this.getUserData();
+    this.getSupplierData();
   }
 
-
-  getUserData(): void {
+//#region getsupplier data from database
+  getSupplierData(): void {
     this.showLoader = true;
     const token = sessionStorage.getItem("logged_user")
     if (token == null) {
@@ -70,7 +75,7 @@ export class SuppliersComponent implements OnInit {
     }
 
     else {
-      this.httpService.getProductData().subscribe(
+      this.httpService.getSupplierAPIData().subscribe(
         (response) => {
           this.supplierList = response.Result;
           this.productStatic = response.Result;
@@ -87,35 +92,37 @@ export class SuppliersComponent implements OnInit {
     }
 
   }
+//#endregion
 
-
+//#region uploadedlogo convert into base64 String
   uploadLogo(event: any) {
-    this.showLoader=true;
+    this.showLoader = true;
     this.file = event.target.files[0];
     const reader: any = new FileReader();
     reader.readAsDataURL(this.file);
     reader.onload = () => {
       this.baseURL = reader.result.split(",")
       this.supplierLogo = this.baseURL[1];
-      this.uploadedlogo="data:image/png;base64," + this.supplierLogo;
+      this.uploadedlogo = "data:image/png;base64," + this.supplierLogo;
     };
-    this.showLoader=false;
+    this.showLoader = false;
 
   }
+//#endregion
 
-
+//#region search functionality by supplier name
   search(): void {
-    this.supplierList = this.productStatic.filter((item: any) => item.SupplierName.indexOf(this.searchValue) !== -1);
+    this.supplierList = this.productStatic.filter((item: any) => item.SupplierName.toLowerCase().indexOf(this.searchValue.toLowerCase()) !== -1);
   }
+//#endregion
 
-  addSupplier() {
-  }
-
+//#region edit supplier's values fill into the modal.
   EditSupplier(event: any) {
     this.isEdit = true;
     console.log(event);
     debugger
     this.isVisible = true;
+    console.log(event.Logo);
     this.uploadedlogo = "data:image/png;base64," + event.Logo;
     this.validateSupplierForm.patchValue({
       Name: event.SupplierName,
@@ -128,44 +135,45 @@ export class SuppliersComponent implements OnInit {
       taxRef: event.TAXReference,
       ComapanyAddress: event.CompanyRegisteredAddress,
       status: event.IsActive,
-      filename:(event.Logo),
+      filename: (event.Logo),
     });
-
-
     this.EditedSupplier = event;
-
   }
 
+//#endregion
+
+//#region delete supplier from Database.
   DeleteSupplier(data: any) {
-    this.showLoader=true
+    this.showLoader = true
     this.httpService.delSupplier(data.SupplierId).subscribe(
       (response) => {
         if (response.ResponseStatus == 3) {
           this.message.error(response.Message, {
             nzDuration: 5000
           });
-          this.showLoader=false;
+          this.showLoader = false;
         }
         else if (response.ResponseStatus == 1) {
           this.message.success(response.Message, {
             nzDuration: 5000
           });
-          this.showLoader=false;
+          this.showLoader = false;
           this.supplierList = this.supplierList.filter((key: { SupplierId: any; }) => key.SupplierId != data.SupplierId);
         }
         else {
           this.message.success(response.Message, {
             nzDuration: 5000
           });
-          this.showLoader=false;
+          this.showLoader = false;
         }
       },
       (error: any) => console.log(error),
       () => console.log("successfully delete")
     );
   }
+//#endregion
 
-
+//#region update supplier Status
   supplierStatus(data: any) {
     this.showLoader = true;
     this.httpService.supplierStatusUpdate(data.IsActive, data.SupplierId).subscribe(
@@ -183,22 +191,24 @@ export class SuppliersComponent implements OnInit {
       () => console.log("done")
     );
   }
+//#endregion
 
+//#region show modal.
   showModal(): void {
     this.isEdit = false;
     this.isVisible = true;
+    this.uploadedlogo = null;
   }
+//#endregion
 
+//#region modal cancel button
   handleCancel() {
     this.isVisible = false;
     this.validateSupplierForm.reset();
   }
+//#endregion
 
-  statuscheck(event: any) {
-    debugger
-    console.log(event)
-  }
-
+//#region when modal submit ?(add or edit)
   handleOk() {
     debugger
     if (this.isEdit != true) {
@@ -217,14 +227,11 @@ export class SuppliersComponent implements OnInit {
         this.httpService.SupplierBody.CompanyRegisteredAddress = SupplierDetail["ComapanyAddress"].value;
         this.httpService.SupplierBody.IsActive = SupplierDetail["status"].value;
         this.httpService.SupplierBody.Logo = this.supplierLogo;
-
-
-
         this.httpService.AddSupplier().subscribe(
 
           (response) => {
             console.log(response);
-       
+
             try {
               if (response.Result.includes("UQ_Supplier_ReferenceNumer")) {
                 this.message.error("Supplier reference number already exists", {
@@ -254,7 +261,7 @@ export class SuppliersComponent implements OnInit {
               });
               this.isVisible = false;
               this.validateSupplierForm.reset();
-              this.getUserData();
+              this.getSupplierData();
               this.showLoader = false;
             }
           },
@@ -278,30 +285,28 @@ export class SuppliersComponent implements OnInit {
 
     else {
       this.showLoader = true;
-      if (this.validateSupplierForm.valid){
-      const SupplierDetail=this.validateSupplierForm.controls
-      const editBody=this.httpService.SupplierBody
-      console.log(this.EditedSupplier);
-      console.log(editBody);
-      this.isVisible = false;
-       this.EditedSupplier.SupplierName = editBody.SupplierName = SupplierDetail["Name"].value;
-       this.EditedSupplier.SupplierReferenceNumber = editBody.SupplierReferenceNumber = SupplierDetail["Reference"].value;
-       this.EditedSupplier.BusinessAddress = editBody.BusinessAddress = SupplierDetail["Address"].value;
-       this.EditedSupplier.EmailAddress = editBody.EmailAddress = SupplierDetail["email"].value;
-       this.EditedSupplier.PhoneNumber = editBody.PhoneNumber = SupplierDetail["phone"].value;
-       this.EditedSupplier.CompanyRegisteredNumber = editBody.CompanyRegisteredNumber = SupplierDetail["comapanyNumber"].value;
-       this.EditedSupplier.VATNumber = editBody.VATNumber = SupplierDetail["VAT"].value;
-       this.EditedSupplier.TAXReference = editBody.TAXReference = SupplierDetail["taxRef"].value;
-       this.EditedSupplier.CompanyRegisteredAddress = editBody.CompanyRegisteredAddress = SupplierDetail["ComapanyAddress"].value;
-       this.EditedSupplier.IsActive = editBody.IsActive = SupplierDetail["status"].value;
-       this.EditedSupplier.Logo = editBody.Logo=this.supplierLogo;
-    
-      this.httpService.editSupplier(this.EditedSupplier.SupplierId).subscribe(
-        
-        (response) => 
-        {
-          console.log(response);
-           
+      if (this.validateSupplierForm.valid) {
+        const SupplierDetail = this.validateSupplierForm.controls
+        const editBody = this.httpService.SupplierBody
+        console.log(this.EditedSupplier);
+        console.log(editBody);
+        this.isVisible = false;
+        this.EditedSupplier.SupplierName = editBody.SupplierName = SupplierDetail["Name"].value;
+        this.EditedSupplier.SupplierReferenceNumber = editBody.SupplierReferenceNumber = SupplierDetail["Reference"].value;
+        this.EditedSupplier.BusinessAddress = editBody.BusinessAddress = SupplierDetail["Address"].value;
+        this.EditedSupplier.EmailAddress = editBody.EmailAddress = SupplierDetail["email"].value;
+        this.EditedSupplier.PhoneNumber = editBody.PhoneNumber = SupplierDetail["phone"].value;
+        this.EditedSupplier.CompanyRegisteredNumber = editBody.CompanyRegisteredNumber = SupplierDetail["comapanyNumber"].value;
+        this.EditedSupplier.VATNumber = editBody.VATNumber = SupplierDetail["VAT"].value;
+        this.EditedSupplier.TAXReference = editBody.TAXReference = SupplierDetail["taxRef"].value;
+        this.EditedSupplier.CompanyRegisteredAddress = editBody.CompanyRegisteredAddress = SupplierDetail["ComapanyAddress"].value;
+        this.EditedSupplier.IsActive = editBody.IsActive = SupplierDetail["status"].value;
+        this.EditedSupplier.Logo = editBody.Logo = this.supplierLogo;
+        this.httpService.editSupplier(this.EditedSupplier.SupplierId).subscribe(
+
+          (response) => {
+            console.log(response);
+
             try {
               if (response.Result.includes("UQ_Supplier_ReferenceNumer")) {
                 this.isVisible = true;
@@ -328,7 +333,6 @@ export class SuppliersComponent implements OnInit {
                 });
               }
             }
-
             catch {
               this.message.success('Supplier Edited Successfully ', {
                 nzDuration: 5000
@@ -337,26 +341,25 @@ export class SuppliersComponent implements OnInit {
               this.validateSupplierForm.reset();
               this.showLoader = false;
             }
-           
-        },
-        (error: any) => console.log(error),
-        () => console.log("successfully Edited")
-      );   
-         
+
+          },
+          (error: any) => console.log(error),
+          () => console.log("successfully Edited")
+        );
+
+      }
+      else {
+        Object.values(this.validateSupplierForm.controls).forEach(control => {
+          if (control.invalid) {
+            control.markAsDirty();
+            control.updateValueAndValidity({ onlySelf: true });
+          }
+        });
+      }
     }
-    else{
-      Object.values(this.validateSupplierForm.controls).forEach(control => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
-        }
-      });
-    }  
+
+
   }
-
-
-}
-
-
+//#endregion
 
 }

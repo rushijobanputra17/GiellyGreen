@@ -1,0 +1,151 @@
+<nz-layout>
+    <nz-sider [nzWidth]="250" *ngIf="isVisibleSidebar">
+        <div class="d-flex mt-3"><img src="assets/logo.png" class="logo"></div>
+        <ul nz-menu class="mt-5" nzMode="inline">
+            <li>
+                <ul>
+                    <li nz-menu-item style="padding-left:50px;border:1px solid" >MONTHLY INVOICE</li>
+                    <li nz-menu-item style="padding-left:65px" routerLink="/suppliers">SUPPLIER LIST</li>
+                </ul>
+            </li>
+        </ul>
+    </nz-sider>
+    <nz-layout>
+        <nz-content>
+            <div class="inner-content container" [ngClass]="{'blurPage': showLoader}">
+                <div class="container">
+                    <div class="row">
+                        <i class="trigger" nz-icon
+                            ></i>
+                        <div class="col-sm-12 col-md-3 col-lg-3 mt-3">
+                            <h3>Monthly Invoice</h3>
+                        </div>
+                        <div class="col-sm-12 col-md-5 col-lg-5 mt-3">
+                            <nz-form-item>
+                                <nz-form-label class="fs-5 fw-400">Choose Month</nz-form-label>
+                                <nz-form-control>
+                                    <nz-date-picker nzMode="month" [(ngModel)]="month" (ngModelChange)="onChange($event)">
+                                    </nz-date-picker>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-4 mt-3 d-flex justify-content-end">
+                            <button nz-button class="btn-custom" printSectionId="printSection" ngxPrint>
+                                Print Report
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row" id="printSection">
+                        <div class="col-sm-12 col-md-12 col-lg-12" *ngIf="isVisible">
+                            <div class="row mb-3">
+                                <div class="col-sm-12 col-md-3 col-lg-3 me-3">
+                                    <nz-form-item>
+                                        <nz-form-label class="fs-5 fw-400">Date</nz-form-label>
+                                        <nz-form-control>
+                                            <input type="date" nz-input [(ngModel)]="invoiceDate">
+                                            <!-- <nz-date-picker class="form-control" ></nz-date-picker> -->
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div class="col-sm-12 col-md-5 col-lg-5">
+                                    <nz-form-item>
+                                        <nz-form-label class="fs-5 fw-400 me-2">Invoice Reference</nz-form-label>
+                                        <nz-form-control>
+                                            <input nz-input class="form-control" [(ngModel)]="invoiceReferenceNumber">
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive">
+                                        <nz-table #rowSelectionTable 
+                                        [nzData]="MonthalyInvoiceData"
+                                        [nzPageSize]="100"
+                                        #hhtpTable
+                                            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+                                            [nzScroll]="{ x: '1900px', y: '500px'}">
+                                            <thead>
+                                                <tr>
+                                                    <th [(nzChecked)]="checked"
+                                                        [nzIndeterminate]="indeterminate"
+                                                        (nzCheckedChange)="onAllChecked($event)" nzLeft></th>
+                                                    <th nzLeft>Supplier Name</th>
+                                                    <th>Hair Services</th>
+                                                    <th>Beauty Services</th>
+                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader1" placeholder="Custom-1"></th>
+                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader2" placeholder="Custom-2"></th>
+                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader3" placeholder="Custom-3"></th>
+                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader4" placeholder="Custom-4"></th>
+                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader5" placeholder="Custom-5"></th>
+                                                    <th>Net</th>
+                                                    <th>VAT</th>
+                                                    <th>Gross</th>
+                                                    <th>Advance Paid</th>
+                                                    <th>Balance Due</th>
+                                                    <th nzRight>Approved</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of hhtpTable.data">
+                                                    <td [nzChecked]="setOfCheckedId.has(data.SupId)"
+                                                        (nzCheckedChange)="onItemChecked(data.SupId, $event)" nzLeft></td>
+                                                    <td  nzLeft>{{data.SupplierName}}</td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="hairServices"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="beautyServices"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="customServices1"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="customServices2"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="customServices3"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="customServices4"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="customServices5"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="netTotal"></td>
+                                                    <td>450</td>
+                                                    <td>200</td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="advancePaid"></td>
+                                                    <td>650</td>
+                                                    <td nzRight><input type="checkbox" disabled></td>
+                                                </tr>
+                                                <tr>
+                                                    <td [colSpan]="9" class="fs-6"><b class="d-flex justify-content-end">TOTAL:</b></td>
+                                                    <td>Example</td>
+                                                    <td>Example</td>
+                                                    <td>Example</td>
+                                                    <td>Example</td>
+                                                    <td>Example</td>
+                                                </tr>
+                                            </tbody>
+                                        </nz-table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2 mt-5" *ngIf="isVisible">
+                                <div class="col-sm-12 col-md-3 col-lg-3 d-flex justify-content-end">
+                                    <button nz-button   class="btn customFooterButton" style="width:80%"><span style="padding-right:10px"><img src="assets/check.png" style="height:15px;width:15px"/></span>APPROVE SELECTED INVOICES</button>
+                                </div>
+                                <div class="col-sm-12 col-md-4 col-lg-4  d-flex justify-content-center">
+                                    <button nz-button class="btn customFooterButton" style="width:90%"><span style="padding-right:10px"><img src="assets/download.png" style="height:18px;width:18px"/></span>COMBINE & DOWNLOAD SELECTED INVOICES</button>
+                                </div>
+                                <div class="col-sm-12 col-md- col-lg-3 d-flex justify-content-start">
+                                    <button nz-button class="btn customFooterButton" style="width:80%" (click)="sendEmail()"><span style="padding-right:10px"><img src="assets/email.png" style="height:15px;width:15px"/></span>EMAIL SELECTED INVOICES</button>
+                                </div>
+                                <div class="col-sm-12 col-md-2 col-lg-2 d-flex justify-content-center">
+                                    <button nz-button class="btn saveButton">SAVE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+            </div>
+
+            <div *ngIf="showLoader">
+                <div style="display:flex;justify-content:center;align-items:center;" class="loader-container">
+                  <i nz-icon [nzType]="'loading'" class="customLoader"></i>
+                </div>
+              </div>
+
+        </nz-content>
+    </nz-layout>
+</nz-layout>
