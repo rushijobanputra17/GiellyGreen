@@ -10,7 +10,6 @@ using System.Web.Http;
 
 namespace GiellyGreen.Controllers
 {
-    [RoutePrefix("invoice")]
     public class MonthlyInvoiceController : ApiController
     {
         public static MonthlyInvoiceRepository monthlyInvoiceRepository   = new MonthlyInvoiceRepository();
@@ -38,18 +37,16 @@ namespace GiellyGreen.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //  DateTime.Now.ToString("MMMM dd");
                     invoiceModel.InvoiceDate = Convert.ToDateTime(invoiceModel.InvoiceDate);
-                    //invoiceModel.InvoiceDate =  Convert.ToDateTime((Convert.ToDateTime(invoiceModel.InvoiceDate).ToString("yyyy-mm-dd")));
-                    monthlyInvoiceRepository.AddInvoice(invoiceModel);
-                    //if (monthlyInvoiceRepository.AddSupplier(mapper.Map<Supplier>(model)) == 1)
-                    //{
-                    //    objResponse = JsonResponseHelper.GetJsonResponse(1, "Record added successfully", model);
-                    //}
-                    //else
-                    //{
-                    //    objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while adding record", null);
-                    //}
+                  var monthlyInvoice =  monthlyInvoiceRepository.AddInvoice(invoiceModel);
+                    if(monthlyInvoice==0)
+                    {
+                        objResponse = JsonResponseHelper.GetJsonResponse(0, "Something Went Wrong while Adding table header", monthlyInvoice);
+                    }
+                    else
+                    {
+                        objResponse = JsonResponseHelper.GetJsonResponse(0, "Data Saved Successfully", monthlyInvoice);
+                    }
                 }
                 else
                 {
@@ -67,6 +64,34 @@ namespace GiellyGreen.Controllers
                     objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
                 }
             }
+            return objResponse;
+        }
+
+        public JsonResponse Patch(List<int> selectedIds, DateTime selectedDate)
+        {
+            try
+            {
+                if (monthlyInvoiceRepository.ApproveSelectedInvoices(selectedIds, selectedDate)>0)
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(1, "Selected invoices approved successfully", null);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Reocrd Not Found", null);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException.Message != null)
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
+                }
+            }
+
             return objResponse;
         }
     }

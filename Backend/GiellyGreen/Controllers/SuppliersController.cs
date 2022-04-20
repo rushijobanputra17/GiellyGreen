@@ -119,12 +119,16 @@ namespace GiellyGreen.Controllers
                         Directory.CreateDirectory(path);
                     }
 
-                    string imgName = model.SupplierName + ".jpeg";
-                    string imgPath = Path.Combine(path, imgName);
-                    byte[] imgBytes = Convert.FromBase64String(model.Logo);
-                    File.WriteAllBytes(imgPath, imgBytes);
+                    if(model.Logo!=null)
+                    {
+                        string imgName = model.SupplierName + ".jpeg";
+                        string imgPath = Path.Combine(path, imgName);
+                        byte[] imgBytes = Convert.FromBase64String(model.Logo);
+                        File.WriteAllBytes(imgPath, imgBytes);
 
-                    model.Logo = imgName;
+                        model.Logo = imgName;
+                    }
+                   
                     model.SupplierId = id;
                     if (supplierRepository.UpdateSupplier(mapper.Map<Supplier>(model)) == 1)
                     {

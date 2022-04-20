@@ -12,5 +12,7 @@ namespace DataAccessLayer.Interface
         dynamic GetAllInvoice(DateTime InvoiceMonth);
 
         int AddInvoice(dynamic invoiceModel);
+
+        int?  ApproveSelectedInvoices(List<int> selectedIds, DateTime selectedDate);
     }
 }
