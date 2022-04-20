@@ -38,18 +38,16 @@ namespace GiellyGreen.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //  DateTime.Now.ToString("MMMM dd");
                     invoiceModel.InvoiceDate = Convert.ToDateTime(invoiceModel.InvoiceDate);
-                    //invoiceModel.InvoiceDate =  Convert.ToDateTime((Convert.ToDateTime(invoiceModel.InvoiceDate).ToString("yyyy-mm-dd")));
-                    monthlyInvoiceRepository.AddInvoice(invoiceModel);
-                    //if (monthlyInvoiceRepository.AddSupplier(mapper.Map<Supplier>(model)) == 1)
-                    //{
-                    //    objResponse = JsonResponseHelper.GetJsonResponse(1, "Record added successfully", model);
-                    //}
-                    //else
-                    //{
-                    //    objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while adding record", null);
-                    //}
+                  var monthlyInvoice =  monthlyInvoiceRepository.AddInvoice(invoiceModel);
+                    if(monthlyInvoice==0)
+                    {
+                        objResponse = JsonResponseHelper.GetJsonResponse(0, "Something Went Wrong while Adding table header", monthlyInvoice);
+                    }
+                    else
+                    {
+                        objResponse = JsonResponseHelper.GetJsonResponse(0, "Data Saved Successfully", monthlyInvoice);
+                    }
                 }
                 else
                 {
