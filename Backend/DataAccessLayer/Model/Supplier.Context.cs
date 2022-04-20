@@ -124,15 +124,6 @@ namespace DataAccessLayer.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSupplier_Result>("GetSupplier", statusParameter);
         }
     
-        public virtual ObjectResult<GetAllInvoice_Result> GetAllInvoice(Nullable<System.DateTime> invoiceMonth)
-        {
-            var invoiceMonthParameter = invoiceMonth.HasValue ?
-                new ObjectParameter("InvoiceMonth", invoiceMonth) :
-                new ObjectParameter("InvoiceMonth", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllInvoice_Result>("GetAllInvoice", invoiceMonthParameter);
-        }
-    
         public virtual int InsertUpdateInvoiceDetails(Nullable<int> invoiceDetailId, Nullable<int> supplierId, Nullable<decimal> hairServices, Nullable<decimal> beautyServices, Nullable<decimal> customService1, Nullable<decimal> customService2, Nullable<decimal> customService3, Nullable<decimal> customService4, Nullable<decimal> customService5, Nullable<decimal> net, Nullable<decimal> vAT, Nullable<decimal> gross, Nullable<decimal> advancePaid, Nullable<decimal> balanceDue, Nullable<bool> approved, Nullable<int> invoiceId)
         {
             var invoiceDetailIdParameter = invoiceDetailId.HasValue ?
@@ -237,6 +228,28 @@ namespace DataAccessLayer.Model
                 new ObjectParameter("CustomCol5", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsertInvoice_Result>("InsertInvoice", invoiceIdParameter, invoiceRefParameter, invoiceDateParameter, customCol1Parameter, customCol2Parameter, customCol3Parameter, customCol4Parameter, customCol5Parameter);
+        }
+    
+        public virtual int ApproveInvoices(string selectedIds, Nullable<System.DateTime> selectedDate)
+        {
+            var selectedIdsParameter = selectedIds != null ?
+                new ObjectParameter("SelectedIds", selectedIds) :
+                new ObjectParameter("SelectedIds", typeof(string));
+    
+            var selectedDateParameter = selectedDate.HasValue ?
+                new ObjectParameter("SelectedDate", selectedDate) :
+                new ObjectParameter("SelectedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ApproveInvoices", selectedIdsParameter, selectedDateParameter);
+        }
+    
+        public virtual ObjectResult<GetAllInvoice_Result> GetAllInvoice(Nullable<System.DateTime> invoiceMonth)
+        {
+            var invoiceMonthParameter = invoiceMonth.HasValue ?
+                new ObjectParameter("InvoiceMonth", invoiceMonth) :
+                new ObjectParameter("InvoiceMonth", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllInvoice_Result>("GetAllInvoice", invoiceMonthParameter);
         }
     }
 }
