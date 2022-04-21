@@ -242,6 +242,7 @@
     <Compile Include="Helpers\JsonResponseHelper.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\EmailViewModel1.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvoiceDetailsViewModels.cs" />
     <Compile Include="Models\InvoiceModels.cs" />
