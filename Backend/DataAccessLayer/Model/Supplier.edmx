@@ -225,12 +225,12 @@
             <Parameter Name="CustomCol4" Mode="In" Type="String" />
             <Parameter Name="CustomCol5" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetAllInvoice" ReturnType="Collection(Team2_GiellyGreenModel.GetAllInvoice_Result)">
-          <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
-          </FunctionImport>
           <FunctionImport Name="ApproveInvoices" ReturnType="Collection(Team2_GiellyGreenModel.ApproveInvoices_Result)">
             <Parameter Name="SelectedIds" Mode="In" Type="String" />
             <Parameter Name="SelectedDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllInvoice" ReturnType="Collection(Team2_GiellyGreenModel.GetAllInvoice_Result)">
+            <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DeleteSupplier_Result">
@@ -353,9 +353,11 @@
         <ComplexType Name="InsertInvoice_Result">
           <Property Type="Int32" Name="InvoiceId" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="ApproveInvoices_Result">
+          <Property Type="Int32" Name="response" Nullable="true" />
+        </ComplexType>
         <ComplexType Name="GetAllInvoice_Result">
           <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="200" />
-          <Property Type="Int32" Name="SupId" Nullable="false" />
           <Property Type="String" Name="CustomHeader1" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="CustomHeader2" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="CustomHeader3" Nullable="true" MaxLength="50" />
@@ -379,9 +381,6 @@
           <Property Type="Decimal" Name="BalanceDue" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Boolean" Name="Approved" Nullable="true" />
           <Property Type="Int32" Name="InvoiceId" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="ApproveInvoices_Result">
-          <Property Type="Int32" Name="response" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -481,11 +480,17 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ApproveInvoices" FunctionName="Team2_GiellyGreenModel.Store.ApproveInvoices" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.ApproveInvoices_Result">
+                <ScalarProperty Name="response" ColumnName="response" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetAllInvoice" FunctionName="Team2_GiellyGreenModel.Store.GetAllInvoice">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetAllInvoice_Result">
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-                <ScalarProperty Name="SupId" ColumnName="SupId" />
                 <ScalarProperty Name="CustomHeader1" ColumnName="CustomHeader1" />
                 <ScalarProperty Name="CustomHeader2" ColumnName="CustomHeader2" />
                 <ScalarProperty Name="CustomHeader3" ColumnName="CustomHeader3" />
@@ -512,13 +517,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ApproveInvoices" FunctionName="Team2_GiellyGreenModel.Store.ApproveInvoices" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.ApproveInvoices_Result">
-                <ScalarProperty Name="response" ColumnName="response" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -540,6 +538,14 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
+    <Diagrams>
+      <Diagram DiagramId="d86d4dad85834160a14d8672c628d6be" Name="Diagram1">
+        <EntityTypeShape EntityType="Team2_GiellyGreenModel.Invoice" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Team2_GiellyGreenModel.Supplier" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Team2_GiellyGreenModel.InvoiceDetail" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="Team2_GiellyGreenModel.FK_Invoice_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="Team2_GiellyGreenModel.FK_InvoiceDetails_Invoices" ManuallyRouted="false" />
+      </Diagram>
+    </Diagrams>
   </Designer>
 </edmx:Edmx>

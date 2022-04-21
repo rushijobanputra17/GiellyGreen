@@ -93,11 +93,17 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ApproveInvoices" FunctionName="Team2_GiellyGreenModel.Store.ApproveInvoices">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.ApproveInvoices_Result">
+          <ScalarProperty Name="response" ColumnName="response" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="GetAllInvoice" FunctionName="Team2_GiellyGreenModel.Store.GetAllInvoice">
       <ResultMapping>
         <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetAllInvoice_Result">
           <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-          <ScalarProperty Name="SupId" ColumnName="SupId" />
           <ScalarProperty Name="CustomHeader1" ColumnName="CustomHeader1" />
           <ScalarProperty Name="CustomHeader2" ColumnName="CustomHeader2" />
           <ScalarProperty Name="CustomHeader3" ColumnName="CustomHeader3" />
@@ -121,13 +127,6 @@
           <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
           <ScalarProperty Name="Approved" ColumnName="Approved" />
           <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="ApproveInvoices" FunctionName="Team2_GiellyGreenModel.Store.ApproveInvoices">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.ApproveInvoices_Result">
-          <ScalarProperty Name="response" ColumnName="response" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

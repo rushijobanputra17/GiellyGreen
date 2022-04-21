@@ -14,7 +14,6 @@ namespace DataAccessLayer.Model
     public partial class GetAllInvoice_Result
     {
         public string SupplierName { get; set; }
-        public int SupId { get; set; }
         public string CustomHeader1 { get; set; }
         public string CustomHeader2 { get; set; }
         public string CustomHeader3 { get; set; }
