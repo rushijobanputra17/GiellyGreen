@@ -14,5 +14,7 @@ namespace DataAccessLayer.Interface
         int AddInvoice(dynamic invoiceModel);
 
         int?  ApproveSelectedInvoices(List<int> selectedIds, DateTime selectedDate);
+
+        dynamic GetInvoicesForPDF(DateTime invoiceDate,List<int> selectedSupplierIds);
     }
 }

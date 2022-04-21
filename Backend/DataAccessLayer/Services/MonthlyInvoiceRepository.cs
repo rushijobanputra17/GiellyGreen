@@ -56,5 +56,10 @@ namespace DataAccessLayer.Services
             return objDataAccess.ApproveInvoices(String.Join(",", selectedIds), selectedDate).FirstOrDefault().response;
         }
 
+        public dynamic GetInvoicesForPDF(DateTime invoiceDate,List<int> selectedSupplierIds)
+        {
+            return objDataAccess.GetInvoicesForPdf(String.Join(",",selectedSupplierIds),invoiceDate).ToList();
+        }
+
     }
 }

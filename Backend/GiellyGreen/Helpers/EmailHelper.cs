@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -9,26 +10,23 @@ namespace GiellyGreen.Helpers
 {
     public class EmailHelper
     {
-        public static void SendEmail(string toEmails)
+        public static void SendEmail(string emailAddress, DateTime invoiceDate, string supplierName, Attachment attachment)
         {
             MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("mpte410@gmail.com");
-            mailMessage.Subject = "Your invoice for the 2022-03";
-            mailMessage.Body = "Please find attached a self-billed invoice to <receiving company>, prepared on your behalf, as per the agreement.Regard Gielly Green Limited";
+            mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["FromMailAddress"].ToString());
+            mailMessage.Subject = "Your invoice for the " + invoiceDate.ToString("MM/dd/yyyy");
+            mailMessage.Body = "Please find attached a self-billed invoice to"+ supplierName + " , prepared on your behalf, as per the agreement.Regard Gielly Green Limited";
             mailMessage.IsBodyHtml = true;
-            mailMessage.Attachments.Add(new Attachment("D:/pdf.pdf"));
-            string[] ToMuliId = toEmails.Split(',');
+            mailMessage.Attachments.Add(attachment);
+            //string[] ToMuliId = toEmails.Split(',');
             mailMessage.CC.Add(new MailAddress("harshmungra21@gmail.com"));
-            foreach (string ToEMailId in ToMuliId)
-            {
-                mailMessage.To.Add(new MailAddress(ToEMailId)); //adding multiple TO Email Id
-            }
+            mailMessage.To.Add(new MailAddress(emailAddress));
             SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.gmail.com";
+            smtp.Host = ConfigurationManager.AppSettings["Host"].ToString();
             smtp.EnableSsl = true;
             NetworkCredential NetworkCred = new NetworkCredential();
             NetworkCred.UserName = mailMessage.From.Address;
-            NetworkCred.Password = "temp192837465";
+            NetworkCred.Password = ConfigurationManager.AppSettings["Password"].ToString();
             smtp.UseDefaultCredentials = true;
             smtp.Credentials = NetworkCred;
             smtp.Port = 587;

@@ -15,6 +15,11 @@ namespace DataAccessLayer.Model
     {
         public string SupplierName { get; set; }
         public int SupplierId { get; set; }
+        public string BusinessAddress { get; set; }
+        public string EmailAddress { get; set; }
+        public string Logo { get; set; }
+        public string TAXReference { get; set; }
+        public string VATNumber { get; set; }
         public string CustomHeader1 { get; set; }
         public string CustomHeader2 { get; set; }
         public string CustomHeader3 { get; set; }
@@ -23,7 +28,6 @@ namespace DataAccessLayer.Model
         public string InvoiceRef { get; set; }
         public Nullable<System.DateTime> InvoiceDate { get; set; }
         public Nullable<int> InvoiceDetailId { get; set; }
-        public Nullable<int> SupplierId1 { get; set; }
         public Nullable<decimal> HairServices { get; set; }
         public Nullable<decimal> BeautyServices { get; set; }
         public Nullable<decimal> CustomService1 { get; set; }

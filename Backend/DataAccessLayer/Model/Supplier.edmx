@@ -393,6 +393,11 @@
         <ComplexType Name="GetInvoicesForPdf_Result">
           <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="200" />
           <Property Type="Int32" Name="SupplierId" Nullable="false" />
+          <Property Type="String" Name="BusinessAddress" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="320" />
+          <Property Type="String" Name="Logo" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="TAXReference" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="VATNumber" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="CustomHeader1" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="CustomHeader2" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="CustomHeader3" Nullable="true" MaxLength="50" />
@@ -401,7 +406,6 @@
           <Property Type="String" Name="InvoiceRef" Nullable="true" MaxLength="15" />
           <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
           <Property Type="Int32" Name="InvoiceDetailId" Nullable="true" />
-          <Property Type="Int32" Name="SupplierId1" Nullable="true" />
           <Property Type="Decimal" Name="HairServices" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="BeautyServices" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="CustomService1" Nullable="true" Precision="18" Scale="2" />
@@ -557,6 +561,11 @@
               <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetInvoicesForPdf_Result">
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
                 <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="TAXReference" ColumnName="TAXReference" />
+                <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
                 <ScalarProperty Name="CustomHeader1" ColumnName="CustomHeader1" />
                 <ScalarProperty Name="CustomHeader2" ColumnName="CustomHeader2" />
                 <ScalarProperty Name="CustomHeader3" ColumnName="CustomHeader3" />
@@ -565,7 +574,6 @@
                 <ScalarProperty Name="InvoiceRef" ColumnName="InvoiceRef" />
                 <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
                 <ScalarProperty Name="InvoiceDetailId" ColumnName="InvoiceDetailId" />
-                <ScalarProperty Name="SupplierId1" ColumnName="SupplierId1" />
                 <ScalarProperty Name="HairServices" ColumnName="HairServices" />
                 <ScalarProperty Name="BeautyServices" ColumnName="BeautyServices" />
                 <ScalarProperty Name="CustomService1" ColumnName="CustomService1" />

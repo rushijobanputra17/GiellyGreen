@@ -135,6 +135,11 @@
         <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetInvoicesForPdf_Result">
           <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
           <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+          <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="Logo" ColumnName="Logo" />
+          <ScalarProperty Name="TAXReference" ColumnName="TAXReference" />
+          <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
           <ScalarProperty Name="CustomHeader1" ColumnName="CustomHeader1" />
           <ScalarProperty Name="CustomHeader2" ColumnName="CustomHeader2" />
           <ScalarProperty Name="CustomHeader3" ColumnName="CustomHeader3" />
@@ -143,7 +148,6 @@
           <ScalarProperty Name="InvoiceRef" ColumnName="InvoiceRef" />
           <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
           <ScalarProperty Name="InvoiceDetailId" ColumnName="InvoiceDetailId" />
-          <ScalarProperty Name="SupplierId1" ColumnName="SupplierId1" />
           <ScalarProperty Name="HairServices" ColumnName="HairServices" />
           <ScalarProperty Name="BeautyServices" ColumnName="BeautyServices" />
           <ScalarProperty Name="CustomService1" ColumnName="CustomService1" />

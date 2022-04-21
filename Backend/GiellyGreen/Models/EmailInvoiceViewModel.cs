@@ -26,5 +26,13 @@ namespace GiellyGreen.Models
         public decimal? Net { get; set; }
         public decimal? AdvancePaid { get; set; }
         public decimal? BalanceDue { get; set; }
+
+        public string VATNumber { get; set; }
+
+        public string CustomHeader1 { get; set; }
+        public string CustomHeader2 { get; set; }
+        public string CustomHeader3 { get; set; }
+        public string CustomHeader4 { get; set; }
+        public string CustomHeader5 { get; set; }
     }
 }

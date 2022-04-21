@@ -20,8 +20,6 @@ namespace GiellyGreen.Controllers
             try
             {
                 var InvoicveDetails = monthlyInvoiceRepository.GetAllInvoice(InvoiceMonth);
-
-                
                 objResponse = JsonResponseHelper.GetJsonResponse(1, "Records found : ", InvoicveDetails);
             }
             catch (Exception ex)
@@ -68,7 +66,7 @@ namespace GiellyGreen.Controllers
             return objResponse;
         }
 
-        public JsonResponse Patch(List<int> selectedIds, DateTime selectedDate)
+        public JsonResponse Patch(DateTime selectedDate, List<int> selectedIds)
         {
             try
             {
@@ -95,5 +93,7 @@ namespace GiellyGreen.Controllers
 
             return objResponse;
         }
+
+        
     }
 }

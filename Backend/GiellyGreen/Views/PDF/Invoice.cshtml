@@ -1,0 +1,133 @@
+﻿@model GiellyGreen.Models.EmailInvoiceViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Invoice</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                @if (@Model.Logo != null)
+                {
+                    <img src="@Model.Logo" width="200" height="200" />
+                }
+            </div>
+            <div class="col-md-6">
+                <h3>Self Billed Invoice</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>@Model.SupplierName</h4>
+                <p>@Model.BusinessAddress</p>
+            </div>
+            <div class="col-md-6">
+                <h5> Invoice Date : @Model.InvoiceDate</h5>
+                <h5>Invoice Referance : @Model.InvoiceRef</h5>
+                <br />
+                @if (Model.TAXReference != null)
+                {
+                    <h5> TAX Referance : @Model.TAXReference</h5>
+                }
+                @if (Model.VATNumber != null)
+                {
+                    <h5> TAX VATNumber : @Model.VATNumber</h5>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h5>To : ADK Consultancy</h5>
+                <h5>Dummy Address</h5>
+                <h5>Dummy Address</h5>
+                <h5>Dummy Address</h5>
+            </div>
+        </div>
+        <div class="row">
+            <table border>
+                <thead>
+                    <tr>
+                        <th colspan="4"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2">Hair Services</td>
+                        <td></td>
+                        <td>@Model.HairServices</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Beauty Services</td>
+                        <td></td>
+                        <td>@Model.BeautyServices</td>
+                    </tr>
+                    @if (Model.CustomHeader1 != null)
+                    {
+                        <tr>
+                            <td colspan="2">@Model.CustomHeader1</td>
+                            <td></td>
+                            <td>@Model.CustomService1</td>
+                        </tr>
+                    }
+                    @if (Model.CustomHeader2 != null)
+                    {
+                        <tr>
+                            <td colspan="2">@Model.CustomHeader2</td>
+                            <td></td>
+                            <td>@Model.CustomService2</td>
+                        </tr>
+                    }
+                    @if (Model.CustomHeader3 != null)
+                    {
+                        <tr>
+                            <td colspan="2">@Model.CustomHeader3</td>
+                            <td></td>
+                            <td>@Model.CustomService3</td>
+                        </tr>
+                    }
+                    @if (Model.CustomHeader4 != null)
+                    {
+                        <tr>
+                            <td colspan="2">@Model.CustomHeader4</td>
+                            <td></td>
+                            <td>@Model.CustomService4</td>
+                        </tr>
+                    }
+                    @if (Model.CustomHeader5 != null)
+                    {
+                        <tr>
+                            <td colspan="2">@Model.CustomHeader5</td>
+                            <td></td>
+                            <td>@Model.CustomService5</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>Subtotal(Net)</td>
+                        <td>@Model.Net</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>VAT</td>
+                        <td>@Model.VAT</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>Advance Paid</td>
+                        <td>@Model.AdvancePaid</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>Balance Due</td>
+                        <td>@Model.BalanceDue</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
