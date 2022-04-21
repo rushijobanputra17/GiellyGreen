@@ -23,6 +23,7 @@ namespace GiellyGreen.Controllers
             System.Web.Mvc.ControllerContext newContext = new System.Web.Mvc.ControllerContext(new HttpContextWrapper(System.Web.HttpContext.Current), route, pdfContoller);
             pdfContoller.ControllerContext = newContext;
             Attachment attachment = new Attachment(new MemoryStream(pdfContoller.GetPDFBytes()), "Invoice.pdf");
+
             return new JsonResponse();
         }
     }

@@ -8,7 +8,7 @@ namespace GiellyGreen.Models
     public class InvoiceDetailsViewModels
     {
 
-        public int InvoiceDetailId { get; set; }
+        public int? InvoiceDetailId { get; set; }
         public int SupplierId { get; set; }
         public Nullable<decimal> HairServices { get; set; }
         public Nullable<decimal> BeautyServices { get; set; }

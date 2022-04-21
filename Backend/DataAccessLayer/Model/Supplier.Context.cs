@@ -251,5 +251,18 @@ namespace DataAccessLayer.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllInvoice_Result>("GetAllInvoice", invoiceMonthParameter);
         }
+    
+        public virtual ObjectResult<GetInvoicesForPdf_Result> GetInvoicesForPdf(string selectedIds, Nullable<System.DateTime> selectedDate)
+        {
+            var selectedIdsParameter = selectedIds != null ?
+                new ObjectParameter("SelectedIds", selectedIds) :
+                new ObjectParameter("SelectedIds", typeof(string));
+    
+            var selectedDateParameter = selectedDate.HasValue ?
+                new ObjectParameter("SelectedDate", selectedDate) :
+                new ObjectParameter("SelectedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInvoicesForPdf_Result>("GetInvoicesForPdf", selectedIdsParameter, selectedDateParameter);
+        }
     }
 }

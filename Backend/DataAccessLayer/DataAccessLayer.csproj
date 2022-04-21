@@ -67,6 +67,9 @@
     <Compile Include="Model\GetAllInvoice_Result.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\GetInvoicesForPdf_Result.cs">
+      <DependentUpon>Supplier.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\GetSupplier_Result.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>

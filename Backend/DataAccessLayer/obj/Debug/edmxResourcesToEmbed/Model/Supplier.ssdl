@@ -87,6 +87,10 @@
   <Function Name="GetAllInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="InvoiceMonth" Type="date" Mode="In" />
   </Function>
+  <Function Name="GetInvoicesForPdf" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SelectedIds" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="SelectedDate" Type="date" Mode="In" />
+  </Function>
   <Function Name="GetSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Status" Type="bit" Mode="In" />
   </Function>
