@@ -5,7 +5,7 @@ using System.Web;
 
 namespace GiellyGreen.Models
 {
-    public class EmailViewModel1
+    public class EmailInvoiceViewModel
     {
         public int SupplierId { get; set; }
         public string Logo { get; set; }
