@@ -143,9 +143,41 @@ refreshCheckedStatus(): void {
 
 //#region send email
 sendEmail() {
-  this.message.success("Email Send Successfully", {
-    nzDuration: 5000
-  });
+  this.httpService.EmailSelectedSupplier(this.invoiceDate,this.setOfCheckedId,this.invoiceReferenceNumber).subscribe(
+    (response) => {
+      console.log(response);
+      this.message.success("Email Send Successfully", {
+        nzDuration: 5000
+      });
+    },
+    (error: any) => {
+      this.message.error("Server Error! Please Reload Your Page", {
+        nzDuration: 5000
+      });
+    },
+    () => console.log("done")
+  );
+ 
+}
+//#endregion
+
+//#region approved Supllier
+Approved(){
+  console.log(this.setOfCheckedId);
+  this.httpService.ApprovedSelectedSupplier(this.invoiceDate,this.setOfCheckedId).subscribe(
+    (response) => {
+      console.log(response);
+      this.message.success("Supplier Approved Successfully", {
+        nzDuration: 5000
+      });
+    },
+    (error: any) => {
+      this.message.error("Server Error! Please Reload Your Page", {
+        nzDuration: 5000
+      });
+    },
+    () => console.log("done")
+  );
 }
 //#endregion
 
@@ -153,6 +185,29 @@ sendEmail() {
 //#region save invoice
 saveInvoice(){
   console.log(this.MonthalyInvoiceData);
+  this.httpService.InvoiceBody.invoiceDetails = this.MonthlyInvoiceDataChanged;
+  this.httpService.InvoiceBody.CustomHeader1 = this.customHeader1;
+  this.httpService.InvoiceBody.CustomHeader2 =  this.customHeader2;
+  this.httpService.InvoiceBody.CustomHeader3 =  this.customHeader3;
+  this.httpService.InvoiceBody.CustomHeader4 =  this.customHeader4;
+  this.httpService.InvoiceBody.CustomHeader5 =  this.customHeader5;
+  this.httpService.InvoiceBody.InvoiceRef = this.invoiceReferenceNumber;
+  this.httpService.InvoiceBody.InvoiceDate = this.invoiceDate;
+ 
+  this.httpService.saveInvoiceData().subscribe(
+    (response) => {
+      console.log(response);
+      this.message.success("Data Saved Successfully", {
+        nzDuration: 5000
+      });
+    },
+    (error: any) => {
+      this.message.error("Server Error! Please Reload Your Page", {
+        nzDuration: 5000
+      });
+    },
+    () => console.log("done")
+  );
 }
 //#endregion
 }

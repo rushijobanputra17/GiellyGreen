@@ -101,15 +101,27 @@ export class SuppliersComponent implements OnInit {
   uploadLogo(event: any) {
     this.showLoader = true;
     this.file = event.target.files[0];
-    const reader: any = new FileReader();
-    reader.readAsDataURL(this.file);
-    reader.onload = () => {
-      this.baseURL = reader.result.split(",")
-      this.supplierLogo = this.baseURL[1];
-      this.uploadedlogo = "data:image/png;base64," + this.supplierLogo;
-    };
-    this.showLoader = false;
-  }
+    if(this.file){
+      if((this.file.type=="image/png")||(this.file.type=="image/jpeg")){
+        const reader: any = new FileReader();
+        reader.readAsDataURL(this.file);
+        reader.onload = () => {
+          this.baseURL = reader.result.split(",")
+          this.supplierLogo = this.baseURL[1];
+          this.uploadedlogo = "data:image/png;base64," + this.supplierLogo;
+          this.showLoader = false;
+        };
+      }
+      else{
+        this.message.success("Only jpeg and png allowed.", {
+          nzDuration: 5000
+        });
+      }
+    }
+    }
+    
+  
+  
 //#endregion
 
 //#region search functionality by supplier name

@@ -94,24 +94,24 @@
                                                         (nzCheckedChange)="onItemChecked(data.SupplierId, $event)" nzLeft>
                                                     </td>
                                                     <td nzLeft>{{data.SupplierName}}</td>
-                                                    <td><input class="w-100" nz-input [(ngModel)]="data.HairServices" (change)="changeValue(data)"></td>
-                                                    <td><input class="w-100" nz-input [(ngModel)]="data.BeautyServices"></td>
-                                                    <td><input class="w-100" nz-input [(ngModel)]="data.CustomService1">
+                                                    <td><input type="number" class="w-100" nz-input [(ngModel)]="data.HairServices" (change)="changeValue(data)" [disabled]="data.Approved"></td>
+                                                    <td><input type="number" class="w-100" nz-input [(ngModel)]="data.BeautyServices" (change)="changeValue(data)" [disabled]="data.Approved"></td>
+                                                    <td><input type="number" class="w-100" nz-input [(ngModel)]="data.CustomService1" (change)="changeValue(data)" [disabled]="data.Approved">
                                                     </td>
-                                                    <td><input class="w-100" nz-input [(ngModel)]="data.CustomService2">
+                                                    <td><input type="number" class="w-100" nz-input [(ngModel)]="data.CustomService2" (change)="changeValue(data)" [disabled]="data.Approved">
                                                     </td>
-                                                    <td><input class="w-100" nz-input [(ngModel)]="data.CustomService3">
+                                                    <td><input type="number" class="w-100" nz-input [(ngModel)]="data.CustomService3" (change)="changeValue(data)" [disabled]="data.Approved">
                                                     </td>
-                                                    <td><input class="w-100" nz-input [(ngModel)]="data.CustomService4">
+                                                    <td><input type="number" class="w-100" nz-input [(ngModel)]="data.CustomService4" (change)="changeValue(data)" [disabled]="data.Approved">
                                                     </td>
-                                                    <td><input class="w-100" nz-input [(ngModel)]="data.CustomService5">
+                                                    <td><input type="number" class="w-100" nz-input [(ngModel)]="data.CustomService5" (change)="changeValue(data)" [disabled]="data.Approved">
                                                     </td>
-                                                    <td><input class="w-100" nz-input [(ngModel)]="data.Net"></td>
+                                                    <td><input type="number" class="w-100" nz-input [(ngModel)]="data.Net" [disabled]="data.Approved"></td>
                                                     <td>450</td>
                                                     <td>200</td>
-                                                    <td><input class="w-100" nz-input [(ngModel)]="data.AdvancePaid"></td>
+                                                    <td><input type="number" class="w-100" nz-input [(ngModel)]="data.AdvancePaid"></td>
                                                     <td>650</td>
-                                                    <td nzRight><input type="checkbox" disabled></td>
+                                                    <td nzRight style="text-align:center"><input class="check" type="checkbox" disabled [checked]="data.Approved"></td>
                                                 </tr>
                                                 <tr>
                                                     <td [colSpan]="9" class="fs-6"><b
@@ -129,7 +129,7 @@
                             </div>
                             <div class="row mb-2 mt-5" *ngIf="isVisible">
                                 <div class="col-sm-12 col-md-3 col-lg-3 d-flex justify-content-end">
-                                    <button nz-button class="btn customFooterButton" style="width:85%"><span
+                                    <button nz-button class="btn customFooterButton" style="width:85%" (click)="Approved()"><span
                                             style="padding-right:10px"><img src="assets/check.png"
                                                 style="height:15px;width:15px" /></span>APPROVE SELECTED
                                         INVOICES</button>

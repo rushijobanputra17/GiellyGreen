@@ -18,7 +18,7 @@
         </div>
         <div class="col-5">
           <nz-input-group nzPrefixIcon="search">
-            <input type="text" nz-input placeholder="Search here.." (keyup)="search()" [(ngModel)]="searchValue" />
+            <input type="text" nz-input placeholder="Search here..." (keyup)="search()" [(ngModel)]="searchValue" />
           </nz-input-group>
         </div>
         <div class="col-2">
@@ -140,7 +140,7 @@
                     </nz-input-group>
                     <ng-template #supplieremailError let-control>
                       <ng-container *ngIf="control.hasError('required')">
-                        Please input supplier Names.
+                        Please input supplier email.
                       </ng-container>
                       <ng-container *ngIf="control.hasError('email')">
                         Please enter valid email.
