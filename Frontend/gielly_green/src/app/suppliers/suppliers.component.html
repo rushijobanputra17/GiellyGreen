@@ -240,11 +240,12 @@
                       (change)="uploadLogo($event)" />
                     <button nz-button (click)="logo.click()">
                       <span>
-                        <i nz-icon nzType="upload"></i>
+                        <fa-icon [icon]="upload" class="p-2"></fa-icon>
                         Upload
                       </span>
                     </button>
-                    <div>
+                    <div *ngIf="uploadedlogo!=null">
+                      <i class="topright" (click)="deletelogo()" nz-icon nzType="close" nzTheme="outline"></i>
                       <img [src]="uploadedlogo" width="200" height="200">
                     </div>
                   </nz-form-control>

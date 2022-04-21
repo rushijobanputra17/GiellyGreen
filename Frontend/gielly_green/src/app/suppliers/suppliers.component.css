@@ -40,6 +40,16 @@
       font-family:'Dax-Regular'!important;
   }
 
+  .topright {
+    position: absolute;
+    top:25px;
+    right:50px;
+    font-size: 18px;
+    color:red;
+  }
+  
+
+
   .logo{
    margin-top:10px;
    margin-left:40px;
