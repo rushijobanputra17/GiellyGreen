@@ -7,6 +7,7 @@ namespace GiellyGreen.Models
 {
     public class EmailViewModel
     {
+
         public int SupplierId { get; set; }
         public string Logo { get; set; }
         public DateTime? InvoiceDate { get; set; }
