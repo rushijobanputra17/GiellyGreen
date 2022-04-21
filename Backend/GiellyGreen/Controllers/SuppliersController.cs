@@ -11,7 +11,8 @@ using System.Web.Http;
 
 namespace GiellyGreen.Controllers
 {
-    [RoutePrefix("suppliers")]
+    [Authorize]
+    //[RoutePrefix("suppliers")]
     public class SuppliersController : ApiController
     {
         public static SupplierRepository supplierRepository = new SupplierRepository();

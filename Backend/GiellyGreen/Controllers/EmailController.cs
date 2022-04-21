@@ -15,6 +15,7 @@ using System.Web.Routing;
 
 namespace GiellyGreen.Controllers
 {
+    [Authorize]
     public class EmailController : ApiController
     {
         public JsonResponse Post(DateTime invoiceDate, string InvoiceRef, List<int> selectedSupplierIds)
