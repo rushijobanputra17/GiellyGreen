@@ -19,6 +19,36 @@
 }
 
 
+.check {
+  -webkit-appearance: none; /*hides the default checkbox*/
+  height: 20px;
+  width: 20px;
+  text-align: center;
+  transition: 0.10s;
+  background-color: lightgrey;
+  font-weight: 600;
+  color:grey;
+  border-radius: 3px;
+  outline: none;
+}
+
+.check:checked {
+  background-color:lightgreen;
+  color:green;
+}
+
+.check:before {
+  content: "✖";
+}
+.check:checked:before {
+  content: "✔";
+}
+
+.check:hover {
+  cursor: pointer; 
+  opacity: 0.8;
+}
+
 .trigger {
   font-size: 18px;
   line-height: 64px;

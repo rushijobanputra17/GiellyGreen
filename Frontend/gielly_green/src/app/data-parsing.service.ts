@@ -9,7 +9,7 @@ export class DataParsingService {
  
   constructor(private http: HttpClient) { }
 
-   APIURL="https://4e5c-106-201-236-89.ngrok.io";
+   APIURL="https://ed97-106-201-236-89.ngrok.io";
 
 SupplierBody=
   {
@@ -25,6 +25,36 @@ SupplierBody=
     "IsActive": true,
     "Logo": "sample string 12",
     "IsInvoicePresent": true
+  }
+
+  InvoiceBody={
+    "invoiceDetails": [
+      {
+        "InvoiceDetailId": 0,
+        "SupplierId": 0,
+        "HairServices": 0,
+        "BeautyServices": 0,
+        "CustomService1": 0,
+        "CustomService2": 0,
+        "CustomService3": 0,
+        "CustomService4": 0,
+        "CustomService5": 0,
+        "Net": 0,
+        "VAT": 0,
+        "Gross": 0,
+        "AdvancePaid": 0,
+        "BalanceDue": 0,
+        "Approved": true
+      }
+    ],
+    "CustomHeader1": "string",
+    "CustomHeader2": "string",
+    "CustomHeader3": "string",
+    "CustomHeader4": "string",
+    "CustomHeader5": "string",
+    "InvoiceRef": "string",
+    "InvoiceDate": "2022-04-20T09:44:00.790Z",
+    "InvoiceId": 0
   }
 
   loginUser(email: string,password: string): Observable<any>{
@@ -84,7 +114,26 @@ SupplierBody=
     const header=new HttpHeaders().set("authorization", "bearer "+ token);
     return this.http.get<any>(`${this.APIURL}/api/MonthlyInvoice?InvoiceMonth=${month}`,{headers:header});
   }
-    
-  
 
+  
+  saveInvoiceData(): Observable<any>{
+    let token=sessionStorage.getItem("logged_user");
+    const header=new HttpHeaders().set("authorization", "bearer "+ token);
+    return this.http.post<any>(`${this.APIURL}/api/MonthlyInvoice`,this.InvoiceBody,{headers:header});
+  }
+
+  ApprovedSelectedSupplier(date:any,setofselected:any): Observable<any>{
+    let selectedSupllier=Array.from(setofselected);
+    let token=sessionStorage.getItem("logged_user");
+    const header=new HttpHeaders().set("authorization", "bearer "+ token);
+    return this.http.patch<any>(`${this.APIURL}/api/MonthlyInvoice?selectedDate=${date}`,selectedSupllier,{headers:header});
+  }
+
+  EmailSelectedSupplier(date:any,setofselected:any,invoiceReferenceNumber:any): Observable<any>{
+    let selectedSupllier=Array.from(setofselected);
+    let token=sessionStorage.getItem("logged_user");
+    const header=new HttpHeaders().set("authorization", "bearer "+ token);
+    return this.http.post<any>(`${this.APIURL}/api/Email?invoiceDate=${date}&InvoiceRef=${invoiceReferenceNumber}`,selectedSupllier,{headers:header});
+  }
+    
 }
