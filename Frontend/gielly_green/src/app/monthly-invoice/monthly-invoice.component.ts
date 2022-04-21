@@ -30,6 +30,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   indeterminate = false;
   listOfCurrentPageData: readonly [] = [];
   MonthalyInvoiceData: any;
+  MonthlyInvoiceDataChanged:any[]=[];
   setOfCheckedId = new Set<number>();
   counter: number = 0;
   listOfSelection = [
@@ -59,12 +60,27 @@ export class MonthlyInvoiceComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
+
+  changeValue(data:any){
+    debugger
+    console.log(this.MonthlyInvoiceDataChanged);
+    if(this.MonthlyInvoiceDataChanged.length != 0){
+      var ExistingId:any=this.MonthlyInvoiceDataChanged.filter((key: { SupplierId: any; }) => key.SupplierId == data.SupplierId);
+      console.log(ExistingId);
+      if(ExistingId.length != 0){
+        this.MonthlyInvoiceDataChanged.splice(ExistingId,1);
+      }  
+    }  
+    this.MonthlyInvoiceDataChanged.push(data);
+    console.log(this.MonthlyInvoiceDataChanged);
+  }
   
 //#region date onchange
 onChange(date: any) {
   this.isVisible = true;
   this.showLoader = true;
-  let monthYearFilter = date.getFullYear() + "-" + date.getMonth()
+  let monthYearFilter = date.getFullYear() + "-" + (date.getMonth()+1);
+  console.log(monthYearFilter);
   this.invoiceDate = this.datepipe.transform(date, 'yyyy-MM-dd');
   this.invoiceReferenceNumber = String(date.getMonth() + 1) + String(date.getFullYear()) + String(this.counter);
   this.counter++;
@@ -109,7 +125,7 @@ onItemChecked(id: number, checked: boolean): void {
 }
 
 onAllChecked(value: boolean): void {
-  this.MonthalyInvoiceData.forEach((item: any) => this.updateCheckedSet(item.SupId, value));
+  this.MonthalyInvoiceData.forEach((item: any) => this.updateCheckedSet(item.SupplierId, value));
   this.refreshCheckedStatus();
 }
 
@@ -119,8 +135,8 @@ onCurrentPageDataChange($event: any): void {
 }
 
 refreshCheckedStatus(): void {
-  this.checked = this.listOfCurrentPageData.every((item: any) => this.setOfCheckedId.has(item.SupId));
-  this.indeterminate = this.listOfCurrentPageData.some((item: any) => this.setOfCheckedId.has(item.id)) && !this.checked;
+  this.checked = this.listOfCurrentPageData.every((item: any) => this.setOfCheckedId.has(item.SupplierId));
+  this.indeterminate = this.listOfCurrentPageData.some((item: any) => this.setOfCheckedId.has(item.SupplierId)) && !this.checked;
 }
 
 //#endregion
@@ -133,4 +149,10 @@ sendEmail() {
 }
 //#endregion
 
+
+//#region save invoice
+saveInvoice(){
+  console.log(this.MonthalyInvoiceData);
+}
+//#endregion
 }

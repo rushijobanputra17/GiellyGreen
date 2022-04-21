@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
 import { DataParsingService } from '../data-parsing.service';
-import { faPlus, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faPen, faTrash,faArrowUpFromBracket} from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -25,6 +25,7 @@ export class SuppliersComponent implements OnInit {
   plusIcon = faPlus;
   pen = faPen;
   del = faTrash;
+  upload = faArrowUpFromBracket;
 
   productStatic: any;
   supplierList: any;
@@ -44,8 +45,12 @@ export class SuppliersComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private message: NzMessageService, private router: Router, private httpService: DataParsingService) { }
 
-  ngOnInit(): void {
+  deletelogo(){
+    console.log("deletelogo");
+    this.uploadedlogo=null;
+  }
 
+  ngOnInit(): void {
     //validate form
     this.validateSupplierForm = this.fb.group({
       Name: [null, [Validators.required, Validators.pattern("^[a-zA-Z]+[ ]?[a-zA-Z]+$")]],
@@ -62,7 +67,6 @@ export class SuppliersComponent implements OnInit {
     });
     this.getSupplierData();
   }
-
 //#region getsupplier data from database
   getSupplierData(): void {
     this.showLoader = true;
@@ -90,7 +94,6 @@ export class SuppliersComponent implements OnInit {
         () => console.log("done")
       );
     }
-
   }
 //#endregion
 
@@ -106,7 +109,6 @@ export class SuppliersComponent implements OnInit {
       this.uploadedlogo = "data:image/png;base64," + this.supplierLogo;
     };
     this.showLoader = false;
-
   }
 //#endregion
 

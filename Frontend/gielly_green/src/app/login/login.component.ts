@@ -85,6 +85,11 @@ export class LoginComponent implements OnInit {
       password: [null, [Validators.required]],
       remember: [true]
     });
+
+    const token = sessionStorage.getItem("logged_user")
+    if (token != null) {
+      this.router.navigate(['/suppliers']);
+    }
   }
 
 }
