@@ -19,9 +19,7 @@ namespace GiellyGreen.Controllers
     {
         public JsonResponse Post(DateTime invoiceDate, string InvoiceRef, List<int> selectedSupplierIds)
         {
-            AutoMapper.MapperConfiguration configList = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<dynamic, EmailInvoiceViewModel>());
-            Mapper mapper = new Mapper(configList);
-
+           
             MonthlyInvoiceRepository monthlyInvoiceRepository = new MonthlyInvoiceRepository();
             var invoiceDetails = monthlyInvoiceRepository.GetInvoicesForPDF(invoiceDate, selectedSupplierIds);
 
@@ -34,11 +32,9 @@ namespace GiellyGreen.Controllers
 
             foreach (var invoice in invoiceDetails)
             {
-                var mapObject = mapper.Map<EmailInvoiceViewModel>(invoice);
-                Attachment attachment = new Attachment(new MemoryStream(pdfContoller.GetPDFBytes(mapObject)), "Invoice.pdf");
+                Attachment attachment = new Attachment(new MemoryStream(pdfContoller.GetPDFBytes(invoice)), "Invoice.pdf");
                EmailHelper.SendEmail(invoice.EmailAddress,invoice.InvoiceDate,invoice.SupplierName, attachment);
             }
-
             return new JsonResponse();
         }
 

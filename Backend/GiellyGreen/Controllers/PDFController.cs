@@ -1,4 +1,5 @@
-﻿using GiellyGreen.Models;
+﻿using DataAccessLayer.Model;
+using GiellyGreen.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace GiellyGreen.Controllers
     public class PDFController : Controller
     {
         // GET: PDF
-        public byte [] GetPDFBytes(EmailInvoiceViewModel model)
+        public byte [] GetPDFBytes(GetInvoicesForPdf_Result model)
         {
             return new Rotativa.ViewAsPdf("~/Views/PDF/Invoice.cshtml",model).BuildFile(ControllerContext);
         }
