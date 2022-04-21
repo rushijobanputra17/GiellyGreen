@@ -21,6 +21,7 @@ namespace GiellyGreen.Controllers
             {
                 var InvoicveDetails = monthlyInvoiceRepository.GetAllInvoice(InvoiceMonth);
 
+                
                 objResponse = JsonResponseHelper.GetJsonResponse(1, "Records found : ", InvoicveDetails);
             }
             catch (Exception ex)
