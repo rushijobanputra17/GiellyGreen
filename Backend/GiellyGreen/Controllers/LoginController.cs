@@ -16,7 +16,7 @@ namespace GiellyGreen.Controllers
         [Route("login")]
         public JsonResponse Post(LoginViewModel model)
         {
-            if(model.Username == WebConfigurationManager.AppSettings["Username"] && model.Password == WebConfigurationManager.AppSettings["Password"])
+            if (model.Username == WebConfigurationManager.AppSettings["Username"] && model.Password == WebConfigurationManager.AppSettings["LoginPassword"])
             {
                 return new JsonResponse()
                 {

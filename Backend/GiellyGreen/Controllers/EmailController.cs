@@ -15,30 +15,50 @@ using System.Web.Routing;
 
 namespace GiellyGreen.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class EmailController : ApiController
     {
         public JsonResponse Post(DateTime invoiceDate, string InvoiceRef, List<int> selectedSupplierIds)
         {
-           
-            MonthlyInvoiceRepository monthlyInvoiceRepository = new MonthlyInvoiceRepository();
-            var invoiceDetails = monthlyInvoiceRepository.GetInvoicesForPDF(invoiceDate, selectedSupplierIds);
-
-            PDFController pdfContoller = new PDFController();
-            RouteData route = new RouteData();
-            route.Values.Add("action", "GetPDFBytes");
-            route.Values.Add("controller", "PDF");
-            System.Web.Mvc.ControllerContext newContext = new System.Web.Mvc.ControllerContext(new HttpContextWrapper(System.Web.HttpContext.Current), route, pdfContoller);
-            pdfContoller.ControllerContext = newContext;
-
-            foreach (var invoice in invoiceDetails)
+            JsonResponse objResponse = new JsonResponse();
+            try
             {
-                Attachment attachment = new Attachment(new MemoryStream(pdfContoller.GetPDFBytes(invoice)), "Invoice.pdf");
-               EmailHelper.SendEmail(invoice.EmailAddress,invoice.InvoiceDate,invoice.SupplierName, attachment);
+                MonthlyInvoiceRepository monthlyInvoiceRepository = new MonthlyInvoiceRepository();
+                var invoiceDetails = monthlyInvoiceRepository.GetInvoicesForPDF(invoiceDate, selectedSupplierIds);
+
+                PDFController pdfContoller = new PDFController();
+                RouteData route = new RouteData();
+                route.Values.Add("action", "GetPDFBytes");
+                route.Values.Add("controller", "PDF");
+                System.Web.Mvc.ControllerContext newContext = new System.Web.Mvc.ControllerContext(new HttpContextWrapper(System.Web.HttpContext.Current), route, pdfContoller);
+                pdfContoller.ControllerContext = newContext;
+
+                foreach (var invoice in invoiceDetails)
+                {
+                    if (invoice.Logo!=null)
+                    {
+                        String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
+                        invoice.Logo = Path.Combine(path, invoice.Logo);
+                    }
+                    Attachment attachment = new Attachment(new MemoryStream(pdfContoller.GetPDFBytes(invoice)), "Invoice.pdf");
+                    EmailHelper.SendEmail(invoice.EmailAddress, invoice.InvoiceDate, invoice.SupplierName, attachment);
+                }
+                objResponse = JsonResponseHelper.GetJsonResponse(1, "Email Send Successfully ", null);
             }
-            return new JsonResponse();
+            catch(Exception ex)
+            {
+                if(ex.InnerException!=null)
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Exception", ex.InnerException.Message);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Exception", ex.Message);
+                }
+            }
+
+            return objResponse;
         }
 
-       
     }
 }

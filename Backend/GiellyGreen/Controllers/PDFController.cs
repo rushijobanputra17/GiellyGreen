@@ -15,5 +15,10 @@ namespace GiellyGreen.Controllers
         {
             return new Rotativa.ViewAsPdf("~/Views/PDF/Invoice.cshtml",model).BuildFile(ControllerContext);
         }
+
+        public ActionResult ReflectView()
+        {
+            return View("~/Views/PDF/Invoice.cshtml", new GetInvoicesForPdf_Result());
+        }
     }
 }
