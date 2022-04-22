@@ -63,6 +63,7 @@ namespace GiellyGreen.Controllers
         }
 
       [Route("ConvertToPdf")]
+      [HttpPost]
         public JsonResponse ConvertToPdf(DateTime invoiceDate, string InvoiceRef, List<int> selectedSupplierIds)
         {
             JsonResponse objResponse = new JsonResponse();
@@ -91,8 +92,8 @@ namespace GiellyGreen.Controllers
                 var pdfBytesList = pdfContoller.GetPDFBytesForCombine(invoiceDetails);
                 string pdfBase64String = Convert.ToBase64String(pdfBytesList);
                // Attachment attachment = new Attachment(new MemoryStream(pdfContoller.GetPDFBytesForCombine(invoiceDetails)), "Invoice.pdf");
-              //  EmailHelper.SendEmail("rushijobanputra1712001@gmail.com", invoiceDate, "rUSGHI", attachment);
-                objResponse = JsonResponseHelper.GetJsonResponse(1, "Combined pdf generated ", pdfBase64String);
+               //  EmailHelper.SendEmail("rushijobanputra1712001@gmail.com", invoiceDate, "rUSGHI", attachment);
+                objResponse = JsonResponseHelper.GetJsonResponse(1, invoiceDate.ToString("MMMM") + "_Invoice", pdfBase64String);
             }
             catch (Exception ex)
             {

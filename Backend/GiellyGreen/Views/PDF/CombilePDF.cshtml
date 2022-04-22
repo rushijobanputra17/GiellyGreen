@@ -13,12 +13,14 @@
         * {
             box-sizing: border-box;
         }
+
         .pageFinish {
             page-break-after: always;
         }
-        .pageFinish:last-child {
-            page-break-before: auto;
-        }
+
+            .pageFinish:last-child {
+                page-break-before: auto;
+            }
         /* Create two equal columns that floats next to each other */
         .column {
             float: left;
@@ -65,6 +67,11 @@
 <body>
     @foreach (var item in Model)
     {
+        if (item.Logo != null)
+        {
+            String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
+            item.Logo = Path.Combine(path, item.Logo);
+        }
         <div class="container pageFinish">
             <div class="row" style="margin-bottom:3px;">
                 <div class="columnHeader">
