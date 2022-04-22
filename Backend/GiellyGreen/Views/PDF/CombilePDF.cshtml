@@ -1,0 +1,202 @@
+﻿@model List<DataAccessLayer.Model.GetInvoicesForPdf_Result>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Invoice</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .pageFinish {
+            page-break-after: always;
+        }
+        .pageFinish:last-child {
+            page-break-before: auto;
+        }
+        /* Create two equal columns that floats next to each other */
+        .column {
+            float: left;
+            width: 50%;
+            padding: 10px;
+            height: 150px; /* Should be removed. Only for demonstration */
+        }
+
+        .columnHeader {
+            float: left;
+            width: 50%;
+            padding: 10px;
+            height: 70px; /* Should be removed. Only for demonstration */
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        th, td {
+            padding: 5px;
+        }
+
+        .widthcol {
+            width: 60%;
+        }
+
+        table {
+            border: none
+        }
+
+        .borderCell {
+            border: 1px solid gray;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    @foreach (var item in Model)
+    {
+        <div class="container pageFinish">
+            <div class="row" style="margin-bottom:3px;">
+                <div class="columnHeader">
+                    @if (item.Logo != null)
+                    {
+                        <img src="@item.Logo" width="200" height="100" alt=@item.Logo />
+                    }
+                </div>
+                <div class="columnHeader" style="text-align:right">
+                    <h1>Self Billed Invoice</h1>
+                </div>
+            </div>
+            <br />
+            <div class="row ">
+                <div class="column" style="text-align:left">
+                    <h4>@item.SupplierName</h4>
+                    <h4>@item.BusinessAddress</h4>
+                </div>
+                <div class="column" style="text-align:right">
+                    <h4> Invoice Date : @item.InvoiceDate</h4>
+                    <h4>Invoice Referance : @item.InvoiceRef</h4>
+                    <br />
+                    @if (item.TAXReference != null)
+                    {
+                        <h4> TAX Referance : @item.TAXReference</h4>
+                    }
+                    @if (item.VATNumber != null)
+                    {
+                        <h4> TAX VATNumber : @item.VATNumber</h4>
+                    }
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="column">
+                    <h4>To : ADK Consultancy</h4>
+                    <h4>Dummy Address</h4>
+                    <h4>Dummy Address</h4>
+                    <h4>Dummy Address</h4>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="margin-bottom:3px;">
+                <div class="col-md-12">
+                    <table class="table-bord" style="width:100%">
+                        <thead>
+                            <tr style="padding:3px;" class="borderCell">
+                                <th class="borderCell" colspan="3" style="margin-left:10px;border-right:0px">Description</th>
+                                <th class="borderCell text-right" style="border-left:0px">Amount(GBP)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="borderCell">
+                                <td colspan="2" class="widthcol borderCell">Hair Services</td>
+                                <td class="borderCell"></td>
+                                <td class="borderCell text-right">@item.HairServices</td>
+                            </tr>
+                            <tr class="borderCell">
+                                <td class="borderCell" colspan="2">Beauty Services</td>
+                                <td class="borderCell"></td>
+                                <td class="borderCell text-right">@item.BeautyServices</td>
+                            </tr>
+                            @if (item.CustomHeader1 != null && item.CustomService1 != 0)
+                            {
+                                <tr class="borderCell">
+                                    <td class="borderCell" colspan="2">@item.CustomHeader1</td>
+                                    <td class="borderCell"></td>
+                                    <td class="borderCell text-right">@item.CustomService1</td>
+                                </tr>
+                            }
+                            @if (item.CustomHeader2 != null && item.CustomService2 != 0)
+                            {
+                                <tr class="borderCell">
+                                    <td class="borderCell" colspan="2">@item.CustomHeader2</td>
+                                    <td class="borderCell"></td>
+                                    <td class="borderCell text-right">@item.CustomService2</td>
+                                </tr>
+                            }
+                            @if (item.CustomHeader3 != null && item.CustomService3 != 0)
+                            {
+                                <tr class="borderCell">
+                                    <td class="borderCell" colspan="2">@item.CustomHeader3</td>
+                                    <td class="borderCell"></td>
+                                    <td class="borderCell text-right">@item.CustomService3</td>
+                                </tr>
+                            }
+                            @if (item.CustomHeader4 != null && item.CustomService4 != 0)
+                            {
+                                <tr class="borderCell">
+                                    <td class="borderCell" colspan="2">@item.CustomHeader4</td>
+                                    <td class="borderCell"></td>
+                                    <td class="borderCell text-right">@item.CustomService4</td>
+                                </tr>
+                            }
+                            @if (item.CustomHeader5 != null && item.CustomService5 != 0)
+                            {
+                                <tr class="borderCell">
+                                    <td class="borderCell" colspan="2">@item.CustomHeader5</td>
+                                    <td class="borderCell"></td>
+                                    <td class="borderCell text-right">@item.CustomService5</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td colspan="2" style="border:0px"></td>
+                                <td class="text-right">Subtotal(Net)</td>
+                                <td class="borderCell text-right">@item.Net</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td class="text-right">VAT</td>
+                                <td class="borderCell text-right">@item.VAT</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td class="text-right">Advance Paid</td>
+                                <td class="borderCell text-right">@item.AdvancePaid</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td class="text-right">Balance Due</td>
+                                <td class="borderCell text-right">@item.BalanceDue</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    }
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+
+</html>
