@@ -1,5 +1,5 @@
 import { toBase64String } from '@angular/compiler/src/output/source_map';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -35,6 +35,7 @@ export class SuppliersComponent implements OnInit {
   isEdit = false;
   EditedSupplier: any;
   uploadedlogo: any;
+  @ViewChild('logo') logoFile:any;
 
 
 
@@ -48,6 +49,7 @@ export class SuppliersComponent implements OnInit {
   deletelogo(){
     console.log("deletelogo");
     this.uploadedlogo=null;
+    this.logoFile.nativeElement.value = "";
   }
 
   ngOnInit(): void {
@@ -113,7 +115,7 @@ export class SuppliersComponent implements OnInit {
         };
       }
       else{
-        this.message.success("Only jpeg and png allowed.", {
+        this.message.error("Only jpeg and png allowed.", {
           nzDuration: 5000
         });
       }

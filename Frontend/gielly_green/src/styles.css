@@ -2,5 +2,52 @@
 @import "~ng-zorro-antd/style/index.min.css"; /* Import base styles */
 @import "~ng-zorro-antd/button/style/index.min.css";  /* Import one component's styles */
 
-@import "~bootstrap/dist/css/bootstrap.css"/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";/* You can add global styles to this file, and also import other style files */
 
+
+.ant-table-column-sorter{
+    justify-content: flex-start !important;
+    flex: inherit !important;
+  }
+  
+  .ant-table-column-title{
+    position: relative!important;
+    z-index: 1!important;
+    flex: 1!important;
+    white-space: nowrap!important;
+    margin-right: 5px!important;
+  }
+  
+  .ant-table-column-sorters::after {
+    position: relative!important;
+  }
+
+  .anticon-search{
+      color:#C4C4C4!important;
+      font-size:20px!important;
+  }
+
+  .ant-switch-checked {
+    background-color:#00c897!important;;
+  }
+
+
+  @media print {
+    body{
+        -webkit-print-color-adjust:exact;
+      
+    }
+
+    nz-layout{
+        display: none!important;
+    }
+
+    #printableTable{
+        display:block!important;
+       
+    }
+
+    .head{
+        font-family: 'Dax-Regular'!important;
+    }
+}

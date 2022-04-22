@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
       const UserLoginDetail = this.validateForm.controls
       this.httpService.loginUser(UserLoginDetail["userName"].value, UserLoginDetail["password"].value).subscribe(
         (response) => {
-
+          console.log(response);
           if (response.ResponseStatus == 1) {
 
             this.httpService.logintoken(UserLoginDetail["userName"].value, UserLoginDetail["password"].value).subscribe(
@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit {
 
           }
           else {
-
             this.message.error('Invalid Email or Password', {
               nzDuration: 2000
             });

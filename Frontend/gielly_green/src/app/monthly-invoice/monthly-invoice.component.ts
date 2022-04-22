@@ -1,10 +1,12 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe,DecimalPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import Swal from 'sweetalert2';
 import { DataParsingService } from '../data-parsing.service';
+
 
 @Component({
   selector: 'app-monthly-invoice',
@@ -53,7 +55,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   advancePaid: any;
 //#endregion
 
-  constructor(private router: Router, private fb: FormBuilder, public datepipe: DatePipe, private httpService: DataParsingService, private message: NzMessageService) { }
+  constructor(private router: Router, private fb: FormBuilder, public datepipe: DatePipe,public decimalpipe: DecimalPipe, private httpService: DataParsingService, private message: NzMessageService) { }
 
   ngOnInit(): void {
     if (!sessionStorage.getItem('logged_user')) {
@@ -81,8 +83,9 @@ onChange(date: any) {
   this.showLoader = true;
   let monthYearFilter = date.getFullYear() + "-" + (date.getMonth()+1);
   console.log(monthYearFilter);
-  this.invoiceDate = this.datepipe.transform(date, 'yyyy-MM-dd');
-  this.invoiceReferenceNumber = String(date.getMonth() + 1) + String(date.getFullYear()) + String(this.counter);
+  let lastdate=new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  this.invoiceDate = this.datepipe.transform(lastdate, 'yyyy-MM-dd');
+  this.invoiceReferenceNumber = date.toLocaleString('en-us', { month: 'long' }) + String(date.getFullYear());
   this.counter++;
 
   this.httpService.getInvoiceData(monthYearFilter).subscribe(
@@ -167,9 +170,14 @@ Approved(){
   this.httpService.ApprovedSelectedSupplier(this.invoiceDate,this.setOfCheckedId).subscribe(
     (response) => {
       console.log(response);
-      this.message.success("Supplier Approved Successfully", {
-        nzDuration: 5000
-      });
+      Swal.fire(
+        'Approved !',
+        'you just approved invoices',
+        'success'
+      )
+      // this.message.success("Supplier Approved Successfully", {
+      //   nzDuration: 5000
+      // });
     },
     (error: any) => {
       this.message.error("Server Error! Please Reload Your Page", {
@@ -193,6 +201,7 @@ saveInvoice(){
   this.httpService.InvoiceBody.CustomHeader5 =  this.customHeader5;
   this.httpService.InvoiceBody.InvoiceRef = this.invoiceReferenceNumber;
   this.httpService.InvoiceBody.InvoiceDate = this.invoiceDate;
+
  
   this.httpService.saveInvoiceData().subscribe(
     (response) => {
@@ -210,4 +219,110 @@ saveInvoice(){
   );
 }
 //#endregion
+downloadPdf(base64String:any,fileName:any){
+  const source = `data:application/pdf;base64,${base64String}`;
+  const link = document.createElement("a");
+  link.href = source;
+  link.download = `${fileName}.pdf`
+  link.click();
+}
+
+//#region print report
+printInvoice(){
+
+  window.print();
+  // let printContents: any = document.getElementById('InvoiceTable');
+  // let getTableToPrint = printContents.outerHTML;
+  // var a: any = window.open('', '', 'height=1000, width=1000');
+  // setTimeout(function(){
+  //   a.document.write('<html><head><link rel="stylesheet" type="text/css" href="styles.css" /></head>');
+  //   a.document.write('<body>');
+  //   a.document.write(getTableToPrint);
+  //   a.document.write('</body></html>');
+  //   // a.close();
+  //   window.print();
+  // }, 2000);
+}
+//#endregion
+
+CombinePDF(){
+  this.httpService.CombinePDfOFSupplier(this.invoiceDate,this.setOfCheckedId,this.invoiceReferenceNumber).subscribe(
+    (response) => {
+      console.log(response);
+      this.downloadPdf(response.Result,response.Message);
+
+      this.message.success("PDF successfully download", {
+        nzDuration: 1000
+      });
+    },
+    (error: any) => {
+      this.message.error("Server Error! Please Reload Your Page", {
+        nzDuration: 5000
+      });
+    },
+    () => console.log("done")
+  );
+}
+
+getVAT(data:any){
+  let netvalue=this.getNet(data)
+  return data.VAT=netvalue*0.2;
+}
+
+getNet(data:any){
+  let netvalue=data.HairServices+data.BeautyServices+data.CustomService1+data.CustomService2+data.CustomService3+data.CustomService4+data.CustomService5;
+  return data.Net=netvalue;
+}
+
+getGross(data:any){
+  let netvalue=this.getNet(data);
+  let VATvalue=this.getVAT(data);
+  return data.Gross=netvalue+VATvalue;
+}
+
+getBalanceDue(data:any){
+  let GrossValue=this.getGross(data);
+  return data.BalanceDue=GrossValue-data.AdvancePaid;
+}
+
+getTotalNET(data:any){
+  let total=0;
+  data.forEach((item:any)=>
+  total+=item.Net
+  );
+  return total;
+}
+
+getTotalVET(data:any){
+  let total=0;
+  data.forEach((item:any)=>
+  total+=item.VAT
+  );
+  return total;
+}
+
+getTotalGross(data:any){
+  let total=0;
+  data.forEach((item:any)=>
+  total+=item.Gross
+  );
+  return total;
+}
+
+getTotalAdvancePay(data:any){
+  let total=0;
+  data.forEach((item:any)=>
+  total+=item.AdvancePaid
+  );
+  return total;
+}
+
+getTotalBalanceDue(data:any){
+  let total=0;
+  data.forEach((item:any)=>
+  total+=item.BalanceDue
+  );
+  return total;
+}
+
 }

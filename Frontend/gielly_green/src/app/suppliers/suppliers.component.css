@@ -42,6 +42,7 @@
 
 
 
+
   .topright {
     position: absolute;
     top:25px;
@@ -123,7 +124,6 @@ th {
     color: white!important;
     background-color:#2C2B29!important;
     font-family:'Dax-Regular'!important;
-    
 }
 
 tr {
@@ -211,4 +211,3 @@ table {
 .blurPage{
   filter: blur(8px);
 }
-

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -74,7 +74,7 @@ registerLocaleData(en);
 
 
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US },DatePipe],
+  providers: [{ provide: NZ_I18N, useValue: en_US },DatePipe,DecimalPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
