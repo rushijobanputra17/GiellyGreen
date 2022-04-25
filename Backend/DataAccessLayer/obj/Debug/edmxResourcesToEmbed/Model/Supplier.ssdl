@@ -33,7 +33,6 @@
     <Property Name="CustomHeader5" Type="nvarchar" MaxLength="50" />
     <Property Name="InvoiceRef" Type="nvarchar" MaxLength="15" />
     <Property Name="InvoiceDate" Type="date" />
-    <Property Name="InvoiceMonth" Type="date" />
   </EntityType>
   <EntityType Name="Supplier">
     <Key>

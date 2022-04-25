@@ -32,7 +32,6 @@
     <EntitySetMapping Name="Invoices">
       <EntityTypeMapping TypeName="Team2_GiellyGreenModel.Invoice">
         <MappingFragment StoreEntitySet="Invoices">
-          <ScalarProperty Name="InvoiceMonth" ColumnName="InvoiceMonth" />
           <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
           <ScalarProperty Name="InvoiceRef" ColumnName="InvoiceRef" />
           <ScalarProperty Name="CustomHeader5" ColumnName="CustomHeader5" />
@@ -86,13 +85,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="InsertInvoice" FunctionName="Team2_GiellyGreenModel.Store.InsertInvoice">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.InsertInvoice_Result">
-          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="ApproveInvoices" FunctionName="Team2_GiellyGreenModel.Store.ApproveInvoices">
       <ResultMapping>
         <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.ApproveInvoices_Result">
@@ -161,6 +153,13 @@
           <ScalarProperty Name="AdvancePaid" ColumnName="AdvancePaid" />
           <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
           <ScalarProperty Name="Approved" ColumnName="Approved" />
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertInvoice" FunctionName="Team2_GiellyGreenModel.Store.InsertInvoice">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.InsertInvoice_Result">
           <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
         </ComplexTypeMapping>
       </ResultMapping>

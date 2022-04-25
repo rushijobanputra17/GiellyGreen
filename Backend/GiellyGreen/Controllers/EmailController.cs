@@ -19,7 +19,7 @@ namespace GiellyGreen.Controllers
     //[Authorize]
     public class EmailController : ApiController
     {
-        
+
         public JsonResponse Post(DateTime invoiceDate, string InvoiceRef, List<int> selectedSupplierIds)
         {
             JsonResponse objResponse = new JsonResponse();
@@ -35,35 +35,45 @@ namespace GiellyGreen.Controllers
                 System.Web.Mvc.ControllerContext newContext = new System.Web.Mvc.ControllerContext(new HttpContextWrapper(System.Web.HttpContext.Current), route, pdfContoller);
                 pdfContoller.ControllerContext = newContext;
 
-                foreach (var invoice in invoiceDetails)
+                if (invoiceDetails.Count > 0)
                 {
-                    if (invoice.Logo!=null)
+                    foreach (var invoice in invoiceDetails)
                     {
-                        String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
-                        invoice.Logo = Path.Combine(path, invoice.Logo);
+                        if (invoice.Net > 0)
+                        {
+                            if (invoice.Logo != null)
+                            {
+                                String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
+                                invoice.Logo = Path.Combine(path, invoice.Logo);
+                            }
+                            Attachment attachment = new Attachment(new MemoryStream(pdfContoller.GetPDFBytes(invoice)), "Invoice.pdf");
+                            EmailHelper.SendEmail(invoice.EmailAddress, invoice.InvoiceDate, invoice.SupplierName, attachment);
+                        }
                     }
-                    Attachment attachment = new Attachment(new MemoryStream(pdfContoller.GetPDFBytes(invoice)), "Invoice.pdf");
-                    EmailHelper.SendEmail(invoice.EmailAddress, invoice.InvoiceDate, invoice.SupplierName, attachment);
-                }
-                objResponse = JsonResponseHelper.GetJsonResponse(1, "Email Send Successfully ", null);
-            }
-            catch(Exception ex)
-            {
-                if(ex.InnerException!=null)
-                {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Exception", ex.InnerException.Message);
+                    objResponse = JsonResponseHelper.GetJsonResponse(1, "Email Send Successfully ", null);
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Exception", ex.Message);
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "No Records found", null);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null)
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
                 }
             }
 
             return objResponse;
         }
 
-      [Route("ConvertToPdf")]
-      [HttpPost]
+        [Route("ConvertToPdf")]
+        [HttpPost]
         public JsonResponse ConvertToPdf(DateTime invoiceDate, string InvoiceRef, List<int> selectedSupplierIds)
         {
             JsonResponse objResponse = new JsonResponse();
@@ -71,39 +81,32 @@ namespace GiellyGreen.Controllers
             {
                 MonthlyInvoiceRepository monthlyInvoiceRepository = new MonthlyInvoiceRepository();
                 var invoiceDetails = monthlyInvoiceRepository.GetInvoicesForPDF(invoiceDate, selectedSupplierIds);
-
-                PDFController pdfContoller = new PDFController();
-                RouteData route = new RouteData();
-                route.Values.Add("action", "GetPDFBytesForCombine");
-                route.Values.Add("controller", "PDF");
-                System.Web.Mvc.ControllerContext newContext = new System.Web.Mvc.ControllerContext(new HttpContextWrapper(System.Web.HttpContext.Current), route, pdfContoller);
-                pdfContoller.ControllerContext = newContext;
-
-                //foreach (var invoice in invoiceDetails)
-                //{
-                //    if (invoice.Logo != null)
-                //    {
-                //        String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
-                //        invoice.Logo = Path.Combine(path, invoice.Logo);
-                //    }
-                //    Attachment attachment = new Attachment(new MemoryStream(pdfContoller.GetPDFBytes(invoice)), "Invoice.pdf");
-                //    EmailHelper.SendEmail(invoice.EmailAddress, invoice.InvoiceDate, invoice.SupplierName, attachment);
-                //}
-                var pdfBytesList = pdfContoller.GetPDFBytesForCombine(invoiceDetails);
-                string pdfBase64String = Convert.ToBase64String(pdfBytesList);
-               // Attachment attachment = new Attachment(new MemoryStream(pdfContoller.GetPDFBytesForCombine(invoiceDetails)), "Invoice.pdf");
-               //  EmailHelper.SendEmail("rushijobanputra1712001@gmail.com", invoiceDate, "rUSGHI", attachment);
-                objResponse = JsonResponseHelper.GetJsonResponse(1, invoiceDate.ToString("MMMM") + "_Invoice", pdfBase64String);
+                if (invoiceDetails.Count > 0)
+                {
+                    PDFController pdfContoller = new PDFController();
+                    RouteData route = new RouteData();
+                    route.Values.Add("action", "GetPDFBytesForCombine");
+                    route.Values.Add("controller", "PDF");
+                    System.Web.Mvc.ControllerContext newContext = new System.Web.Mvc.ControllerContext(new HttpContextWrapper(System.Web.HttpContext.Current), route, pdfContoller);
+                    pdfContoller.ControllerContext = newContext;
+                    var pdfBytesList = pdfContoller.GetPDFBytesForCombine(invoiceDetails);
+                    string pdfBase64String = Convert.ToBase64String(pdfBytesList);
+                    objResponse = JsonResponseHelper.GetJsonResponse(1, invoiceDate.ToString("MMMM") + "_Invoice", pdfBase64String);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "No Records found", null);
+                }
             }
             catch (Exception ex)
             {
                 if (ex.InnerException != null)
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Exception", ex.InnerException.Message);
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Exception", ex.Message);
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
                 }
             }
 

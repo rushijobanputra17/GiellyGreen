@@ -45,7 +45,7 @@ namespace GiellyGreen.Controllers
                     }
                     else
                     {
-                        objResponse = JsonResponseHelper.GetJsonResponse(0, "Data Saved Successfully", monthlyInvoice);
+                        objResponse = JsonResponseHelper.GetJsonResponse(1, "Data Saved Successfully", monthlyInvoice);
                     }
                 }
                 else
@@ -77,7 +77,7 @@ namespace GiellyGreen.Controllers
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Reocrd Not Found", null);
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Record Not Found", null);
                 }
             }
             catch (Exception ex)

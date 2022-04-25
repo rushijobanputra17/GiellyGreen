@@ -75,7 +75,7 @@
                 <h4>@Model.BusinessAddress</h4>
             </div>
             <div class="column" style="text-align:right">
-                <h4> Invoice Date : @Model.InvoiceDate</h4>
+                <h4> Invoice Date :  @Convert.ToDateTime(@Model.InvoiceDate).ToString("dd-MM-yyyy")</h4>
                 <h4>Invoice Referance : @Model.InvoiceRef</h4>
                 <br />
                 @if (Model.TAXReference != null)
@@ -111,19 +111,19 @@
                         <tr  class="borderCell">
                             <td  colspan="2" class="widthcol borderCell">Hair Services</td>
                             <td class="borderCell"></td>
-                            <td class="borderCell text-right">@Model.HairServices</td>
+                            <td class="borderCell text-right">@Convert.ToDecimal(Model.HairServices).ToString("N2")</td>
                         </tr>
                         <tr class="borderCell">
                             <td class="borderCell" colspan="2">Beauty Services</td>
                             <td class="borderCell"></td>
-                            <td class="borderCell text-right">@Model.BeautyServices</td>
+                            <td class="borderCell text-right">@Convert.ToDecimal(Model.BeautyServices).ToString("N2")</td>
                         </tr>
                         @if (Model.CustomHeader1 != null && Model.CustomService1!=0)
                         {
                             <tr  class="borderCell">
                                 <td class="borderCell" colspan="2">@Model.CustomHeader1</td>
                                 <td class="borderCell"></td>
-                                <td class="borderCell text-right">@Model.CustomService1</td>
+                                <td class="borderCell text-right">@Convert.ToDecimal(Model.CustomService1).ToString("N2")</td>
                             </tr>
                         }
                         @if (Model.CustomHeader2 != null && Model.CustomService2 != 0)
@@ -131,7 +131,7 @@
                             <tr  class="borderCell">
                                 <td class="borderCell" colspan="2">@Model.CustomHeader2</td>
                                 <td class="borderCell"></td>
-                                <td class="borderCell text-right">@Model.CustomService2</td>
+                                <td class="borderCell text-right">@Convert.ToDecimal(Model.CustomService2).ToString("N2")</td>
                             </tr>
                         }
                         @if (Model.CustomHeader3 != null && Model.CustomService3 != 0)
@@ -139,7 +139,7 @@
                             <tr  class="borderCell">
                                 <td class="borderCell" colspan="2">@Model.CustomHeader3</td>
                                 <td class="borderCell"></td>
-                                <td class="borderCell text-right">@Model.CustomService3</td>
+                                <td class="borderCell text-right">@Convert.ToDecimal(Model.CustomService3).ToString("N2")</td>
                             </tr>
                         }
                         @if (Model.CustomHeader4 != null && Model.CustomService4 != 0)
@@ -147,7 +147,7 @@
                             <tr  class="borderCell">
                                 <td class="borderCell" colspan="2">@Model.CustomHeader4</td>
                                 <td class="borderCell"></td>
-                                <td class="borderCell text-right">@Model.CustomService4</td>
+                                <td class="borderCell text-right">@Convert.ToDecimal(Model.CustomService4).ToString("N2")</td>
                             </tr>
                         }
                         @if (Model.CustomHeader5 != null && Model.CustomService5 != 0)
@@ -155,28 +155,28 @@
                             <tr  class="borderCell">
                                 <td class="borderCell" colspan="2">@Model.CustomHeader5</td>
                                 <td class="borderCell"></td>
-                                <td class="borderCell text-right">@Model.CustomService5</td>
+                                <td class="borderCell text-right">@Convert.ToDecimal(Model.CustomService5).ToString("N2")</td>
                             </tr>
                         }
                         <tr>
                             <td colspan="2" style="border:0px"></td>
                             <td class="text-right" >Subtotal(Net)</td>
-                            <td  class="borderCell text-right">@Model.Net</td>
+                            <td class="borderCell text-right">@Convert.ToDecimal(Model.Net).ToString("N2")</td>
                         </tr>
                         <tr>
                             <td colspan="2"></td>
                             <td class="text-right">VAT</td>
-                            <td  class="borderCell text-right">@Model.VAT</td>
+                            <td class="borderCell text-right">@Convert.ToDecimal(Model.VAT).ToString("N2")</td>
                         </tr>
                         <tr>
                             <td colspan="2"></td>
                             <td class="text-right">Advance Paid</td>
-                            <td class="borderCell text-right">@Model.AdvancePaid</td>
+                            <td class="borderCell text-right">@Convert.ToDecimal(Model.AdvancePaid).ToString("N2")</td>
                         </tr>
                         <tr>
                             <td colspan="2"></td>
                             <td class="text-right">Balance Due</td>
-                            <td class="borderCell text-right">@Model.BalanceDue</td>
+                            <td class="borderCell text-right">@Convert.ToDecimal(Model.BalanceDue).ToString("N2")</td>
                         </tr>
                     </tbody>
                 </table>

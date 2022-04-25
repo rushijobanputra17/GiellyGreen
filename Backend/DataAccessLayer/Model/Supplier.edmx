@@ -38,7 +38,6 @@
           <Property Name="CustomHeader5" Type="nvarchar" MaxLength="50" />
           <Property Name="InvoiceRef" Type="nvarchar" MaxLength="15" />
           <Property Name="InvoiceDate" Type="date" />
-          <Property Name="InvoiceMonth" Type="date" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -219,16 +218,6 @@
             <End Role="Invoice" EntitySet="Invoices" />
             <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
           </AssociationSet>
-          <FunctionImport Name="InsertInvoice" ReturnType="Collection(Team2_GiellyGreenModel.InsertInvoice_Result)">
-            <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
-            <Parameter Name="InvoiceRef" Mode="In" Type="String" />
-            <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
-            <Parameter Name="CustomCol1" Mode="In" Type="String" />
-            <Parameter Name="CustomCol2" Mode="In" Type="String" />
-            <Parameter Name="CustomCol3" Mode="In" Type="String" />
-            <Parameter Name="CustomCol4" Mode="In" Type="String" />
-            <Parameter Name="CustomCol5" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="ApproveInvoices" ReturnType="Collection(Team2_GiellyGreenModel.ApproveInvoices_Result)">
             <Parameter Name="SelectedIds" Mode="In" Type="String" />
             <Parameter Name="SelectedDate" Mode="In" Type="DateTime" />
@@ -239,6 +228,16 @@
           <FunctionImport Name="GetInvoicesForPdf" ReturnType="Collection(Team2_GiellyGreenModel.GetInvoicesForPdf_Result)">
             <Parameter Name="SelectedIds" Mode="In" Type="String" />
             <Parameter Name="SelectedDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="InsertInvoice" ReturnType="Collection(Team2_GiellyGreenModel.InsertInvoice_Result)">
+            <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
+            <Parameter Name="InvoiceRef" Mode="In" Type="String" />
+            <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
+            <Parameter Name="CustomCol1" Mode="In" Type="String" />
+            <Parameter Name="CustomCol2" Mode="In" Type="String" />
+            <Parameter Name="CustomCol3" Mode="In" Type="String" />
+            <Parameter Name="CustomCol4" Mode="In" Type="String" />
+            <Parameter Name="CustomCol5" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DeleteSupplier_Result">
@@ -358,9 +357,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="InsertInvoice_Result">
-          <Property Type="Int32" Name="InvoiceId" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="ApproveInvoices_Result">
           <Property Type="Int32" Name="response" Nullable="true" />
         </ComplexType>
@@ -421,6 +417,9 @@
           <Property Type="Boolean" Name="Approved" Nullable="true" />
           <Property Type="Int32" Name="InvoiceId" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="InsertInvoice_Result">
+          <Property Type="Int32" Name="InvoiceId" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -458,7 +457,6 @@
           <EntitySetMapping Name="Invoices">
             <EntityTypeMapping TypeName="Team2_GiellyGreenModel.Invoice">
               <MappingFragment StoreEntitySet="Invoices">
-                <ScalarProperty Name="InvoiceMonth" ColumnName="InvoiceMonth" />
                 <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
                 <ScalarProperty Name="InvoiceRef" ColumnName="InvoiceRef" />
                 <ScalarProperty Name="CustomHeader5" ColumnName="CustomHeader5" />
@@ -512,13 +510,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="InsertInvoice" FunctionName="Team2_GiellyGreenModel.Store.InsertInvoice" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.InsertInvoice_Result">
-                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ApproveInvoices" FunctionName="Team2_GiellyGreenModel.Store.ApproveInvoices" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.ApproveInvoices_Result">
@@ -591,6 +582,13 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertInvoice" FunctionName="Team2_GiellyGreenModel.Store.InsertInvoice" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.InsertInvoice_Result">
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -613,7 +611,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="d86d4dad85834160a14d8672c628d6be" Name="Diagram1">
+      <Diagram DiagramId="d86d4dad85834160a14d8672c628d6be" Name="Diagram1" ZoomLevel="33">
         <EntityTypeShape EntityType="Team2_GiellyGreenModel.Invoice" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Team2_GiellyGreenModel.Supplier" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Team2_GiellyGreenModel.InvoiceDetail" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />

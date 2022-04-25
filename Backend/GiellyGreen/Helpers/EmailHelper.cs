@@ -14,8 +14,8 @@ namespace GiellyGreen.Helpers
         {
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["FromMailAddress"].ToString());
-            mailMessage.Subject = "Your invoice for the " + invoiceDate.ToString("MM/dd/yyyy");
-            mailMessage.Body = "Please find attached a self-billed invoice to"+ supplierName + " , prepared on your behalf, as per the agreement.Regard Gielly Green Limited";
+            mailMessage.Subject = "Your invoice for the " + invoiceDate.ToString("MMMM,yyyy");
+            mailMessage.Body = "Please find attached a self-billed invoice to "+ supplierName + " , prepared on your behalf, as per the agreement.Regard Gielly Green Limited";
             mailMessage.IsBodyHtml = true;
             mailMessage.Attachments.Add(attachment);
             //string[] ToMuliId = toEmails.Split(',');
