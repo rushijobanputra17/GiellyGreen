@@ -28,7 +28,11 @@ namespace DataAccessLayer.Services
             var invoiceDetail = 0;
             foreach (dynamic invoieDetail in model.invoiceDetails)
             {
-                invoiceDetail = objDataAccess.InsertUpdateInvoiceDetails(0, invoieDetail.SupplierId, invoieDetail.HairServices, invoieDetail.BeautyServices, invoieDetail.CustomService1, invoieDetail.CustomService2, invoieDetail.CustomService3, invoieDetail.CustomService4, invoieDetail.CustomService5, invoieDetail.Net, invoieDetail.VAT, invoieDetail.Gross, invoieDetail.AdvancePaid, invoieDetail.BalanceDue, invoieDetail.Approved, invoiceidValue);
+                if (invoieDetail.Net > 0)
+                {
+                    invoiceDetail = objDataAccess.InsertUpdateInvoiceDetails(0, invoieDetail.SupplierId, invoieDetail.HairServices, invoieDetail.BeautyServices, invoieDetail.CustomService1, invoieDetail.CustomService2, invoieDetail.CustomService3, invoieDetail.CustomService4, invoieDetail.CustomService5, invoieDetail.Net, invoieDetail.VAT, invoieDetail.Gross, invoieDetail.AdvancePaid, invoieDetail.BalanceDue, invoieDetail.Approved, invoiceidValue);
+                }
+
             }
             return invoiceDetail;
         }
@@ -42,12 +46,12 @@ namespace DataAccessLayer.Services
             foreach (var supplier in GetActiveSupplierList)
             {
                 var objectMonth = MonthlyInvoiceList.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault();
-                if (MonthlyInvoiceList.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault()==null)
+                if (MonthlyInvoiceList.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault() == null)
                 {
                     MonthlyInvoiceList.Add(mapper.Map<GetAllInvoice_Result>(supplier));
                 }
             }
-            
+
             return MonthlyInvoiceList;
         }
 
@@ -56,9 +60,9 @@ namespace DataAccessLayer.Services
             return objDataAccess.ApproveInvoices(String.Join(",", selectedIds), selectedDate).FirstOrDefault().response;
         }
 
-        public dynamic GetInvoicesForPDF(DateTime invoiceDate,List<int> selectedSupplierIds)
+        public dynamic GetInvoicesForPDF(DateTime invoiceDate, List<int> selectedSupplierIds)
         {
-            return objDataAccess.GetInvoicesForPdf(String.Join(",",selectedSupplierIds),invoiceDate).ToList();
+            return objDataAccess.GetInvoicesForPdf(String.Join(",", selectedSupplierIds), invoiceDate).ToList();
         }
 
     }

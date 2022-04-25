@@ -75,7 +75,7 @@
                 <h4>@Model.BusinessAddress</h4>
             </div>
             <div class="column" style="text-align:right">
-                <h4> Invoice Date : @Model.InvoiceDate</h4>
+                <h4> Invoice Date :  @Convert.ToDateTime(@Model.InvoiceDate).ToShortDateString()</h4>
                 <h4>Invoice Referance : @Model.InvoiceRef</h4>
                 <br />
                 @if (Model.TAXReference != null)

@@ -10,7 +10,8 @@
 namespace DataAccessLayer.Model
 {
     using System;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class GetInvoicesForPdf_Result
     {
         public string SupplierName { get; set; }

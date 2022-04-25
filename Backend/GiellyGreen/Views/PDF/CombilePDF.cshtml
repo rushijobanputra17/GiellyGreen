@@ -15,11 +15,11 @@
         }
 
         .pageFinish {
-            page-break-after: always;
+            page-break-after: always !important;
         }
 
             .pageFinish:last-child {
-                page-break-after: auto;
+                page-break-after: auto !important;
             }
 
         .column {
@@ -72,6 +72,7 @@
             String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
             item.Logo = Path.Combine(path, item.Logo);
         }
+        @item.InvoiceDate
         <div class="container pageFinish">
             <div class="row" style="margin-bottom:3px;">
                 <div class="columnHeader">
@@ -91,7 +92,7 @@
                     <h4>@item.BusinessAddress</h4>
                 </div>
                 <div class="column" style="text-align:right">
-                    <h4> Invoice Date : @item.InvoiceDate</h4>
+                    <h4> Invoice Date : @Convert.ToDateTime(@item.InvoiceDate).ToShortDateString() </h4>
                     <h4>Invoice Referance : @item.InvoiceRef</h4>
                     <br />
                     @if (item.TAXReference != null)
