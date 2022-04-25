@@ -33,7 +33,6 @@ namespace GiellyGreen.Controllers
                 {
                     Directory.CreateDirectory(path);
                 }
-
                 suppliers.ForEach(supplier =>
                 {
                     if (!string.IsNullOrEmpty(supplier.Logo) && supplier.Logo != "null")
@@ -62,22 +61,10 @@ namespace GiellyGreen.Controllers
                 model.IsInvoicePresent = false;
                 if (ModelState.IsValid)
                 {
-                    String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
-                    if (!Directory.Exists(path))
+                    if (model.Logo != null)
                     {
-                        Directory.CreateDirectory(path);
+                        model.Logo = SupplierHelper.SetModelLogo(model.SupplierName, model.Logo);
                     }
-
-                    if(model.Logo!=null)
-                    {
-                        string imgName = model.SupplierName + ".jpeg";
-                        string imgPath = Path.Combine(path, imgName);
-                        byte[] imgBytes = Convert.FromBase64String(model.Logo);
-                        File.WriteAllBytes(imgPath, imgBytes);
-                        model.Logo = imgName;
-                    }
-
-                   
 
                     if (supplierRepository.AddSupplier(mapper.Map<Supplier>(model)) == 1)
                     {
@@ -90,12 +77,12 @@ namespace GiellyGreen.Controllers
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while adding record", ModelState.Values.SelectMany(v => v.Errors).Select(v=>v.ErrorMessage).ToList());
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while adding record", ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList());
                 }
             }
             catch (Exception ex)
             {
-                if (ex.InnerException!= null)
+                if (ex.InnerException != null)
                 {
                     objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
                 }
@@ -104,6 +91,7 @@ namespace GiellyGreen.Controllers
                     objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
                 }
             }
+
             return objResponse;
         }
 
@@ -114,22 +102,11 @@ namespace GiellyGreen.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
-                    if (!Directory.Exists(path))
+                    if (model.Logo != null)
                     {
-                        Directory.CreateDirectory(path);
+                        model.Logo = SupplierHelper.SetModelLogo(model.SupplierName, model.Logo);
                     }
 
-                    if(model.Logo!=null)
-                    {
-                        string imgName = model.SupplierName + ".jpeg";
-                        string imgPath = Path.Combine(path, imgName);
-                        byte[] imgBytes = Convert.FromBase64String(model.Logo);
-                        File.WriteAllBytes(imgPath, imgBytes);
-
-                        model.Logo = imgName;
-                    }
-                   
                     model.SupplierId = id;
                     if (supplierRepository.UpdateSupplier(mapper.Map<Supplier>(model)) == 1)
                     {
@@ -147,7 +124,7 @@ namespace GiellyGreen.Controllers
             }
             catch (Exception ex)
             {
-                if(ex.InnerException!=null)
+                if (ex.InnerException != null)
                 {
                     objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
                 }
@@ -155,7 +132,6 @@ namespace GiellyGreen.Controllers
                 {
                     objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
                 }
-                
             }
 
             return objResponse;
