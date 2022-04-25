@@ -13,30 +13,29 @@
         * {
             box-sizing: border-box;
         }
-
         .pageFinish {
-            page-break-after: always !important;
+            page-break-before: always;
         }
 
-            .pageFinish:last-child {
-                page-break-after: auto !important;
+            .pageFinish:first-child {
+                page-break-before: avoid;
             }
 
         .column {
             float: left;
             width: 50%;
             padding: 10px;
-            height: 150px; 
+            height: 150px;
         }
 
         .columnHeader {
             float: left;
             width: 50%;
             padding: 10px;
-            height: 70px; 
+            height: 70px;
         }
 
- 
+
         .row:after {
             content: "";
             display: table;
@@ -72,7 +71,6 @@
             String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
             item.Logo = Path.Combine(path, item.Logo);
         }
-        @item.InvoiceDate
         <div class="container pageFinish">
             <div class="row" style="margin-bottom:3px;">
                 <div class="columnHeader">
@@ -92,7 +90,7 @@
                     <h4>@item.BusinessAddress</h4>
                 </div>
                 <div class="column" style="text-align:right">
-                    <h4> Invoice Date : @Convert.ToDateTime(@item.InvoiceDate).ToShortDateString() </h4>
+                    <h4> Invoice Date : @Convert.ToDateTime(@item.InvoiceDate).ToString("dd-MM-yyyy") </h4>
                     <h4>Invoice Referance : @item.InvoiceRef</h4>
                     <br />
                     @if (item.TAXReference != null)
@@ -128,7 +126,7 @@
                             <tr class="borderCell">
                                 <td colspan="2" class="widthcol borderCell">Hair Services</td>
                                 <td class="borderCell"></td>
-                            <td class="borderCell text-right">@Convert.ToDecimal(item.HairServices).ToString("N2")</td>
+                                <td class="borderCell text-right">@Convert.ToDecimal(item.HairServices).ToString("N2")</td>
                             </tr>
                             <tr class="borderCell">
                                 <td class="borderCell" colspan="2">Beauty Services</td>

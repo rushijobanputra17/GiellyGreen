@@ -193,6 +193,41 @@ namespace DataAccessLayer.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUpdateInvoiceDetails", invoiceDetailIdParameter, supplierIdParameter, hairServicesParameter, beautyServicesParameter, customService1Parameter, customService2Parameter, customService3Parameter, customService4Parameter, customService5Parameter, netParameter, vATParameter, grossParameter, advancePaidParameter, balanceDueParameter, approvedParameter, invoiceIdParameter);
         }
     
+        public virtual ObjectResult<ApproveInvoices_Result> ApproveInvoices(string selectedIds, Nullable<System.DateTime> selectedDate)
+        {
+            var selectedIdsParameter = selectedIds != null ?
+                new ObjectParameter("SelectedIds", selectedIds) :
+                new ObjectParameter("SelectedIds", typeof(string));
+    
+            var selectedDateParameter = selectedDate.HasValue ?
+                new ObjectParameter("SelectedDate", selectedDate) :
+                new ObjectParameter("SelectedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ApproveInvoices_Result>("ApproveInvoices", selectedIdsParameter, selectedDateParameter);
+        }
+    
+        public virtual ObjectResult<GetAllInvoice_Result> GetAllInvoice(Nullable<System.DateTime> invoiceMonth)
+        {
+            var invoiceMonthParameter = invoiceMonth.HasValue ?
+                new ObjectParameter("InvoiceMonth", invoiceMonth) :
+                new ObjectParameter("InvoiceMonth", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllInvoice_Result>("GetAllInvoice", invoiceMonthParameter);
+        }
+    
+        public virtual ObjectResult<GetInvoicesForPdf_Result> GetInvoicesForPdf(string selectedIds, Nullable<System.DateTime> selectedDate)
+        {
+            var selectedIdsParameter = selectedIds != null ?
+                new ObjectParameter("SelectedIds", selectedIds) :
+                new ObjectParameter("SelectedIds", typeof(string));
+    
+            var selectedDateParameter = selectedDate.HasValue ?
+                new ObjectParameter("SelectedDate", selectedDate) :
+                new ObjectParameter("SelectedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInvoicesForPdf_Result>("GetInvoicesForPdf", selectedIdsParameter, selectedDateParameter);
+        }
+    
         public virtual ObjectResult<InsertInvoice_Result> InsertInvoice(Nullable<int> invoiceId, string invoiceRef, Nullable<System.DateTime> invoiceDate, string customCol1, string customCol2, string customCol3, string customCol4, string customCol5)
         {
             var invoiceIdParameter = invoiceId.HasValue ?
@@ -228,41 +263,6 @@ namespace DataAccessLayer.Model
                 new ObjectParameter("CustomCol5", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsertInvoice_Result>("InsertInvoice", invoiceIdParameter, invoiceRefParameter, invoiceDateParameter, customCol1Parameter, customCol2Parameter, customCol3Parameter, customCol4Parameter, customCol5Parameter);
-        }
-    
-        public virtual ObjectResult<ApproveInvoices_Result> ApproveInvoices(string selectedIds, Nullable<System.DateTime> selectedDate)
-        {
-            var selectedIdsParameter = selectedIds != null ?
-                new ObjectParameter("SelectedIds", selectedIds) :
-                new ObjectParameter("SelectedIds", typeof(string));
-    
-            var selectedDateParameter = selectedDate.HasValue ?
-                new ObjectParameter("SelectedDate", selectedDate) :
-                new ObjectParameter("SelectedDate", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ApproveInvoices_Result>("ApproveInvoices", selectedIdsParameter, selectedDateParameter);
-        }
-    
-        public virtual ObjectResult<GetAllInvoice_Result> GetAllInvoice(Nullable<System.DateTime> invoiceMonth)
-        {
-            var invoiceMonthParameter = invoiceMonth.HasValue ?
-                new ObjectParameter("InvoiceMonth", invoiceMonth) :
-                new ObjectParameter("InvoiceMonth", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllInvoice_Result>("GetAllInvoice", invoiceMonthParameter);
-        }
-    
-        public virtual ObjectResult<GetInvoicesForPdf_Result> GetInvoicesForPdf(string selectedIds, Nullable<System.DateTime> selectedDate)
-        {
-            var selectedIdsParameter = selectedIds != null ?
-                new ObjectParameter("SelectedIds", selectedIds) :
-                new ObjectParameter("SelectedIds", typeof(string));
-    
-            var selectedDateParameter = selectedDate.HasValue ?
-                new ObjectParameter("SelectedDate", selectedDate) :
-                new ObjectParameter("SelectedDate", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInvoicesForPdf_Result>("GetInvoicesForPdf", selectedIdsParameter, selectedDateParameter);
         }
     }
 }

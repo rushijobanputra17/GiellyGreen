@@ -57,16 +57,6 @@
       <End Role="Invoice" EntitySet="Invoices" />
       <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
     </AssociationSet>
-    <FunctionImport Name="InsertInvoice" ReturnType="Collection(Team2_GiellyGreenModel.InsertInvoice_Result)">
-      <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
-      <Parameter Name="InvoiceRef" Mode="In" Type="String" />
-      <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
-      <Parameter Name="CustomCol1" Mode="In" Type="String" />
-      <Parameter Name="CustomCol2" Mode="In" Type="String" />
-      <Parameter Name="CustomCol3" Mode="In" Type="String" />
-      <Parameter Name="CustomCol4" Mode="In" Type="String" />
-      <Parameter Name="CustomCol5" Mode="In" Type="String" />
-    </FunctionImport>
     <FunctionImport Name="ApproveInvoices" ReturnType="Collection(Team2_GiellyGreenModel.ApproveInvoices_Result)">
       <Parameter Name="SelectedIds" Mode="In" Type="String" />
       <Parameter Name="SelectedDate" Mode="In" Type="DateTime" />
@@ -77,6 +67,16 @@
     <FunctionImport Name="GetInvoicesForPdf" ReturnType="Collection(Team2_GiellyGreenModel.GetInvoicesForPdf_Result)">
       <Parameter Name="SelectedIds" Mode="In" Type="String" />
       <Parameter Name="SelectedDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="InsertInvoice" ReturnType="Collection(Team2_GiellyGreenModel.InsertInvoice_Result)">
+      <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
+      <Parameter Name="InvoiceRef" Mode="In" Type="String" />
+      <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
+      <Parameter Name="CustomCol1" Mode="In" Type="String" />
+      <Parameter Name="CustomCol2" Mode="In" Type="String" />
+      <Parameter Name="CustomCol3" Mode="In" Type="String" />
+      <Parameter Name="CustomCol4" Mode="In" Type="String" />
+      <Parameter Name="CustomCol5" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="DeleteSupplier_Result">
@@ -196,9 +196,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <ComplexType Name="InsertInvoice_Result">
-    <Property Type="Int32" Name="InvoiceId" Nullable="true" />
-  </ComplexType>
   <ComplexType Name="ApproveInvoices_Result">
     <Property Type="Int32" Name="response" Nullable="true" />
   </ComplexType>
@@ -257,6 +254,9 @@
     <Property Type="Decimal" Name="AdvancePaid" Nullable="true" Precision="18" Scale="2" />
     <Property Type="Decimal" Name="BalanceDue" Nullable="true" Precision="18" Scale="2" />
     <Property Type="Boolean" Name="Approved" Nullable="true" />
+    <Property Type="Int32" Name="InvoiceId" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="InsertInvoice_Result">
     <Property Type="Int32" Name="InvoiceId" Nullable="true" />
   </ComplexType>
 </Schema>
