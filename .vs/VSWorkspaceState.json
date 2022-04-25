@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Backend",
+    "\\Backend\\GiellyGreen",
+    "\\Backend\\GiellyGreen\\Views",
+    "\\Backend\\GiellyGreen\\Views\\PDF"
   ],
-  "SelectedNode": "\\GiellyGreen.sln",
+  "SelectedNode": "\\Backend\\GiellyGreen\\Views\\PDF\\CombilePDF.cshtml",
   "PreviewInSolutionExplorer": false
 }
