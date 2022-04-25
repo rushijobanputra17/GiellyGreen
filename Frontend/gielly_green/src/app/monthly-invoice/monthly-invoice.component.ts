@@ -107,6 +107,7 @@ onChange(date: any) {
       this.message.error("Server Error! Please Reload Your Page", {
         nzDuration: 5000
       });
+      this.showLoader = false;
     },
     () => console.log("done")
   );
@@ -149,10 +150,25 @@ sendEmail() {
   this.httpService.EmailSelectedSupplier(this.invoiceDate,this.setOfCheckedId,this.invoiceReferenceNumber).subscribe(
     (response) => {
       console.log(response);
-      this.message.success("Email Send Successfully", {
-        nzDuration: 5000
-      });
-    },
+      if(response.ResponseStatus==0){
+        Swal.fire(
+          'Error!',
+          'No record found',
+          'error'
+        )
+      }
+      else if(response.ResponseStatus==0){
+        this.message.error(response.Message, {
+          nzDuration: 5000
+        });
+      }
+    
+      else{
+        this.message.success("Email send Successfully", {
+          nzDuration: 5000
+        });
+    }
+  },
     (error: any) => {
       this.message.error("Server Error! Please Reload Your Page", {
         nzDuration: 5000
@@ -170,11 +186,27 @@ Approved(){
   this.httpService.ApprovedSelectedSupplier(this.invoiceDate,this.setOfCheckedId).subscribe(
     (response) => {
       console.log(response);
-      Swal.fire(
-        'Approved !',
-        'you just approved invoices',
-        'success'
-      )
+  if(response.ResponseStatus==0){
+    Swal.fire(
+      'Error!',
+      'No record found',
+      'error'
+    )
+  }
+  else if(response.ResponseStatus==0){
+    this.message.error(response.Message, {
+      nzDuration: 5000
+    });
+  }
+
+  else{
+    Swal.fire(
+      'Approved !',
+      'you just approved invoices',
+      'success'
+    )
+    this.onChange(this.month);  
+  }
       // this.message.success("Supplier Approved Successfully", {
       //   nzDuration: 5000
       // });
@@ -193,7 +225,7 @@ Approved(){
 //#region save invoice
 saveInvoice(){
   console.log(this.MonthalyInvoiceData);
-  this.httpService.InvoiceBody.invoiceDetails = this.MonthlyInvoiceDataChanged;
+  this.httpService.InvoiceBody.invoiceDetails = this.MonthalyInvoiceData;
   this.httpService.InvoiceBody.CustomHeader1 = this.customHeader1;
   this.httpService.InvoiceBody.CustomHeader2 =  this.customHeader2;
   this.httpService.InvoiceBody.CustomHeader3 =  this.customHeader3;
@@ -201,7 +233,7 @@ saveInvoice(){
   this.httpService.InvoiceBody.CustomHeader5 =  this.customHeader5;
   this.httpService.InvoiceBody.InvoiceRef = this.invoiceReferenceNumber;
   this.httpService.InvoiceBody.InvoiceDate = this.invoiceDate;
-
+ 
  
   this.httpService.saveInvoiceData().subscribe(
     (response) => {
@@ -249,11 +281,26 @@ CombinePDF(){
   this.httpService.CombinePDfOFSupplier(this.invoiceDate,this.setOfCheckedId,this.invoiceReferenceNumber).subscribe(
     (response) => {
       console.log(response);
-      this.downloadPdf(response.Result,response.Message);
-
-      this.message.success("PDF successfully download", {
-        nzDuration: 1000
-      });
+    
+      if(response.ResponseStatus==0){
+        Swal.fire(
+          'Error!',
+          'No record found',
+          'error'
+        )
+      }
+      else if(response.ResponseStatus==0){
+        this.message.error(response.Message, {
+          nzDuration: 5000
+        });
+      }
+    
+      else{
+        this.message.success("Download Successfully", {
+          nzDuration: 5000
+        });
+        this.downloadPdf(response.Result,response.Message);
+    }
     },
     (error: any) => {
       this.message.error("Server Error! Please Reload Your Page", {

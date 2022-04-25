@@ -31,7 +31,7 @@
                         </div>
                         <div  *ngIf="isVisible" class="col-sm-12 col-md-4 col-lg-4 mt-3 d-flex justify-content-end">
                             <button nz-button class="btn-custom" printSectionId="printSection" (click)="printInvoice()" ngxPrint>
-                                Print Report
+                                PRINT REPORT
                             </button>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                                             <thead>
                                                 <tr>
                                                     <th [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
-                                                        (nzCheckedChange)="onAllChecked($event)" nzLeft></th>
+                                                        (nzCheckedChange)="onAllChecked($event)"  nzLeft></th>
                                                     <th nzLeft>Supplier Name</th>
                                                     <th>Hair Services</th>
                                                     <th>Beauty Services</th>
@@ -91,7 +91,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let data of hhtpTable.data">
-                                                    <td [nzChecked]="setOfCheckedId.has(data.SupplierId)"
+                                                    <td  type="checkbox" class="select" [nzChecked]="setOfCheckedId.has(data.SupplierId)"
                                                         (nzCheckedChange)="onItemChecked(data.SupplierId, $event)" nzLeft>
                                                     </td>
                                                     <td nzLeft>{{data.SupplierName}}</td>

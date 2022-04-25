@@ -46,4 +46,9 @@
   </div>
   <!-- end col -->
   <!-- Row -->
+  <div *ngIf="showLoader">
+    <div style="display:flex;justify-content:center;align-items:center;" class="loader-container">
+      <i nz-icon [nzType]="'loading'" class="customLoader"></i>
+    </div>
+  </div>
 </div>

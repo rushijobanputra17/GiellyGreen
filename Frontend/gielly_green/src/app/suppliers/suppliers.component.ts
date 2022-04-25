@@ -19,14 +19,14 @@ export class SuppliersComponent implements OnInit {
   searchValue = '';
   isCollapsed = false;
   sortNamefn = (a: any, b: any) => a.SupplierName.localeCompare(b.SupplierName);
-  sortRefFn = (a: any, b: any): number => a.SupplierReferenceNumber - b.SupplierReferenceNumber;
+  sortRefFn = (a: any, b: any): any => a.SupplierReferenceNumber - b.SupplierReferenceNumber;
 
   //icons
   plusIcon = faPlus;
   pen = faPen;
   del = faTrash;
   upload = faArrowUpFromBracket;
-
+  modalTitle:any;
   productStatic: any;
   supplierList: any;
   file: File;
@@ -40,11 +40,21 @@ export class SuppliersComponent implements OnInit {
 
 
   isVisible = false;
+  SidebarIsVisible = false;
   validateSupplierForm!: FormGroup;
   showLoader = false;
   //#endregion
 
   constructor(private fb: FormBuilder, private message: NzMessageService, private router: Router, private httpService: DataParsingService) { }
+
+  sidebartoggle(){
+   if(this.SidebarIsVisible==true){
+    this.SidebarIsVisible = false;
+   }
+   else{
+    this.SidebarIsVisible = true;
+   }
+  }
 
   deletelogo(){
     console.log("deletelogo");
@@ -134,6 +144,8 @@ export class SuppliersComponent implements OnInit {
 
 //#region edit supplier's values fill into the modal.
   EditSupplier(event: any) {
+    debugger
+    this.modalTitle="Edit Supplier"
     this.isEdit = true;
     console.log(event);
     debugger
@@ -151,8 +163,12 @@ export class SuppliersComponent implements OnInit {
       taxRef: event.TAXReference,
       ComapanyAddress: event.CompanyRegisteredAddress,
       status: event.IsActive,
-      filename: (event.Logo),
+      filename:(event.Logo),
     });
+    console.log(event.Logo);
+    if(event.Logo==null){
+    this.uploadedlogo=null;
+    }
     this.EditedSupplier = event;
   }
 
@@ -160,6 +176,7 @@ export class SuppliersComponent implements OnInit {
 
 //#region delete supplier from Database.
   DeleteSupplier(data: any) {
+    debugger
     this.showLoader = true
     this.httpService.delSupplier(data.SupplierId).subscribe(
       (response) => {
@@ -175,6 +192,8 @@ export class SuppliersComponent implements OnInit {
           });
           this.showLoader = false;
           this.supplierList = this.supplierList.filter((key: { SupplierId: any; }) => key.SupplierId != data.SupplierId);
+          this.productStatic=this.supplierList;
+         
         }
         else {
           this.message.success(response.Message, {
@@ -212,6 +231,7 @@ export class SuppliersComponent implements OnInit {
 //#region show modal.
   showModal(): void {
     this.isEdit = false;
+    this.modalTitle="Add New Supplier"
     this.isVisible = true;
     this.uploadedlogo = null;
   }
@@ -243,6 +263,7 @@ export class SuppliersComponent implements OnInit {
         this.httpService.SupplierBody.CompanyRegisteredAddress = SupplierDetail["ComapanyAddress"].value;
         this.httpService.SupplierBody.IsActive = SupplierDetail["status"].value;
         this.httpService.SupplierBody.Logo = this.supplierLogo;
+      
         this.httpService.AddSupplier().subscribe(
 
           (response) => {
@@ -250,21 +271,25 @@ export class SuppliersComponent implements OnInit {
 
             try {
               if (response.Result.includes("UQ_Supplier_ReferenceNumer")) {
+                this.isVisible = true;
                 this.message.error("Supplier reference number already exists", {
                   nzDuration: 5000
                 });
               }
               else if (response.Result.includes("idx_VATNumber")) {
+                this.isVisible = true;
                 this.message.error("VAT number already exists", {
                   nzDuration: 5000
                 });
               }
               else if (response.Result.includes("idx_TAXReference")) {
+                this.isVisible = true;
                 this.message.error("TAX reference number already exists", {
                   nzDuration: 5000
                 });
               }
               else if (response.Result.includes("idx_Email")) {
+                this.isVisible = true;
                 this.message.error("Supplier Email  already exists", {
                   nzDuration: 5000
                 });
@@ -318,6 +343,8 @@ export class SuppliersComponent implements OnInit {
         this.EditedSupplier.CompanyRegisteredAddress = editBody.CompanyRegisteredAddress = SupplierDetail["ComapanyAddress"].value;
         this.EditedSupplier.IsActive = editBody.IsActive = SupplierDetail["status"].value;
         this.EditedSupplier.Logo = editBody.Logo = this.supplierLogo;
+        console.log(this.supplierLogo);
+
         this.httpService.editSupplier(this.EditedSupplier.SupplierId).subscribe(
 
           (response) => {
