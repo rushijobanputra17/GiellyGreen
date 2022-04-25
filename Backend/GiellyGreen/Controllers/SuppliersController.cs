@@ -61,7 +61,7 @@ namespace GiellyGreen.Controllers
                 model.IsInvoicePresent = false;
                 if (ModelState.IsValid)
                 {
-                    if (model.Logo != null)
+                    if (!string.IsNullOrEmpty(model.Logo))
                     {
                         model.Logo = SupplierHelper.SetModelLogo(model.SupplierName, model.Logo);
                     }
@@ -102,7 +102,7 @@ namespace GiellyGreen.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (model.Logo != null)
+                    if (!string.IsNullOrEmpty(model.Logo))
                     {
                         model.Logo = SupplierHelper.SetModelLogo(model.SupplierName, model.Logo);
                     }
