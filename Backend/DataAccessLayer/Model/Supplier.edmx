@@ -38,7 +38,6 @@
           <Property Name="CustomHeader5" Type="nvarchar" MaxLength="50" />
           <Property Name="InvoiceRef" Type="nvarchar" MaxLength="15" />
           <Property Name="InvoiceDate" Type="date" />
-          <Property Name="InvoiceMonth" Type="date" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -458,7 +457,6 @@
           <EntitySetMapping Name="Invoices">
             <EntityTypeMapping TypeName="Team2_GiellyGreenModel.Invoice">
               <MappingFragment StoreEntitySet="Invoices">
-                <ScalarProperty Name="InvoiceMonth" ColumnName="InvoiceMonth" />
                 <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
                 <ScalarProperty Name="InvoiceRef" ColumnName="InvoiceRef" />
                 <ScalarProperty Name="CustomHeader5" ColumnName="CustomHeader5" />
