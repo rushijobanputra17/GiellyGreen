@@ -7,11 +7,16 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Invoice</title>
+    <link href="http://fonts.cdnfonts.com/css/dax" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <style>
         * {
             box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Dax"
         }
 
         /* Create two equal columns that floats next to each other */
@@ -43,15 +48,17 @@
         .widthcol {
             width: 60%;
         }
-        table{
+
+        table {
             border: none
         }
 
         .borderCell {
-            border:1px solid gray;
+            border: 1px solid gray;
         }
-        .text-right{
-            text-align:right;
+
+        .text-right {
+            text-align: right;
         }
     </style>
 </head>
@@ -103,7 +110,7 @@
                 <table class="table-bord" style="width:100%">
                     <thead>
                         <tr style="padding:3px;" class="borderCell">
-                            <th class="borderCell" colspan="3" style="margin-left:10px;border-right:0px">Description</th>
+                            <th class="borderCell" colspan="3" style="text-align:center">Description</th>
                             <th  class="borderCell text-right" style="border-left:0px">Amount(GBP)</th>
                         </tr>
                     </thead>
