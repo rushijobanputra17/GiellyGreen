@@ -705,7 +705,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="d86d4dad85834160a14d8672c628d6be" Name="Diagram1" ZoomLevel="33">
+      <Diagram DiagramId="d86d4dad85834160a14d8672c628d6be" Name="Diagram1" ZoomLevel="31">
         <EntityTypeShape EntityType="Team2_GiellyGreenModel.Invoice" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Team2_GiellyGreenModel.Supplier" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Team2_GiellyGreenModel.InvoiceDetail" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
