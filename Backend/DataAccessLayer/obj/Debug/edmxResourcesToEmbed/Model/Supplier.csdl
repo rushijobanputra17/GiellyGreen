@@ -68,9 +68,6 @@
     <FunctionImport Name="GetInvoices" ReturnType="Collection(Team2_GiellyGreenModel.GetInvoices_Result)">
       <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
     </FunctionImport>
-    <FunctionImport Name="GetProfile" ReturnType="Collection(Team2_GiellyGreenModel.GetProfile_Result)">
-      <Parameter Name="ProfileId" Mode="In" Type="Int32" />
-    </FunctionImport>
     <FunctionImport Name="InsertInvoice" ReturnType="Collection(Int32)">
       <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
       <Parameter Name="InvoiceRef" Mode="In" Type="String" />
@@ -90,6 +87,8 @@
       <Parameter Name="Country" Mode="In" Type="String" />
       <Parameter Name="DefaultVAT" Mode="In" Type="Decimal" />
     </FunctionImport>
+    <EntitySet Name="Profiles" EntityType="Team2_GiellyGreenModel.Profile" />
+    <FunctionImport Name="GetProfile" ReturnType="Collection(Team2_GiellyGreenModel.GetProfile_Result)" />
   </EntityContainer>
   <ComplexType Name="DeleteSupplier_Result">
     <Property Type="Int32" Name="ResponseStatus" Nullable="true" />
@@ -255,6 +254,18 @@
     <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
     <Property Type="Decimal" Name="VATPercent" Nullable="true" Precision="4" Scale="2" />
   </ComplexType>
+  <EntityType Name="Profile">
+    <Key>
+      <PropertyRef Name="ProfileId" />
+    </Key>
+    <Property Name="ProfileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ZipCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DefaultVAT" Type="Decimal" Precision="4" Scale="2" />
+  </EntityType>
   <ComplexType Name="GetProfile_Result">
     <Property Type="Int32" Name="ProfileId" Nullable="false" />
     <Property Type="String" Name="CompanyName" Nullable="true" MaxLength="200" />

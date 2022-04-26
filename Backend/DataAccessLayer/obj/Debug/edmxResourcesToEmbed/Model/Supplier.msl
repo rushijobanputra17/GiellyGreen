@@ -166,6 +166,21 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertInvoice" FunctionName="Team2_GiellyGreenModel.Store.InsertInvoice" />
+    <FunctionImportMapping FunctionImportName="InsertUpdateProfile" FunctionName="Team2_GiellyGreenModel.Store.InsertUpdateProfile" />
+    <EntitySetMapping Name="Profiles">
+      <EntityTypeMapping TypeName="Team2_GiellyGreenModel.Profile">
+        <MappingFragment StoreEntitySet="Profile">
+          <ScalarProperty Name="DefaultVAT" ColumnName="DefaultVAT" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="AddressLine" ColumnName="AddressLine" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="GetProfile" FunctionName="Team2_GiellyGreenModel.Store.GetProfile">
       <ResultMapping>
         <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetProfile_Result">
@@ -179,7 +194,5 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="InsertInvoice" FunctionName="Team2_GiellyGreenModel.Store.InsertInvoice" />
-    <FunctionImportMapping FunctionImportName="InsertUpdateProfile" FunctionName="Team2_GiellyGreenModel.Store.InsertUpdateProfile" />
   </EntityContainerMapping>
 </Mapping>

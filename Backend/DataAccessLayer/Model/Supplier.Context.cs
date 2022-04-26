@@ -30,6 +30,7 @@ namespace DataAccessLayer.Model
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+        public virtual DbSet<Profile> Profiles { get; set; }
     
         public virtual ObjectResult<DeleteSupplier_Result> DeleteSupplier(Nullable<int> supplierId)
         {
@@ -228,15 +229,6 @@ namespace DataAccessLayer.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInvoices_Result>("GetInvoices", invoiceMonthParameter);
         }
     
-        public virtual ObjectResult<GetProfile_Result> GetProfile(Nullable<int> profileId)
-        {
-            var profileIdParameter = profileId.HasValue ?
-                new ObjectParameter("ProfileId", profileId) :
-                new ObjectParameter("ProfileId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProfile_Result>("GetProfile", profileIdParameter);
-        }
-    
         public virtual ObjectResult<Nullable<int>> InsertInvoice(Nullable<int> invoiceId, string invoiceRef, Nullable<System.DateTime> invoiceDate, string customCol1, string customCol2, string customCol3, string customCol4, string customCol5)
         {
             var invoiceIdParameter = invoiceId.HasValue ?
@@ -305,6 +297,11 @@ namespace DataAccessLayer.Model
                 new ObjectParameter("DefaultVAT", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUpdateProfile", profileIdParameter, companyNameParameter, addressLineParameter, cityParameter, zipCodeParameter, countryParameter, defaultVATParameter);
+        }
+    
+        public virtual ObjectResult<GetProfile_Result> GetProfile()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProfile_Result>("GetProfile");
         }
     }
 }

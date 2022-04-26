@@ -236,6 +236,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MonthlyInvoiceController.cs" />
     <Compile Include="Controllers\PDFController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -251,6 +252,7 @@
     <Compile Include="Models\InvoiceModels.cs" />
     <Compile Include="Models\JsonResponse.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\SupplierViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />

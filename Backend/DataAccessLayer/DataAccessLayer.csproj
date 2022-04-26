@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\IMonthlyInvoiceRepository.cs" />
+    <Compile Include="Interface\IProfileRepository.cs" />
     <Compile Include="Interface\ISupplierRepository.cs" />
     <Compile Include="Model\ApproveInvoices_Result.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
@@ -83,6 +84,9 @@
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Invoices.cs" />
+    <Compile Include="Model\Profile.cs">
+      <DependentUpon>Supplier.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Supplier.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -104,6 +108,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MapperConfiguration.cs" />
     <Compile Include="Services\MonthlyInvoiceRepository.cs" />
+    <Compile Include="Services\ProfileRepository.cs" />
     <Compile Include="Services\SupplierRepository.cs" />
   </ItemGroup>
   <ItemGroup>
