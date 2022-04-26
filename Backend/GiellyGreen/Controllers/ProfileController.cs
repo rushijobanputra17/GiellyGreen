@@ -2,10 +2,6 @@
 using GiellyGreen.Helpers;
 using GiellyGreen.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace GiellyGreen.Controllers
@@ -24,7 +20,14 @@ namespace GiellyGreen.Controllers
             }
             catch (Exception ex)
             {
-                objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
+                if (ex.InnerException != null)
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
+                }
             }
 
             return objResponse;
@@ -54,9 +57,9 @@ namespace GiellyGreen.Controllers
                     objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
                 }
             }
+
             return objResponse;
         }
-
     }
 
 }

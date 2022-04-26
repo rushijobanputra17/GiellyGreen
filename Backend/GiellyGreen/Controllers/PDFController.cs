@@ -1,10 +1,5 @@
 ﻿using DataAccessLayer.Model;
-using GiellyGreen.Models;
-using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace GiellyGreen.Controllers
@@ -19,8 +14,7 @@ namespace GiellyGreen.Controllers
 
         public byte[] GetPDFBytesForCombine(List<GetInvoicesForPdf_Result> list)
         {
-            return new Rotativa.ViewAsPdf("~/Views/PDF/CombilePDF.cshtml", list).BuildFile(ControllerContext);
-             
+            return new Rotativa.ViewAsPdf("~/Views/PDF/CombilePDF.cshtml", list).BuildFile(ControllerContext);   
         }
 
         public ActionResult ReflectView()

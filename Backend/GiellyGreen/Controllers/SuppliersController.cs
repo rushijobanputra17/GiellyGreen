@@ -27,7 +27,7 @@ namespace GiellyGreen.Controllers
         {
             try
             {
-                var suppliers = supplierRepository.GetSuppliers(isActive); /*objDataAccess.GetSupplier(isActive).ToList();*////* *///
+                var suppliers = supplierRepository.GetSuppliers(isActive);
                 String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
                 if (!Directory.Exists(path))
                 {
@@ -47,7 +47,14 @@ namespace GiellyGreen.Controllers
             }
             catch (Exception ex)
             {
-                objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
+                if (ex.InnerException != null)
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
+                }
             }
 
             return objResponse;
@@ -106,7 +113,6 @@ namespace GiellyGreen.Controllers
                     {
                         model.Logo = SupplierHelper.SetModelLogo(model.SupplierName, model.Logo);
                     }
-
                     model.SupplierId = id;
                     if (supplierRepository.UpdateSupplier(mapper.Map<Supplier>(model)) == 1)
                     {

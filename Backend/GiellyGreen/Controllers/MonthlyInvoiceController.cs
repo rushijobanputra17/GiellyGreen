@@ -14,16 +14,23 @@ namespace GiellyGreen.Controllers
         public static MonthlyInvoiceRepository monthlyInvoiceRepository = new MonthlyInvoiceRepository();
         public JsonResponse objResponse;
 
-        public JsonResponse Get(DateTime InvoiceMonth)
+        public JsonResponse Get(DateTime invoiceMonth)
         {
             try
             {
-                var InvoicveDetails = monthlyInvoiceRepository.GetAllInvoice(InvoiceMonth);
-                objResponse = JsonResponseHelper.GetJsonResponse(1, "Records found : ", InvoicveDetails);
+                var invoiceDetails = monthlyInvoiceRepository.GetAllInvoice(invoiceMonth);
+                objResponse = JsonResponseHelper.GetJsonResponse(1, "Records found : ", invoiceDetails);
             }
             catch (Exception ex)
             {
-                objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
+                if (ex.InnerException != null)
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
+                }
             }
 
             return objResponse;
@@ -62,6 +69,7 @@ namespace GiellyGreen.Controllers
                     objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
                 }
             }
+
             return objResponse;
         }
 

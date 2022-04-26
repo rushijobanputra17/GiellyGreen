@@ -1,14 +1,9 @@
-﻿using AutoMapper;
-using DataAccessLayer.Services;
+﻿using DataAccessLayer.Services;
 using GiellyGreen.Helpers;
 using GiellyGreen.Models;
-using Rotativa;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Http;
@@ -19,21 +14,24 @@ namespace GiellyGreen.Controllers
     //[Authorize]
     public class EmailController : ApiController
     {
+        public static MonthlyInvoiceRepository monthlyInvoiceRepository = new MonthlyInvoiceRepository();
+        JsonResponse objResponse;
+        PDFController pdfContoller = new PDFController();
 
-        public JsonResponse Post(DateTime invoiceDate, string InvoiceRef, List<int> selectedSupplierIds)
+        public JsonResponse Post(DateTime invoiceDate, string invoiceRef, List<int> selectedSupplierIds)
         {
-            JsonResponse objResponse = new JsonResponse();
             try
             {
-                MonthlyInvoiceRepository monthlyInvoiceRepository = new MonthlyInvoiceRepository();
                 var invoiceDetails = monthlyInvoiceRepository.GetInvoicesForPDF(invoiceDate, selectedSupplierIds);
 
-                PDFController pdfContoller = new PDFController();
-                RouteData route = new RouteData();
-                route.Values.Add("action", "GetPDFBytes");
-                route.Values.Add("controller", "PDF");
-                System.Web.Mvc.ControllerContext newContext = new System.Web.Mvc.ControllerContext(new HttpContextWrapper(System.Web.HttpContext.Current), route, pdfContoller);
-                pdfContoller.ControllerContext = newContext;
+                //PDFController pdfContoller = new PDFController();
+                //RouteData route = new RouteData();
+                //route.Values.Add("action", "GetPDFBytes");
+                //route.Values.Add("controller", "PDF");
+                //System.Web.Mvc.ControllerContext newContext = new System.Web.Mvc.ControllerContext(new HttpContextWrapper(System.Web.HttpContext.Current), route, pdfContoller);
+                //pdfContoller.ControllerContext = newContext;
+
+                pdfContoller.ControllerContext = EmailHelper.GetPdfContext("GetPDFBytes");
 
                 if (invoiceDetails.Count > 0)
                 {
@@ -76,19 +74,20 @@ namespace GiellyGreen.Controllers
         [HttpPost]
         public JsonResponse ConvertToPdf(DateTime invoiceDate, string InvoiceRef, List<int> selectedSupplierIds)
         {
-            JsonResponse objResponse = new JsonResponse();
             try
             {
-                MonthlyInvoiceRepository monthlyInvoiceRepository = new MonthlyInvoiceRepository();
                 var invoiceDetails = monthlyInvoiceRepository.GetInvoicesForPDF(invoiceDate, selectedSupplierIds);
                 if (invoiceDetails.Count > 0)
                 {
-                    PDFController pdfContoller = new PDFController();
-                    RouteData route = new RouteData();
-                    route.Values.Add("action", "GetPDFBytesForCombine");
-                    route.Values.Add("controller", "PDF");
-                    System.Web.Mvc.ControllerContext newContext = new System.Web.Mvc.ControllerContext(new HttpContextWrapper(System.Web.HttpContext.Current), route, pdfContoller);
-                    pdfContoller.ControllerContext = newContext;
+                    //PDFController pdfContoller = new PDFController();
+                    //RouteData route = new RouteData();
+                    //route.Values.Add("action", "GetPDFBytesForCombine");
+                    //route.Values.Add("controller", "PDF");
+                    //System.Web.Mvc.ControllerContext newContext = new System.Web.Mvc.ControllerContext(new HttpContextWrapper(System.Web.HttpContext.Current), route, pdfContoller);
+                    //pdfContoller.ControllerContext = newContext;
+
+                    pdfContoller.ControllerContext = EmailHelper.GetPdfContext("GetPDFBytesForCombine");
+
                     var pdfBytesList = pdfContoller.GetPDFBytesForCombine(invoiceDetails);
                     string pdfBase64String = Convert.ToBase64String(pdfBytesList);
                     objResponse = JsonResponseHelper.GetJsonResponse(1, invoiceDate.ToString("MMMM") + "_Invoice", pdfBase64String);
