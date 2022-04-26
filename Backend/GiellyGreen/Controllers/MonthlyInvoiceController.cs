@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace GiellyGreen.Controllers
 {
-    // [Authorize]
+    [Authorize]
     public class MonthlyInvoiceController : ApiController
     {
         public static MonthlyInvoiceRepository monthlyInvoiceRepository = new MonthlyInvoiceRepository();
@@ -83,7 +83,7 @@ namespace GiellyGreen.Controllers
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Record Not Found", null);
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Invoices have no data", null);
                 }
             }
             catch (Exception ex)

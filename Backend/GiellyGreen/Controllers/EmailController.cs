@@ -52,7 +52,7 @@ namespace GiellyGreen.Controllers
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "No Records found", null);
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Email cannot be send because selected invoices have no data", null);
                 }
             }
             catch (Exception ex)
@@ -94,7 +94,7 @@ namespace GiellyGreen.Controllers
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "No Records found", null);
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Selected invoices have no data so they cannot be combined and downloaded", null);
                 }
             }
             catch (Exception ex)

@@ -20,7 +20,7 @@ namespace DataAccessLayer.Services
 
         public int AddInvoice(dynamic model)
         {
-            var invoiceidValue = Enumerable.FirstOrDefault(objDataAccess.InsertInvoice(0, model.InvoiceRef, model.InvoiceDate, model.CustomHeader1, model.CustomHeader2, model.CustomHeader3, model.CustomHeader4, model.CustomHeader5)).InvoiceId;
+            var invoiceidValue = Enumerable.FirstOrDefault(objDataAccess.InsertInvoice(0, model.InvoiceReference, model.InvoiceDate, model.CustomHeader1, model.CustomHeader2, model.CustomHeader3, model.CustomHeader4, model.CustomHeader5)).InvoiceId;
             if (invoiceidValue == 0)
             {
                 return 0;

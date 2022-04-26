@@ -13,7 +13,7 @@ namespace GiellyGreen.Models
         public string CustomHeader5 { get; set; }
 
         [Required]
-        public string InvoiceRef { get; set; }
+        public string InvoiceReference { get; set; }
         public Nullable<System.DateTime> InvoiceDate { get; set; }
         public int InvoiceId { get; set; }
 

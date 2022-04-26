@@ -6,6 +6,7 @@ using System.Web.Http;
 
 namespace GiellyGreen.Controllers
 {
+    //[Authorize]
     public class ProfileController : ApiController
     {
         public JsonResponse objResponse;
@@ -61,5 +62,4 @@ namespace GiellyGreen.Controllers
             return objResponse;
         }
     }
-
 }

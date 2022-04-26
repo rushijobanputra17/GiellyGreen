@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace GiellyGreen.Controllers
 {
-    //[Authorize]
+    [Authorize]
     //[RoutePrefix("suppliers")]
     public class SuppliersController : ApiController
     {
@@ -113,6 +113,7 @@ namespace GiellyGreen.Controllers
                     {
                         model.Logo = SupplierHelper.SetModelLogo(model.SupplierName, model.Logo);
                     }
+
                     model.SupplierId = id;
                     if (supplierRepository.UpdateSupplier(mapper.Map<Supplier>(model)) == 1)
                     {
