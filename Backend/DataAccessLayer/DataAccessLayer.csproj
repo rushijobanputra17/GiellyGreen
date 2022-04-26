@@ -61,19 +61,19 @@
     <Compile Include="Model\DeleteSupplier_Result.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\GetAllInvoiceDetail_Result.cs">
-      <DependentUpon>Supplier.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\GetAllInvoice_Result.cs">
+    <Compile Include="Model\GetInvoiceDetails_Result.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GetInvoicesForPdf_Result.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\GetSupplier_Result.cs">
+    <Compile Include="Model\GetInvoices_Result.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\InsertInvoice_Result.cs">
+    <Compile Include="Model\GetProfile_Result.cs">
+      <DependentUpon>Supplier.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetSupplier_Result.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Invoice.cs">
@@ -82,6 +82,7 @@
     <Compile Include="Model\InvoiceDetail.cs">
       <DependentUpon>Supplier.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Invoices.cs" />
     <Compile Include="Model\Supplier.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

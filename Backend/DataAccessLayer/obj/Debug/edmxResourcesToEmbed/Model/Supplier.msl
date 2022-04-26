@@ -32,6 +32,7 @@
     <EntitySetMapping Name="Invoices">
       <EntityTypeMapping TypeName="Team2_GiellyGreenModel.Invoice">
         <MappingFragment StoreEntitySet="Invoices">
+          <ScalarProperty Name="VATPercent" ColumnName="VATPercent" />
           <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
           <ScalarProperty Name="InvoiceRef" ColumnName="InvoiceRef" />
           <ScalarProperty Name="CustomHeader5" ColumnName="CustomHeader5" />
@@ -92,36 +93,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="GetAllInvoice" FunctionName="Team2_GiellyGreenModel.Store.GetAllInvoice">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetAllInvoice_Result">
-          <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-          <ScalarProperty Name="CustomHeader1" ColumnName="CustomHeader1" />
-          <ScalarProperty Name="CustomHeader2" ColumnName="CustomHeader2" />
-          <ScalarProperty Name="CustomHeader3" ColumnName="CustomHeader3" />
-          <ScalarProperty Name="CustomHeader4" ColumnName="CustomHeader4" />
-          <ScalarProperty Name="CustomHeader5" ColumnName="CustomHeader5" />
-          <ScalarProperty Name="InvoiceRef" ColumnName="InvoiceRef" />
-          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
-          <ScalarProperty Name="InvoiceDetailId" ColumnName="InvoiceDetailId" />
-          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-          <ScalarProperty Name="HairServices" ColumnName="HairServices" />
-          <ScalarProperty Name="BeautyServices" ColumnName="BeautyServices" />
-          <ScalarProperty Name="CustomService1" ColumnName="CustomService1" />
-          <ScalarProperty Name="CustomService2" ColumnName="CustomService2" />
-          <ScalarProperty Name="CustomService3" ColumnName="CustomService3" />
-          <ScalarProperty Name="CustomService4" ColumnName="CustomService4" />
-          <ScalarProperty Name="CustomService5" ColumnName="CustomService5" />
-          <ScalarProperty Name="Net" ColumnName="Net" />
-          <ScalarProperty Name="VAT" ColumnName="VAT" />
-          <ScalarProperty Name="Gross" ColumnName="Gross" />
-          <ScalarProperty Name="AdvancePaid" ColumnName="AdvancePaid" />
-          <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
-          <ScalarProperty Name="Approved" ColumnName="Approved" />
-          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="GetInvoicesForPdf" FunctionName="Team2_GiellyGreenModel.Store.GetInvoicesForPdf">
       <ResultMapping>
         <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetInvoicesForPdf_Result">
@@ -157,12 +128,58 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="InsertInvoice" FunctionName="Team2_GiellyGreenModel.Store.InsertInvoice">
+    <FunctionImportMapping FunctionImportName="GetInvoiceDetails" FunctionName="Team2_GiellyGreenModel.Store.GetInvoiceDetails">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.InsertInvoice_Result">
+        <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetInvoiceDetails_Result">
+          <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+          <ScalarProperty Name="InvoiceDetailId" ColumnName="InvoiceDetailId" />
+          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+          <ScalarProperty Name="HairServices" ColumnName="HairServices" />
+          <ScalarProperty Name="BeautyServices" ColumnName="BeautyServices" />
+          <ScalarProperty Name="CustomService1" ColumnName="CustomService1" />
+          <ScalarProperty Name="CustomService2" ColumnName="CustomService2" />
+          <ScalarProperty Name="CustomService3" ColumnName="CustomService3" />
+          <ScalarProperty Name="CustomService4" ColumnName="CustomService4" />
+          <ScalarProperty Name="CustomService5" ColumnName="CustomService5" />
+          <ScalarProperty Name="Net" ColumnName="Net" />
+          <ScalarProperty Name="VAT" ColumnName="VAT" />
+          <ScalarProperty Name="Gross" ColumnName="Gross" />
+          <ScalarProperty Name="AdvancePaid" ColumnName="AdvancePaid" />
+          <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
+          <ScalarProperty Name="Approved" ColumnName="Approved" />
           <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetInvoices" FunctionName="Team2_GiellyGreenModel.Store.GetInvoices">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetInvoices_Result">
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+          <ScalarProperty Name="CustomHeader1" ColumnName="CustomHeader1" />
+          <ScalarProperty Name="CustomHeader2" ColumnName="CustomHeader2" />
+          <ScalarProperty Name="CustomHeader3" ColumnName="CustomHeader3" />
+          <ScalarProperty Name="CustomHeader4" ColumnName="CustomHeader4" />
+          <ScalarProperty Name="CustomHeader5" ColumnName="CustomHeader5" />
+          <ScalarProperty Name="InvoiceRef" ColumnName="InvoiceRef" />
+          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+          <ScalarProperty Name="VATPercent" ColumnName="VATPercent" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetProfile" FunctionName="Team2_GiellyGreenModel.Store.GetProfile">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetProfile_Result">
+          <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="AddressLine" ColumnName="AddressLine" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="DefaultVAT" ColumnName="DefaultVAT" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertInvoice" FunctionName="Team2_GiellyGreenModel.Store.InsertInvoice" />
+    <FunctionImportMapping FunctionImportName="InsertUpdateProfile" FunctionName="Team2_GiellyGreenModel.Store.InsertUpdateProfile" />
   </EntityContainerMapping>
 </Mapping>

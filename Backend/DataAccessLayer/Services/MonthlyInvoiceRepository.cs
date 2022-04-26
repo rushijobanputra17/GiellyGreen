@@ -38,20 +38,35 @@ namespace DataAccessLayer.Services
 
         public dynamic GetAllInvoice(DateTime invoiceMonth)
         {
-            AutoMapper.MapperConfiguration configList = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<GetSupplier_Result, GetAllInvoice_Result>());
-            Mapper mapper = new Mapper(configList);
-            var monthlyInvoiceList = objDataAccess.GetAllInvoice(invoiceMonth).ToList();
+            AutoMapper.MapperConfiguration config = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<GetInvoices_Result, Invoices>());
+            Mapper mapper = new Mapper(config);
+            Invoices invoices = mapper.Map<Invoices>(objDataAccess.GetInvoices(invoiceMonth).FirstOrDefault());
+            invoices.InvoiceDetails = objDataAccess.GetInvoiceDetails(invoices.InvoiceId).ToList();
             var activeSupplierList = objDataAccess.GetSupplier(true).ToList();
+            AutoMapper.MapperConfiguration supplierConfig = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<GetSupplier_Result, GetInvoiceDetails_Result>());
+            Mapper supplierMapper = new Mapper(supplierConfig);
+
             foreach (var supplier in activeSupplierList)
             {
-                var objectMonth = monthlyInvoiceList.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault();
-                if (monthlyInvoiceList.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault() == null)
+                
+                if (invoices.InvoiceDetails.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault() == null)
                 {
-                    monthlyInvoiceList.Add(mapper.Map<GetAllInvoice_Result>(supplier));
+                    invoices.InvoiceDetails.Add(supplierMapper.Map<GetInvoiceDetails_Result>(supplier));
                 }
             }
+            //var monthlyInvoiceList = objDataAccess.GetAllInvoice(invoiceMonth).ToList();
+            //var activeSupplierList = objDataAccess.GetSupplier(true).ToList();
+            //foreach (var supplier in activeSupplierList)
+            //{
+            //    var objectMonth = monthlyInvoiceList.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault();
+            //    if (monthlyInvoiceList.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault() == null)
+            //    {
+            //        monthlyInvoiceList.Add(mapper.Map<GetAllInvoice_Result>(supplier));
+            //    }
+            //}
 
-            return monthlyInvoiceList;
+            //return monthlyInvoiceList;
+            return invoices;
         }
 
         public int? ApproveSelectedInvoices(List<int> selectedIds, DateTime selectedDate)

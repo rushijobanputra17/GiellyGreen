@@ -11,8 +11,14 @@ namespace DataAccessLayer.Model
 {
     using System;
     
-    public partial class InsertInvoice_Result
+    public partial class GetProfile_Result
     {
-        public Nullable<int> InvoiceId { get; set; }
+        public int ProfileId { get; set; }
+        public string CompanyName { get; set; }
+        public string AddressLine { get; set; }
+        public string City { get; set; }
+        public string ZipCode { get; set; }
+        public string Country { get; set; }
+        public Nullable<decimal> DefaultVAT { get; set; }
     }
 }
