@@ -32,9 +32,31 @@
     background-color:#00c897!important;
   }
 
-  .ant-layout-sider-children .ant-menu.ant-menu-inline-collapsed {
+  /* .ant-layout-sider-children .ant-menu.ant-menu-inline-collapsed {
   display: none!important;
-  }
+  } */
+
+  
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 5px;
+}
+
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+
+::-webkit-scrollbar-thumb {
+  background:#2C2B29;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
 
   .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
     border-right: 1px solid #2C2B29!important;

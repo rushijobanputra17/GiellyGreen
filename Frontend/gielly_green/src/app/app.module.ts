@@ -35,6 +35,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { MonthlyInvoiceComponent } from './monthly-invoice/monthly-invoice.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -45,7 +46,8 @@ registerLocaleData(en);
     AppComponent,
     LoginComponent,
     SuppliersComponent,
-    MonthlyInvoiceComponent
+    MonthlyInvoiceComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

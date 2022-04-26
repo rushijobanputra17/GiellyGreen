@@ -9,7 +9,7 @@ export class DataParsingService {
  
   constructor(private http: HttpClient) { }
 
-   APIURL="https://0935-106-201-236-89.ngrok.io";
+   APIURL="https://8a13-106-201-236-89.ngrok.io";
 
 SupplierBody=
   {
@@ -55,6 +55,16 @@ SupplierBody=
     "InvoiceRef": "string",
     "InvoiceDate": "2022-04-20T09:44:00.790Z",
     "InvoiceId": 0
+  }
+
+  ProfileBody={
+    "ProfileId": 0,
+    "CompanyName": "string",
+    "AddressLine": "string",
+    "City": "string",
+    "ZipCode": "string",
+    "Country": "string",
+    "DefaultVAT": 0
   }
 
   loginUser(email: string,password: string): Observable<any>{
@@ -142,5 +152,16 @@ SupplierBody=
     const header=new HttpHeaders().set("authorization", "bearer "+ token);
     return this.http.post<any>(`${this.APIURL}/ConvertToPdf?invoiceDate=${date}&InvoiceRef=${invoiceReferenceNumber}`,selectedSupllier,{headers:header});
   }
+
+  setProfile(): Observable<any>{
+    let token=sessionStorage.getItem("logged_user");
+    const header=new HttpHeaders().set("authorization", "bearer "+ token);
+    return this.http.post<any>(`${this.APIURL}/api/Profile`,this.ProfileBody,{headers:header});
+  }
     
+  getProfile(): Observable<any>{
+    let token=sessionStorage.getItem("logged_user");
+    const header=new HttpHeaders().set("authorization", "bearer "+ token);
+    return this.http.get<any>(`${this.APIURL}/api/Profile`,{headers:header});
+  }
 }

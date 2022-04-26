@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
 import { DataParsingService } from '../data-parsing.service';
-import { faPlus, faPen, faTrash,faArrowUpFromBracket} from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faPen, faTrash,faArrowUpFromBracket,faFileInvoice,faUser} from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -19,13 +19,16 @@ export class SuppliersComponent implements OnInit {
   searchValue = '';
   isCollapsed = false;
   sortNamefn = (a: any, b: any) => a.SupplierName.localeCompare(b.SupplierName);
-  sortRefFn = (a: any, b: any): any => a.SupplierReferenceNumber - b.SupplierReferenceNumber;
+  sortRefFn = (a: any, b: any) => a.SupplierReferenceNumber.localeCompare(b.SupplierReferenceNumber);
 
   //icons
   plusIcon = faPlus;
   pen = faPen;
   del = faTrash;
   upload = faArrowUpFromBracket;
+  invoice= faFileInvoice;
+  supplier = faUser;
+
   modalTitle:any;
   productStatic: any;
   supplierList: any;
@@ -74,7 +77,6 @@ export class SuppliersComponent implements OnInit {
       VAT: [null, [Validators.pattern("^[a-zA-Z0-9]{1,15}$")]],
       taxRef: [null, [Validators.pattern("^[a-zA-Z0-9]{1,15}$")]],
       ComapanyAddress: [null, [Validators.pattern("[A-Za-z0-9 .,*&%$#@!-_]{3,150}$")]],
-      filename: [null],
       status: [false],
     });
     this.getSupplierData();
@@ -111,6 +113,7 @@ export class SuppliersComponent implements OnInit {
 
 //#region uploadedlogo convert into base64 String
   uploadLogo(event: any) {
+    debugger
     this.showLoader = true;
     this.file = event.target.files[0];
     if(this.file){
@@ -342,9 +345,13 @@ export class SuppliersComponent implements OnInit {
         this.EditedSupplier.TAXReference = editBody.TAXReference = SupplierDetail["taxRef"].value;
         this.EditedSupplier.CompanyRegisteredAddress = editBody.CompanyRegisteredAddress = SupplierDetail["ComapanyAddress"].value;
         this.EditedSupplier.IsActive = editBody.IsActive = SupplierDetail["status"].value;
-        this.EditedSupplier.Logo = editBody.Logo = this.supplierLogo;
-        console.log(this.supplierLogo);
 
+        if( this.uploadedlogo==null){
+          this.EditedSupplier.Logo = editBody.Logo = this.uploadedlogo;
+        }
+        else{
+          this.EditedSupplier.Logo = editBody.Logo = this.supplierLogo;
+        }
         this.httpService.editSupplier(this.EditedSupplier.SupplierId).subscribe(
 
           (response) => {
@@ -405,4 +412,11 @@ export class SuppliersComponent implements OnInit {
   }
 //#endregion
 
+
+//#region logout
+logout(){
+  sessionStorage.removeItem("logged_user");
+  this.router.navigate(['/login']);
+}
+//#endregion
 }

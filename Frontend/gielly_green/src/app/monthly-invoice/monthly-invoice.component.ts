@@ -53,6 +53,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   customServices5: any;
   netTotal: any;
   advancePaid: any;
+  Vat:any;
 //#endregion
 
   constructor(private router: Router, private fb: FormBuilder, public datepipe: DatePipe,public decimalpipe: DecimalPipe, private httpService: DataParsingService, private message: NzMessageService) { }
@@ -91,15 +92,16 @@ onChange(date: any) {
   this.httpService.getInvoiceData(monthYearFilter).subscribe(
     (response) => {
       console.log(response);
-      this.MonthalyInvoiceData = response.Result;
+      this.MonthalyInvoiceData = response.Result.InvoiceDetails;
       console.log(this.MonthalyInvoiceData);
       this.showLoader = false;
-      this.customHeader1 = this.MonthalyInvoiceData[0].CustomHeader1
-      this.customHeader2 = this.MonthalyInvoiceData[0].CustomHeader2
-      this.customHeader3 = this.MonthalyInvoiceData[0].CustomHeader3
-      this.customHeader4 = this.MonthalyInvoiceData[0].CustomHeader4
-      this.customHeader5 = this.MonthalyInvoiceData[0].CustomHeader5
+      this.customHeader1 = response.Result.CustomHeader1
+      this.customHeader2 = response.Result.CustomHeader2
+      this.customHeader3 = response.Result.CustomHeader3
+      this.customHeader4 = response.Result.CustomHeader4
+      this.customHeader5 = response.Result.CustomHeader5
       this.showLoader = false;
+      this.Vat=response.Result.VATPercent;
      
       this.onCurrentPageDataChange(response.Result);
     },
@@ -221,7 +223,6 @@ Approved(){
 }
 //#endregion
 
-
 //#region save invoice
 saveInvoice(){
   console.log(this.MonthalyInvoiceData);
@@ -238,9 +239,28 @@ saveInvoice(){
   this.httpService.saveInvoiceData().subscribe(
     (response) => {
       console.log(response);
-      this.message.success("Data Saved Successfully", {
-        nzDuration: 5000
-      });
+      if (response.ResponseStatus==1){
+        this.message.success(response.Message, {
+          nzDuration: 3000
+        });
+      }
+      else if(response.ResponseStatus==0){
+        this.message.error(response.Result[0], {
+          nzDuration: 3000
+        });
+      }
+      else{
+        if(response.Result.includes("UQ_InvoiceRef")){
+          this.message.error("Invoice Reference already exists", {
+            nzDuration: 3000
+          });
+        }
+        else{
+          this.message.error(response.result, {
+            nzDuration: 3000
+          });
+        }
+      }
     },
     (error: any) => {
       this.message.error("Server Error! Please Reload Your Page", {
@@ -313,7 +333,7 @@ CombinePDF(){
 
 getVAT(data:any){
   let netvalue=this.getNet(data)
-  return data.VAT=netvalue*0.2;
+  return data.VAT=netvalue*this.Vat/100;
 }
 
 getNet(data:any){

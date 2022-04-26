@@ -1,22 +1,29 @@
 <nz-layout>
   <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null" [nzWidth]="250">  
-    <ul nz-menu class="mt-5" nzMode="inline">
+    <div class="m-4" style="padding-left:10px">
+      <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        (click)="isCollapsed = !isCollapsed"></i>
+    </div>
+    <ul nz-menu  nzMode="inline">
       <li>
         <ul>
-          <li nz-menu-item style="padding-left:50px" routerLink="/monthly-invoice">MONTHLY INVOICE</li>
-          <li nz-menu-item style="padding-left:65px;border:1px solid">SUPPLIER LIST</li>
+          <li nz-menu-item style="padding-left:20px" routerLink="/monthly-invoice"> <fa-icon [icon]="invoice" class="p-3"></fa-icon>MONTHLY INVOICE</li>
+          <li nz-menu-item style="padding-left:20px;border:1px solid"><fa-icon [icon]="supplier" class="p-3"></fa-icon> SUPPLIER LIST</li>
         </ul>
       </li>
     </ul>
   </nz-sider>
   <nz-layout>
   <nz-header>
-    <div class="row">
-      <div class="col-6">
-        <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-          (click)="isCollapsed = !isCollapsed"></i>
-      </div>
+    <div class="row  d-flex justify-content-end"> 
       <div class="col-6 d-flex justify-content-end">
+      <i nz-icon nzType="menu" nzTrigger="click" nz-dropdown [nzDropdownMenu]="menu" class="profile-custom p-4" nzTheme="outline"></i>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu style="width:200px;height:100px">
+          <li nz-menu-item  routerLink="/profile"><i nz-icon nzType="user" class="LiCustom p-2" nzTheme="outline"></i>&nbsp;&nbsp;PROFILE</li>
+          <li nz-menu-item (click)="logout()"><i nz-icon nzType="logout" class="LiCustom p-2" nzTheme="outline" ></i>&nbsp;&nbsp;LOG OUT</li>
+        </ul>
+      </nz-dropdown-menu>
         <img src="assets/logo.png" class="logo">
       </div>
     </div>
@@ -40,7 +47,7 @@
           </nz-input-group>
         </div>
         <div col-12 class="table-design">
-          <nz-table [nzData]="supplierList" nzDark [nzPageSize]="100" nzShowPagination #hhtpTable>
+          <nz-table [nzData]="supplierList" nzDark [nzPageSize]="100" [nzScroll]="{ y: '440px' }" nzShowPagination #hhtpTable>
             <thead class="border thead-design">
               <tr>
                 <th [nzSortFn]="sortRefFn">Supplier Reference</th>
@@ -247,7 +254,7 @@
                 <label>Upload supplier Logo</label>
                 <nz-form-item>
                   <nz-form-control>
-                    <input type="file" hidden #logo accept="image/png,image/jpeg" formControlName="filename"
+                    <input type="file" hidden #logo accept="image/png,image/jpeg"
                       (change)="uploadLogo($event)" />
                     <button nz-button (click)="logo.click()">
                       <span>

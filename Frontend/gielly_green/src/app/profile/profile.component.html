@@ -1,0 +1,130 @@
+<nz-layout>
+    <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null" [nzWidth]="250">  
+      <div class="m-4" style="padding-left:10px">
+        <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          (click)="isCollapsed = !isCollapsed"></i>
+      </div>
+      <ul nz-menu  nzMode="inline">
+        <li>
+          <ul>
+            <li nz-menu-item style="padding-left:20px" routerLink="/monthly-invoice"> <fa-icon [icon]="invoice" class="p-3"></fa-icon>MONTHLY INVOICE</li>
+            <li nz-menu-item style="padding-left:20px" routerLink="/suppliers"><fa-icon [icon]="supplier" class="p-3"></fa-icon> SUPPLIER LIST</li>
+          </ul>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout>
+    <nz-header>
+      <div class="row  d-flex justify-content-end"> 
+        <div class="col-6 d-flex justify-content-end">
+        <i nz-icon nzType="menu" nzTrigger="click" nz-dropdown [nzDropdownMenu]="menu" class="profile-custom p-4" nzTheme="outline"></i>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu style="width:200px;height:100px">
+            <li nz-menu-item  routerLink="/profile"><i nz-icon nzType="user" class="LiCustom p-2" nzTheme="outline"></i>&nbsp;&nbsp;PROFILE</li>
+            <li nz-menu-item (click)="logout()"><i nz-icon nzType="logout" class="LiCustom p-2" nzTheme="outline" ></i>&nbsp;&nbsp;LOG OUT</li>
+          </ul>
+        </nz-dropdown-menu>
+          <img src="assets/logo.png" class="logo">
+        </div>
+      </div>
+    </nz-header>
+    <nz-content>
+        <form nz-form [formGroup]="validateProfileForm" class="login-form p-3">
+            <div class="modal-container">
+                <div>
+                <h1>Profile</h1>
+                </div>
+              <div class="row mt-3">
+                <div class="col-6">
+                  <label>Comapany Name</label>
+                  <nz-form-item>
+                    <nz-form-control>
+                      <nz-input-group>
+                        <input type="text" nz-input class="input-design" formControlName="Name" />
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6">
+                  <label>Address Line</label>
+                  <nz-form-item>
+                    <nz-form-control>
+                      <textarea nz-input formControlName="Address"></textarea>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+  
+              <div class="row">
+                <div class="col-6">
+                  <label>City</label>
+                  <nz-form-item>
+                    <nz-form-control>
+                      <nz-input-group>
+                        <input type="text" nz-input class="input-design" formControlName="city" />
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6">
+                  <label>Zip Code</label>
+                  <nz-form-item>
+                    <nz-form-control>
+                      <nz-input-group>
+                        <input type="text" nz-input class="input-design" formControlName="Zipcode" />
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6">
+                  <label>Country</label>
+                  <nz-form-item>
+                    <nz-form-control>
+                      <nz-input-group>
+                        <input type="text" nz-input class="input-design" formControlName="Country" />
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6">
+                  <label>Dafault VAT</label>
+                  <nz-form-item>
+                    <nz-form-control>
+                      <nz-input-group>
+                        <input type="text" nz-input class="input-design" formControlName="VAT" />
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-6 d-flex justify-content-end">
+                    <nz-form-control>
+                        <button nz-button class="custom-button" (click)="submitProfile()">Submit</button>
+                    </nz-form-control>
+                </div> 
+            </div>
+          </form>
+
+          <div *ngIf="showLoader">
+            <div style="display:flex;justify-content:center;align-items:center;" class="loader-container">
+              <i nz-icon [nzType]="'loading'" class="customLoader"></i>
+            </div>
+          </div>
+          
+    </nz-content>
+    </nz-layout>
+  </nz-layout>
