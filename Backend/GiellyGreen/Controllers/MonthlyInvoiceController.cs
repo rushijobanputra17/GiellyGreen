@@ -4,16 +4,14 @@ using GiellyGreen.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace GiellyGreen.Controllers
 {
-   // [Authorize]
+    // [Authorize]
     public class MonthlyInvoiceController : ApiController
     {
-        public static MonthlyInvoiceRepository monthlyInvoiceRepository   = new MonthlyInvoiceRepository();
+        public static MonthlyInvoiceRepository monthlyInvoiceRepository = new MonthlyInvoiceRepository();
         public JsonResponse objResponse;
 
         public JsonResponse Get(DateTime InvoiceMonth)
@@ -38,8 +36,8 @@ namespace GiellyGreen.Controllers
                 if (ModelState.IsValid)
                 {
                     invoiceModel.InvoiceDate = Convert.ToDateTime(invoiceModel.InvoiceDate);
-                  var monthlyInvoice =  monthlyInvoiceRepository.AddInvoice(invoiceModel);
-                    if(monthlyInvoice==0)
+                    var monthlyInvoice = monthlyInvoiceRepository.AddInvoice(invoiceModel);
+                    if (monthlyInvoice == 0)
                     {
                         objResponse = JsonResponseHelper.GetJsonResponse(0, "Something Went Wrong while Adding table header", monthlyInvoice);
                     }
@@ -71,7 +69,7 @@ namespace GiellyGreen.Controllers
         {
             try
             {
-                if (monthlyInvoiceRepository.ApproveSelectedInvoices(selectedIds, selectedDate)>0)
+                if (monthlyInvoiceRepository.ApproveSelectedInvoices(selectedIds, selectedDate) > 0)
                 {
                     objResponse = JsonResponseHelper.GetJsonResponse(1, "Selected invoices approved successfully", null);
                 }
@@ -82,7 +80,7 @@ namespace GiellyGreen.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.InnerException.Message != null)
+                if (ex.InnerException != null)
                 {
                     objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
                 }
@@ -94,7 +92,5 @@ namespace GiellyGreen.Controllers
 
             return objResponse;
         }
-
-        
     }
 }
