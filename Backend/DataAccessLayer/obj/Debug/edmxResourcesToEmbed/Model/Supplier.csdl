@@ -104,7 +104,7 @@
     <Property Name="CustomHeader4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="CustomHeader5" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="InvoiceRef" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-    <Property Name="InvoiceDate" Type="DateTime" Precision="0" />
+    <Property Name="InvoiceDate" Type="DateTime" Precision="0" Nullable="false" />
     <Property Name="InvoiceMonth" Type="DateTime" Precision="0" />
     <NavigationProperty Name="InvoiceDetails" Relationship="Team2_GiellyGreenModel.FK_InvoiceDetails_Invoices" FromRole="Invoice" ToRole="InvoiceDetail" />
     <Property Name="VATPercent" Type="Decimal" Precision="4" Scale="2" />

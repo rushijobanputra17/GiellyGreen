@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace GiellyGreen.Models
 {
@@ -10,6 +11,8 @@ namespace GiellyGreen.Models
         public string CustomHeader3 { get; set; }
         public string CustomHeader4 { get; set; }
         public string CustomHeader5 { get; set; }
+
+        [Required]
         public string InvoiceRef { get; set; }
         public Nullable<System.DateTime> InvoiceDate { get; set; }
         public int InvoiceId { get; set; }

@@ -32,7 +32,7 @@
     <Property Name="CustomHeader4" Type="nvarchar" MaxLength="50" />
     <Property Name="CustomHeader5" Type="nvarchar" MaxLength="50" />
     <Property Name="InvoiceRef" Type="nvarchar" MaxLength="15" />
-    <Property Name="InvoiceDate" Type="date" />
+    <Property Name="InvoiceDate" Type="date" Nullable="false" />
     <Property Name="VATPercent" Type="decimal" Precision="4" Scale="2" />
   </EntityType>
   <EntityType Name="Profile">
