@@ -303,5 +303,10 @@ namespace DataAccessLayer.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsertInvoice_Result>("InsertInvoice", invoiceIdParameter, invoiceRefParameter, invoiceDateParameter, customCol1Parameter, customCol2Parameter, customCol3Parameter, customCol4Parameter, customCol5Parameter);
         }
+    
+        public virtual ObjectResult<GetVATPercent_Result> GetVATPercent()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetVATPercent_Result>("GetVATPercent");
+        }
     }
 }

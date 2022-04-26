@@ -89,6 +89,7 @@
       <Parameter Name="CustomCol4" Mode="In" Type="String" />
       <Parameter Name="CustomCol5" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="GetVATPercent" ReturnType="Collection(Team2_GiellyGreenModel.GetVATPercent_Result)" />
   </EntityContainer>
   <ComplexType Name="DeleteSupplier_Result">
     <Property Type="Int32" Name="ResponseStatus" Nullable="true" />
@@ -277,5 +278,8 @@
   </ComplexType>
   <ComplexType Name="InsertInvoice_Result">
     <Property Type="Int32" Name="InvoiceId" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GetVATPercent_Result">
+    <Property Type="Decimal" Name="DefaultVAT" Nullable="true" Precision="4" Scale="2" />
   </ComplexType>
 </Schema>

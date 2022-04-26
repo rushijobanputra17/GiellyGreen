@@ -200,5 +200,12 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetVATPercent" FunctionName="Team2_GiellyGreenModel.Store.GetVATPercent">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetVATPercent_Result">
+          <ScalarProperty Name="DefaultVAT" ColumnName="DefaultVAT" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

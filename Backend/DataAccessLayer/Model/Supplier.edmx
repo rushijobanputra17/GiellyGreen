@@ -115,6 +115,7 @@
         <Function Name="GetSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Status" Type="bit" Mode="In" />
         </Function>
+        <Function Name="GetVATPercent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="InsertInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="InvoiceId" Type="int" Mode="In" />
           <Parameter Name="InvoiceRef" Type="nvarchar" Mode="In" />
@@ -277,6 +278,7 @@
             <Parameter Name="CustomCol4" Mode="In" Type="String" />
             <Parameter Name="CustomCol5" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetVATPercent" ReturnType="Collection(Team2_GiellyGreenModel.GetVATPercent_Result)" />
         </EntityContainer>
         <ComplexType Name="DeleteSupplier_Result">
           <Property Type="Int32" Name="ResponseStatus" Nullable="true" />
@@ -465,6 +467,9 @@
         </ComplexType>
         <ComplexType Name="InsertInvoice_Result">
           <Property Type="Int32" Name="InvoiceId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetVATPercent_Result">
+          <Property Type="Decimal" Name="DefaultVAT" Nullable="true" Precision="4" Scale="2" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -668,6 +673,13 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.InsertInvoice_Result">
                 <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetVATPercent" FunctionName="Team2_GiellyGreenModel.Store.GetVATPercent" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetVATPercent_Result">
+                <ScalarProperty Name="DefaultVAT" ColumnName="DefaultVAT" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
