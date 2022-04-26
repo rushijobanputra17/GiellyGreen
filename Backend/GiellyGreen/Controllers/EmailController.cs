@@ -15,6 +15,7 @@ namespace GiellyGreen.Controllers
     public class EmailController : ApiController
     {
         public static MonthlyInvoiceRepository monthlyInvoiceRepository = new MonthlyInvoiceRepository();
+        public static ProfileRepository ProfileRepository = new ProfileRepository();
         JsonResponse objResponse;
         PDFController pdfContoller = new PDFController();
 
@@ -22,6 +23,9 @@ namespace GiellyGreen.Controllers
         {
             try
             {
+                PdfViewModel pdfViewModel = new PdfViewModel();
+                pdfViewModel.CompanyProfile =  ProfileRepository.GetProfileInfo();
+
                 var invoiceDetails = monthlyInvoiceRepository.GetInvoicesForPDF(invoiceDate, selectedSupplierIds);
 
                 //PDFController pdfContoller = new PDFController();
@@ -44,7 +48,8 @@ namespace GiellyGreen.Controllers
                                 String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
                                 invoice.Logo = Path.Combine(path, invoice.Logo);
                             }
-                            Attachment attachment = new Attachment(new MemoryStream(pdfContoller.GetPDFBytes(invoice)), "Invoice.pdf");
+                            pdfViewModel.Invoice = invoice;
+                            Attachment attachment = new Attachment(new MemoryStream(pdfContoller.GetPDFBytes(pdfViewModel)), "Invoice.pdf");
                             EmailHelper.SendEmail(invoice.EmailAddress, invoice.InvoiceDate, invoice.SupplierName, attachment);
                         }
                     }

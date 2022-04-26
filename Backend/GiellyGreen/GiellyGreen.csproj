@@ -252,6 +252,7 @@
     <Compile Include="Models\InvoiceModels.cs" />
     <Compile Include="Models\JsonResponse.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\PdfViewModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\SupplierViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

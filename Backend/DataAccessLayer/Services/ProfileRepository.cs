@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Interface;
 using DataAccessLayer.Model;
+using System.Linq;
 
 namespace DataAccessLayer.Services
 {
@@ -14,7 +15,7 @@ namespace DataAccessLayer.Services
 
         public dynamic GetProfileInfo()
         {
-            return objDataAccess.GetProfile();
+            return Enumerable.FirstOrDefault(objDataAccess.GetProfile());
         }
 
         public int InsertUpdateProfile(dynamic profileModel)
