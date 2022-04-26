@@ -1,11 +1,3 @@
-.trigger {
-    font-size: 18px;
-    line-height: 64px;
-    padding: 0 24px;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-
  
   .ant-table-tbody[_ngcontent-hgx-c187] > tr[_ngcontent-hgx-c187] > td[_ngcontent-hgx-c187] {
     padding: 50px!important;
@@ -22,13 +14,20 @@
       overflow-y:hidden!important;
   }
 
+
   nz-sider{
       background-color:#2C2B29!important;
       width: 100%!important;
       min-height: 100%!important;  
   }
 
+  nz-header{
+    background-color:#2C2B29!important;
+    height: 80px !important;
+  }
+
   ul{
+    margin-top:45px;;
     background-color:#2C2B29!important;
   }
 
@@ -79,7 +78,7 @@
 }
 
 .main-container{
-    width: 80vw;
+    min-width:100%!important;
     font-family:'Dax-Regular'!important;
 }
 
@@ -164,6 +163,15 @@ label{
 table {
   border-collapse: collapse;        
   width: 100%;
+}
+
+.trigger {
+  font-size: 18px;
+  line-height: 4px;
+  padding: 0 0px;
+  cursor: pointer;
+  transition: color 0.3s;
+  color:#C99D4A;
 }
 
 

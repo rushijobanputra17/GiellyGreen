@@ -1,6 +1,5 @@
 <nz-layout>
-  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null" [nzWidth]="250">
-    <div class="d-flex mt-3"><img src="assets/logo.png" class="logo"></div>
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null" [nzWidth]="250">  
     <ul nz-menu class="mt-5" nzMode="inline">
       <li>
         <ul>
@@ -10,13 +9,25 @@
       </li>
     </ul>
   </nz-sider>
+  <nz-layout>
+  <nz-header>
+    <div class="row">
+      <div class="col-6">
+        <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          (click)="isCollapsed = !isCollapsed"></i>
+      </div>
+      <div class="col-6 d-flex justify-content-end">
+        <img src="assets/logo.png" class="logo">
+      </div>
+    </div>
+  </nz-header>
   <nz-content>
     <div class="main-container" [ngClass]="{'blurPage': showLoader}">
       <div class="search-box row p-3">
-        <div class='col-5'>
+        <div class='col-6'>
           <p class="title-design">Suppliers List</p>
         </div>
-        <div class="col-5">
+        <div class="col-4">
           <nz-input-group nzPrefixIcon="search">
             <input type="text" nz-input placeholder="Search here..." (keyup)="search()" [(ngModel)]="searchValue" />
           </nz-input-group>
@@ -67,7 +78,7 @@
       </div>
     </div>
 
-    <nz-modal [nzMaskClosable]="false" [(nzVisible)]="isVisible" [nzWidth]="650" nzTitle="Add New Supplier"
+    <nz-modal [nzMaskClosable]="false" [(nzVisible)]="isVisible" [nzWidth]="650" nzTitle={{modalTitle}}
       [nzFooter]="modalFooter" nzCentered (nzOnCancel)="handleCancel()">
       <ng-container *nzModalContent>
         <form nz-form [formGroup]="validateSupplierForm" class="login-form">
@@ -82,7 +93,7 @@
                     </nz-input-group>
                     <ng-template #supplierNameError let-control>
                       <ng-container *ngIf="control.hasError('required')">
-                        Please input supplier Names.
+                        Please input supplier Name.
                       </ng-container>
                       <ng-container *ngIf="control.hasError('pattern')">
                         Only alphabetic names are allowed.
@@ -269,4 +280,5 @@
       </ng-template>
     </nz-modal>
   </nz-content>
+  </nz-layout>
 </nz-layout>

@@ -25,12 +25,27 @@
   .anticon-search{
       color:#C4C4C4!important;
       font-size:20px!important;
+      border-radius:5px!important;
   }
 
   .ant-switch-checked {
-    background-color:#00c897!important;;
+    background-color:#00c897!important;
   }
 
+  .ant-layout-sider-children .ant-menu.ant-menu-inline-collapsed {
+  display: none!important;
+  }
+
+  .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
+    border-right: 1px solid #2C2B29!important;
+  }
+
+  .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #00C897!important;
+    border-color: #00C897 !important;
+  }  
+
+ 
 
   @media print {
     body{

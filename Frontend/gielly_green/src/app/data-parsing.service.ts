@@ -9,7 +9,7 @@ export class DataParsingService {
  
   constructor(private http: HttpClient) { }
 
-   APIURL="https://6055-106-201-236-89.ngrok.io";
+   APIURL="https://0935-106-201-236-89.ngrok.io";
 
 SupplierBody=
   {
@@ -117,6 +117,7 @@ SupplierBody=
 
   
   saveInvoiceData(): Observable<any>{
+    console.log(this.InvoiceBody);
     let token=sessionStorage.getItem("logged_user");
     const header=new HttpHeaders().set("authorization", "bearer "+ token);
     return this.http.post<any>(`${this.APIURL}/api/MonthlyInvoice`,this.InvoiceBody,{headers:header});

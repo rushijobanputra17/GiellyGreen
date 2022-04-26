@@ -150,3 +150,31 @@ th {
   background-color: #00000079;
 
 }
+
+
+.select {
+  -webkit-appearance: none; /*hides the default checkbox*/
+  height: 20px!important;
+  width: 20px!important;
+  text-align: center!important;
+  transition: 0.10s!important;
+  background-color: white!important;
+  font-weight: 600!important;
+  border-radius: 3px!important;
+  outline: none!important;
+}
+
+.select:checked {
+  background-color:#00c897!important;
+  color:white!important;
+}
+
+
+.select:checked:before {
+  content: "✔"!important;
+}
+
+.select:hover {
+  cursor: pointer!important; 
+  opacity: 0.8!important;
+}

@@ -12,12 +12,14 @@ import { DataParsingService } from '../data-parsing.service';
 export class LoginComponent implements OnInit {
 //Properties
   validateForm!: FormGroup;
+  showLoader = false;
 
 //#region submit form and login if valid email and password
 
   submitForm(): void {
     if (this.validateForm.valid) {
       const UserLoginDetail = this.validateForm.controls
+      this.showLoader = true;
       this.httpService.loginUser(UserLoginDetail["userName"].value, UserLoginDetail["password"].value).subscribe(
         (response) => {
           console.log(response);
@@ -28,6 +30,7 @@ export class LoginComponent implements OnInit {
                 this.message.success('Successfully Login', {
                   nzDuration: 2000
                 }),
+                this.showLoader = false;
                   sessionStorage.setItem("logged_user", response.access_token);
                 this.router.navigate(['/suppliers']);
               },
@@ -35,6 +38,7 @@ export class LoginComponent implements OnInit {
                 this.message.error("Server Error! Please Reload Your Page", {
                   nzDuration: 5000
                 });
+                this.showLoader = false;
               },
               () => console.log("success")
             );
@@ -44,6 +48,7 @@ export class LoginComponent implements OnInit {
             this.message.error('Invalid Email or Password', {
               nzDuration: 2000
             });
+            this.showLoader = false;
           }
 
         },
@@ -53,11 +58,13 @@ export class LoginComponent implements OnInit {
             this.message.error("sometghin went wrong! Plaese Reload Your Page", {
               nzDuration: 1000
             });
+            this.showLoader = false;
           }
           else {
             this.message.error(error.error.error_description, {
               nzDuration: 1000
             });
+            this.showLoader = false;
           }
 
         },
