@@ -53,7 +53,7 @@ namespace DataAccessLayer.Services
                 invoices = new Invoices()
                 {
                     InvoiceDetails = new List<GetInvoiceDetails_Result>(),
-                    VATPercent = objDataAccess.GetVATPercent().FirstOrDefault().DefaultVAT
+                    VATPercent = objDataAccess.GetProfile().FirstOrDefault().DefaultVAT // objDataAccess.GetVATPercent().FirstOrDefault().DefaultVAT
                 };
             }
 
