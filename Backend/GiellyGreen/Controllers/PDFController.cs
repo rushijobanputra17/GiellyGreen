@@ -13,9 +13,9 @@ namespace GiellyGreen.Controllers
             return new Rotativa.ViewAsPdf("~/Views/PDF/Invoice.cshtml", model).BuildFile(ControllerContext);
         }
 
-        public byte[] GetPDFBytesForCombine(List<GetInvoicesForPdf_Result> list)
+        public byte[] GetPDFBytesForCombine(CombinePdfViewModel model)
         {
-            return new Rotativa.ViewAsPdf("~/Views/PDF/CombilePDF.cshtml", list).BuildFile(ControllerContext);   
+            return new Rotativa.ViewAsPdf("~/Views/PDF/CombilePDF.cshtml", model).BuildFile(ControllerContext);   
         }
 
         public ActionResult ReflectView()

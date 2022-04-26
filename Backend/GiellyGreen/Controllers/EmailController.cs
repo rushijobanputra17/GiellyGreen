@@ -81,9 +81,13 @@ namespace GiellyGreen.Controllers
         {
             try
             {
+                CombinePdfViewModel combinePdfViewModel = new CombinePdfViewModel();
+
                 var invoiceDetails = monthlyInvoiceRepository.GetInvoicesForPDF(invoiceDate, selectedSupplierIds);
                 if (invoiceDetails.Count > 0)
                 {
+                    combinePdfViewModel.CompanyProfile = ProfileRepository.GetProfileInfo();
+                    combinePdfViewModel.InvoiceDetails = invoiceDetails;
                     //PDFController pdfContoller = new PDFController();
                     //RouteData route = new RouteData();
                     //route.Values.Add("action", "GetPDFBytesForCombine");
@@ -93,7 +97,7 @@ namespace GiellyGreen.Controllers
 
                     pdfContoller.ControllerContext = EmailHelper.GetPdfContext("GetPDFBytesForCombine");
 
-                    var pdfBytesList = pdfContoller.GetPDFBytesForCombine(invoiceDetails);
+                    var pdfBytesList = pdfContoller.GetPDFBytesForCombine(combinePdfViewModel);
                     string pdfBase64String = Convert.ToBase64String(pdfBytesList);
                     objResponse = JsonResponseHelper.GetJsonResponse(1, invoiceDate.ToString("MMMM") + "_Invoice", pdfBase64String);
                 }
