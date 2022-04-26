@@ -10,16 +10,9 @@
 namespace DataAccessLayer.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Invoice
+    public partial class GetInvoices_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Invoice()
-        {
-            this.InvoiceDetails = new HashSet<InvoiceDetail>();
-        }
-    
         public int InvoiceId { get; set; }
         public string CustomHeader1 { get; set; }
         public string CustomHeader2 { get; set; }
@@ -27,11 +20,7 @@ namespace DataAccessLayer.Model
         public string CustomHeader4 { get; set; }
         public string CustomHeader5 { get; set; }
         public string InvoiceRef { get; set; }
-        public System.DateTime InvoiceDate { get; set; }
-        public Nullable<System.DateTime> InvoiceMonth { get; set; }
+        public Nullable<System.DateTime> InvoiceDate { get; set; }
         public Nullable<decimal> VATPercent { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
     }
 }

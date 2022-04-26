@@ -11,10 +11,11 @@ namespace DataAccessLayer.Model
 {
     using System;
     
-    public partial class GetAllInvoiceDetail_Result
+    public partial class GetInvoiceDetails_Result
     {
-        public int InvoiceId { get; set; }
-        public int SupplierId { get; set; }
+        public string SupplierName { get; set; }
+        public Nullable<int> InvoiceDetailId { get; set; }
+        public Nullable<int> SupplierId { get; set; }
         public Nullable<decimal> HairServices { get; set; }
         public Nullable<decimal> BeautyServices { get; set; }
         public Nullable<decimal> CustomService1 { get; set; }
@@ -28,6 +29,6 @@ namespace DataAccessLayer.Model
         public Nullable<decimal> AdvancePaid { get; set; }
         public Nullable<decimal> BalanceDue { get; set; }
         public Nullable<bool> Approved { get; set; }
-        public Nullable<System.DateTime> InvoiceMonth { get; set; }
+        public Nullable<int> InvoiceId { get; set; }
     }
 }

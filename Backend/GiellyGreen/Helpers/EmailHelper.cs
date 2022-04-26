@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using GiellyGreen.Controllers;
+using System;
 using System.Configuration;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web;
+using System.Web.Routing;
 
 namespace GiellyGreen.Helpers
 {
@@ -31,6 +31,16 @@ namespace GiellyGreen.Helpers
             smtp.Credentials = NetworkCred;
             smtp.Port = 587;
             smtp.Send(mailMessage);
+        }
+
+        public static System.Web.Mvc.ControllerContext GetPdfContext(string actionMethodName)
+        {
+            PDFController pdfContoller = new PDFController();
+            RouteData route = new RouteData();
+            route.Values.Add("action", "GetPDFBytes");
+            route.Values.Add("controller", "PDF");
+            System.Web.Mvc.ControllerContext newContext = new System.Web.Mvc.ControllerContext(new HttpContextWrapper(System.Web.HttpContext.Current), route, pdfContoller);
+            return newContext;
         }
     }
 }

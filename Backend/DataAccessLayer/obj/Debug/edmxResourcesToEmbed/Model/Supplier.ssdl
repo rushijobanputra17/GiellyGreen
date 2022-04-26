@@ -32,7 +32,20 @@
     <Property Name="CustomHeader4" Type="nvarchar" MaxLength="50" />
     <Property Name="CustomHeader5" Type="nvarchar" MaxLength="50" />
     <Property Name="InvoiceRef" Type="nvarchar" MaxLength="15" />
-    <Property Name="InvoiceDate" Type="date" />
+    <Property Name="InvoiceDate" Type="date" Nullable="false" />
+    <Property Name="VATPercent" Type="decimal" Precision="4" Scale="2" />
+  </EntityType>
+  <EntityType Name="Profile">
+    <Key>
+      <PropertyRef Name="ProfileId" />
+    </Key>
+    <Property Name="ProfileId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyName" Type="nvarchar" MaxLength="200" />
+    <Property Name="AddressLine" Type="nvarchar" MaxLength="200" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="ZipCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" />
+    <Property Name="DefaultVAT" Type="decimal" Precision="4" Scale="2" />
   </EntityType>
   <EntityType Name="Supplier">
     <Key>
@@ -83,16 +96,21 @@
   <Function Name="DeleteSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SupplierId" Type="int" Mode="In" />
   </Function>
-  <Function Name="GetAllInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+  <Function Name="GetInvoiceDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="InvoiceId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetInvoices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="InvoiceMonth" Type="date" Mode="In" />
   </Function>
   <Function Name="GetInvoicesForPdf" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SelectedIds" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="SelectedDate" Type="date" Mode="In" />
   </Function>
+  <Function Name="GetProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="GetSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Status" Type="bit" Mode="In" />
   </Function>
+  <Function Name="GetVATPercent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="InsertInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="InvoiceId" Type="int" Mode="In" />
     <Parameter Name="InvoiceRef" Type="nvarchar" Mode="In" />
@@ -121,6 +139,15 @@
     <Parameter Name="Approved" Type="bit" Mode="In" />
     <Parameter Name="InvoiceId" Type="int" Mode="In" />
   </Function>
+  <Function Name="InsertUpdateProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ProfileId" Type="int" Mode="In" />
+    <Parameter Name="CompanyName" Type="nvarchar" Mode="In" />
+    <Parameter Name="AddressLine" Type="nvarchar" Mode="In" />
+    <Parameter Name="City" Type="nvarchar" Mode="In" />
+    <Parameter Name="ZipCode" Type="nvarchar" Mode="In" />
+    <Parameter Name="Country" Type="nvarchar" Mode="In" />
+    <Parameter Name="DefaultVAT" Type="decimal" Mode="In" />
+  </Function>
   <Function Name="InsertUpdateSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="id" Type="int" Mode="In" />
     <Parameter Name="SupplierName" Type="nvarchar" Mode="In" />
@@ -142,6 +169,7 @@
   <EntityContainer Name="Team2_GiellyGreenModelStoreContainer">
     <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Invoices" EntityType="Self.Invoices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Invoice_Supplier" Association="Self.FK_Invoice_Supplier">
       <End Role="Supplier" EntitySet="Supplier" />

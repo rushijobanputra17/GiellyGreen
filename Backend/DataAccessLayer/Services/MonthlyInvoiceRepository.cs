@@ -20,7 +20,7 @@ namespace DataAccessLayer.Services
 
         public int AddInvoice(dynamic model)
         {
-            var invoiceidValue = Enumerable.FirstOrDefault(objDataAccess.InsertInvoice(0, model.InvoiceRef, model.InvoiceDate, model.CustomHeader1, model.CustomHeader2, model.CustomHeader3, model.CustomHeader4, model.CustomHeader5)).InvoiceId;
+            var invoiceidValue = Enumerable.FirstOrDefault(objDataAccess.InsertInvoice(0, model.InvoiceReference, model.InvoiceDate, model.CustomHeader1, model.CustomHeader2, model.CustomHeader3, model.CustomHeader4, model.CustomHeader5)).InvoiceId;
             if (invoiceidValue == 0)
             {
                 return 0;
@@ -36,22 +36,35 @@ namespace DataAccessLayer.Services
             return invoiceDetail;
         }
 
-        public dynamic GetAllInvoice(DateTime InvoiceMonth)
+        public dynamic GetAllInvoice(DateTime invoiceMonth)
         {
-            AutoMapper.MapperConfiguration configList = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<GetSupplier_Result, GetAllInvoice_Result>());
-            Mapper mapper = new Mapper(configList);
-            var MonthlyInvoiceList = objDataAccess.GetAllInvoice(InvoiceMonth).ToList();
-            var GetActiveSupplierList = objDataAccess.GetSupplier(true).ToList();
-            foreach (var supplier in GetActiveSupplierList)
+            AutoMapper.MapperConfiguration config = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<GetInvoices_Result, Invoices>());
+            Mapper mapper = new Mapper(config);
+            var activeSupplierList = objDataAccess.GetSupplier(true).ToList();
+            AutoMapper.MapperConfiguration supplierConfig = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<GetSupplier_Result, GetInvoiceDetails_Result>());
+            Mapper supplierMapper = new Mapper(supplierConfig);
+            Invoices invoices = mapper.Map<Invoices>(objDataAccess.GetInvoices(invoiceMonth).FirstOrDefault());
+            if (invoices != null)
             {
-                var objectMonth = MonthlyInvoiceList.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault();
-                if (MonthlyInvoiceList.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault() == null)
+                invoices.InvoiceDetails = objDataAccess.GetInvoiceDetails(invoices.InvoiceId).ToList();
+            }
+            else
+            {
+                invoices = new Invoices()
                 {
-                    MonthlyInvoiceList.Add(mapper.Map<GetAllInvoice_Result>(supplier));
-                }
+                    InvoiceDetails = new List<GetInvoiceDetails_Result>(),
+                    VATPercent = objDataAccess.GetProfile().FirstOrDefault().DefaultVAT // objDataAccess.GetVATPercent().FirstOrDefault().DefaultVAT
+                };
             }
 
-            return MonthlyInvoiceList;
+            foreach (var supplier in activeSupplierList)
+            {
+                if (invoices.InvoiceDetails.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault() == null)
+                {
+                    invoices.InvoiceDetails.Add(supplierMapper.Map<GetInvoiceDetails_Result>(supplier));
+                }
+            }
+            return invoices;
         }
 
         public int? ApproveSelectedInvoices(List<int> selectedIds, DateTime selectedDate)
@@ -63,6 +76,5 @@ namespace DataAccessLayer.Services
         {
             return objDataAccess.GetInvoicesForPdf(String.Join(",", selectedSupplierIds), invoiceDate).ToList();
         }
-
     }
 }

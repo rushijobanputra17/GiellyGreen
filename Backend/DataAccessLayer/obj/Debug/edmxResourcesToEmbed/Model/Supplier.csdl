@@ -22,9 +22,6 @@
       <Parameter Name="Status" Mode="In" Type="Boolean" />
       <Parameter Name="id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="GetAllInvoiceDetail" ReturnType="Collection(Team2_GiellyGreenModel.GetAllInvoiceDetail_Result)">
-      <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
-    </FunctionImport>
     <FunctionImport Name="GetSupplier" ReturnType="Collection(Team2_GiellyGreenModel.GetSupplier_Result)">
       <Parameter Name="Status" Mode="In" Type="Boolean" />
     </FunctionImport>
@@ -61,12 +58,26 @@
       <Parameter Name="SelectedIds" Mode="In" Type="String" />
       <Parameter Name="SelectedDate" Mode="In" Type="DateTime" />
     </FunctionImport>
-    <FunctionImport Name="GetAllInvoice" ReturnType="Collection(Team2_GiellyGreenModel.GetAllInvoice_Result)">
-      <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
-    </FunctionImport>
     <FunctionImport Name="GetInvoicesForPdf" ReturnType="Collection(Team2_GiellyGreenModel.GetInvoicesForPdf_Result)">
       <Parameter Name="SelectedIds" Mode="In" Type="String" />
       <Parameter Name="SelectedDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="GetInvoiceDetails" ReturnType="Collection(Team2_GiellyGreenModel.GetInvoiceDetails_Result)">
+      <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="InsertUpdateProfile">
+      <Parameter Name="ProfileId" Mode="In" Type="Int32" />
+      <Parameter Name="CompanyName" Mode="In" Type="String" />
+      <Parameter Name="AddressLine" Mode="In" Type="String" />
+      <Parameter Name="City" Mode="In" Type="String" />
+      <Parameter Name="ZipCode" Mode="In" Type="String" />
+      <Parameter Name="Country" Mode="In" Type="String" />
+      <Parameter Name="DefaultVAT" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <EntitySet Name="Profiles" EntityType="Team2_GiellyGreenModel.Profile" />
+    <FunctionImport Name="GetProfile" ReturnType="Collection(Team2_GiellyGreenModel.GetProfile_Result)" />
+    <FunctionImport Name="GetInvoices" ReturnType="Collection(Team2_GiellyGreenModel.GetInvoices_Result)">
+      <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
     </FunctionImport>
     <FunctionImport Name="InsertInvoice" ReturnType="Collection(Team2_GiellyGreenModel.InsertInvoice_Result)">
       <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
@@ -78,27 +89,10 @@
       <Parameter Name="CustomCol4" Mode="In" Type="String" />
       <Parameter Name="CustomCol5" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="GetVATPercent" ReturnType="Collection(Team2_GiellyGreenModel.GetVATPercent_Result)" />
   </EntityContainer>
   <ComplexType Name="DeleteSupplier_Result">
     <Property Type="Int32" Name="ResponseStatus" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="GetAllInvoiceDetail_Result">
-    <Property Type="Int32" Name="InvoiceId" Nullable="false" />
-    <Property Type="Int32" Name="SupplierId" Nullable="false" />
-    <Property Type="Decimal" Name="HairServices" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="BeautyServices" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="CustomService1" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="CustomService2" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="CustomService3" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="CustomService4" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="CustomService5" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="Net" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="VAT" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="Gross" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="AdvancePaid" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="BalanceDue" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Boolean" Name="Approved" Nullable="true" />
-    <Property Type="DateTime" Name="InvoiceMonth" Nullable="true" Precision="23" />
   </ComplexType>
   <EntityType Name="Invoice">
     <Key>
@@ -111,9 +105,10 @@
     <Property Name="CustomHeader4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="CustomHeader5" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="InvoiceRef" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-    <Property Name="InvoiceDate" Type="DateTime" Precision="0" />
+    <Property Name="InvoiceDate" Type="DateTime" Precision="0" Nullable="false" />
     <Property Name="InvoiceMonth" Type="DateTime" Precision="0" />
     <NavigationProperty Name="InvoiceDetails" Relationship="Team2_GiellyGreenModel.FK_InvoiceDetails_Invoices" FromRole="Invoice" ToRole="InvoiceDetail" />
+    <Property Name="VATPercent" Type="Decimal" Precision="4" Scale="2" />
   </EntityType>
   <EntityType Name="Supplier">
     <Key>
@@ -199,32 +194,6 @@
   <ComplexType Name="ApproveInvoices_Result">
     <Property Type="Int32" Name="response" Nullable="true" />
   </ComplexType>
-  <ComplexType Name="GetAllInvoice_Result">
-    <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="200" />
-    <Property Type="String" Name="CustomHeader1" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="CustomHeader2" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="CustomHeader3" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="CustomHeader4" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="CustomHeader5" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="InvoiceRef" Nullable="true" MaxLength="15" />
-    <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
-    <Property Type="Int32" Name="InvoiceDetailId" Nullable="true" />
-    <Property Type="Int32" Name="SupplierId" Nullable="true" />
-    <Property Type="Decimal" Name="HairServices" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="BeautyServices" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="CustomService1" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="CustomService2" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="CustomService3" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="CustomService4" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="CustomService5" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="Net" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="VAT" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="Gross" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="AdvancePaid" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="BalanceDue" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Boolean" Name="Approved" Nullable="true" />
-    <Property Type="Int32" Name="InvoiceId" Nullable="true" />
-  </ComplexType>
   <ComplexType Name="GetInvoicesForPdf_Result">
     <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="200" />
     <Property Type="Int32" Name="SupplierId" Nullable="false" />
@@ -256,7 +225,61 @@
     <Property Type="Boolean" Name="Approved" Nullable="true" />
     <Property Type="Int32" Name="InvoiceId" Nullable="true" />
   </ComplexType>
+  <ComplexType Name="GetInvoiceDetails_Result">
+    <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="200" />
+    <Property Type="Int32" Name="InvoiceDetailId" Nullable="true" />
+    <Property Type="Int32" Name="SupplierId" Nullable="true" />
+    <Property Type="Decimal" Name="HairServices" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="BeautyServices" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomService1" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomService2" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomService3" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomService4" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomService5" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="Net" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="VAT" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="Gross" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="AdvancePaid" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="BalanceDue" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Boolean" Name="Approved" Nullable="true" />
+    <Property Type="Int32" Name="InvoiceId" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="Profile">
+    <Key>
+      <PropertyRef Name="ProfileId" />
+    </Key>
+    <Property Name="ProfileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ZipCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DefaultVAT" Type="Decimal" Precision="4" Scale="2" />
+  </EntityType>
+  <ComplexType Name="GetProfile_Result">
+    <Property Type="Int32" Name="ProfileId" Nullable="false" />
+    <Property Type="String" Name="CompanyName" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="AddressLine" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="City" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="ZipCode" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Country" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="DefaultVAT" Nullable="true" Precision="4" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="GetInvoices_Result">
+    <Property Type="Int32" Name="InvoiceId" Nullable="false" />
+    <Property Type="String" Name="CustomHeader1" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CustomHeader2" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CustomHeader3" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CustomHeader4" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CustomHeader5" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="InvoiceRef" Nullable="true" MaxLength="15" />
+    <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
+    <Property Type="Decimal" Name="VATPercent" Nullable="true" Precision="4" Scale="2" />
+  </ComplexType>
   <ComplexType Name="InsertInvoice_Result">
     <Property Type="Int32" Name="InvoiceId" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GetVATPercent_Result">
+    <Property Type="Decimal" Name="DefaultVAT" Nullable="true" Precision="4" Scale="2" />
   </ComplexType>
 </Schema>

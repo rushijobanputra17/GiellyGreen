@@ -1,4 +1,4 @@
-﻿@model List<DataAccessLayer.Model.GetInvoicesForPdf_Result>
+﻿@model GiellyGreen.Models.CombinePdfViewModel
 @{
     Layout = null;
 }
@@ -64,7 +64,7 @@
     </style>
 </head>
 <body>
-    @foreach (var item in Model)
+    @foreach (var item in Model.InvoiceDetails)
     {
         if (item.Logo != null)
         {
@@ -106,10 +106,10 @@
             <br />
             <div class="row">
                 <div class="column">
-                    <h4>To : ADK Consultancy</h4>
-                    <h4>Dummy Address</h4>
-                    <h4>Dummy Address</h4>
-                    <h4>Dummy Address</h4>
+                    <h4>To : @Model.CompanyProfile.CompanyName</h4>
+                    <h4>@Model.CompanyProfile.AddressLine</h4>
+                    <h4>@Model.CompanyProfile.City - @Model.CompanyProfile.ZipCode</h4>
+                    <h4>@Model.CompanyProfile.Country</h4>
                 </div>
             </div>
             <br />
@@ -118,7 +118,7 @@
                     <table class="table-bord" style="width:100%">
                         <thead>
                             <tr style="padding:3px;" class="borderCell">
-                                <th class="borderCell" colspan="3" style="margin-left:10px;border-right:0px">Description</th>
+                                <th class="borderCell" colspan="3" style="text-align:center">Description</th>
                                 <th class="borderCell text-right" style="border-left:0px">Amount(GBP)</th>
                             </tr>
                         </thead>

@@ -30,6 +30,7 @@ namespace DataAccessLayer.Model
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+        public virtual DbSet<Profile> Profiles { get; set; }
     
         public virtual ObjectResult<DeleteSupplier_Result> DeleteSupplier(Nullable<int> supplierId)
         {
@@ -104,15 +105,6 @@ namespace DataAccessLayer.Model
                 new ObjectParameter("id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateStatus", statusParameter, idParameter);
-        }
-    
-        public virtual ObjectResult<GetAllInvoiceDetail_Result> GetAllInvoiceDetail(Nullable<System.DateTime> invoiceMonth)
-        {
-            var invoiceMonthParameter = invoiceMonth.HasValue ?
-                new ObjectParameter("InvoiceMonth", invoiceMonth) :
-                new ObjectParameter("InvoiceMonth", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllInvoiceDetail_Result>("GetAllInvoiceDetail", invoiceMonthParameter);
         }
     
         public virtual ObjectResult<GetSupplier_Result> GetSupplier(Nullable<bool> status)
@@ -206,15 +198,6 @@ namespace DataAccessLayer.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ApproveInvoices_Result>("ApproveInvoices", selectedIdsParameter, selectedDateParameter);
         }
     
-        public virtual ObjectResult<GetAllInvoice_Result> GetAllInvoice(Nullable<System.DateTime> invoiceMonth)
-        {
-            var invoiceMonthParameter = invoiceMonth.HasValue ?
-                new ObjectParameter("InvoiceMonth", invoiceMonth) :
-                new ObjectParameter("InvoiceMonth", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllInvoice_Result>("GetAllInvoice", invoiceMonthParameter);
-        }
-    
         public virtual ObjectResult<GetInvoicesForPdf_Result> GetInvoicesForPdf(string selectedIds, Nullable<System.DateTime> selectedDate)
         {
             var selectedIdsParameter = selectedIds != null ?
@@ -226,6 +209,62 @@ namespace DataAccessLayer.Model
                 new ObjectParameter("SelectedDate", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInvoicesForPdf_Result>("GetInvoicesForPdf", selectedIdsParameter, selectedDateParameter);
+        }
+    
+        public virtual ObjectResult<GetInvoiceDetails_Result> GetInvoiceDetails(Nullable<int> invoiceId)
+        {
+            var invoiceIdParameter = invoiceId.HasValue ?
+                new ObjectParameter("InvoiceId", invoiceId) :
+                new ObjectParameter("InvoiceId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInvoiceDetails_Result>("GetInvoiceDetails", invoiceIdParameter);
+        }
+    
+        public virtual int InsertUpdateProfile(Nullable<int> profileId, string companyName, string addressLine, string city, string zipCode, string country, Nullable<decimal> defaultVAT)
+        {
+            var profileIdParameter = profileId.HasValue ?
+                new ObjectParameter("ProfileId", profileId) :
+                new ObjectParameter("ProfileId", typeof(int));
+    
+            var companyNameParameter = companyName != null ?
+                new ObjectParameter("CompanyName", companyName) :
+                new ObjectParameter("CompanyName", typeof(string));
+    
+            var addressLineParameter = addressLine != null ?
+                new ObjectParameter("AddressLine", addressLine) :
+                new ObjectParameter("AddressLine", typeof(string));
+    
+            var cityParameter = city != null ?
+                new ObjectParameter("City", city) :
+                new ObjectParameter("City", typeof(string));
+    
+            var zipCodeParameter = zipCode != null ?
+                new ObjectParameter("ZipCode", zipCode) :
+                new ObjectParameter("ZipCode", typeof(string));
+    
+            var countryParameter = country != null ?
+                new ObjectParameter("Country", country) :
+                new ObjectParameter("Country", typeof(string));
+    
+            var defaultVATParameter = defaultVAT.HasValue ?
+                new ObjectParameter("DefaultVAT", defaultVAT) :
+                new ObjectParameter("DefaultVAT", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUpdateProfile", profileIdParameter, companyNameParameter, addressLineParameter, cityParameter, zipCodeParameter, countryParameter, defaultVATParameter);
+        }
+    
+        public virtual ObjectResult<GetProfile_Result> GetProfile()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProfile_Result>("GetProfile");
+        }
+    
+        public virtual ObjectResult<GetInvoices_Result> GetInvoices(Nullable<System.DateTime> invoiceMonth)
+        {
+            var invoiceMonthParameter = invoiceMonth.HasValue ?
+                new ObjectParameter("InvoiceMonth", invoiceMonth) :
+                new ObjectParameter("InvoiceMonth", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInvoices_Result>("GetInvoices", invoiceMonthParameter);
         }
     
         public virtual ObjectResult<InsertInvoice_Result> InsertInvoice(Nullable<int> invoiceId, string invoiceRef, Nullable<System.DateTime> invoiceDate, string customCol1, string customCol2, string customCol3, string customCol4, string customCol5)
@@ -263,6 +302,11 @@ namespace DataAccessLayer.Model
                 new ObjectParameter("CustomCol5", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsertInvoice_Result>("InsertInvoice", invoiceIdParameter, invoiceRefParameter, invoiceDateParameter, customCol1Parameter, customCol2Parameter, customCol3Parameter, customCol4Parameter, customCol5Parameter);
+        }
+    
+        public virtual ObjectResult<GetVATPercent_Result> GetVATPercent()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetVATPercent_Result>("GetVATPercent");
         }
     }
 }

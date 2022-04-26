@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace GiellyGreen.Models
+namespace DataAccessLayer.Model
 {
-    public class InvoiceModels
+    public class Invoices
     {
+        public int InvoiceId { get; set; }
         public string CustomHeader1 { get; set; }
         public string CustomHeader2 { get; set; }
         public string CustomHeader3 { get; set; }
         public string CustomHeader4 { get; set; }
         public string CustomHeader5 { get; set; }
-
-        [Required]
-        public string InvoiceReference { get; set; }
+        public string InvoiceRef { get; set; }
         public Nullable<System.DateTime> InvoiceDate { get; set; }
-        public int InvoiceId { get; set; }
+        public Nullable<decimal> VATPercent { get; set; }
 
-        public List<InvoiceDetailsViewModels> invoiceDetails;
+        public List<GetInvoiceDetails_Result> InvoiceDetails;
     }
 }
