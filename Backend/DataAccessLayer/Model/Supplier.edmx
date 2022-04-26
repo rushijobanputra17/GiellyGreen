@@ -37,7 +37,7 @@
           <Property Name="CustomHeader4" Type="nvarchar" MaxLength="50" />
           <Property Name="CustomHeader5" Type="nvarchar" MaxLength="50" />
           <Property Name="InvoiceRef" Type="nvarchar" MaxLength="15" />
-          <Property Name="InvoiceDate" Type="date" />
+          <Property Name="InvoiceDate" Type="date" Nullable="false" />
           <Property Name="VATPercent" Type="decimal" Precision="4" Scale="2" />
         </EntityType>
         <EntityType Name="Profile">
@@ -265,7 +265,7 @@
           <EntitySet Name="Profiles" EntityType="Team2_GiellyGreenModel.Profile" />
           <FunctionImport Name="GetProfile" ReturnType="Collection(Team2_GiellyGreenModel.GetProfile_Result)" />
           <FunctionImport Name="GetInvoices" ReturnType="Collection(Team2_GiellyGreenModel.GetInvoices_Result)">
-            <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
+          <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="InsertInvoice" ReturnType="Collection(Team2_GiellyGreenModel.InsertInvoice_Result)">
             <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
@@ -292,7 +292,7 @@
           <Property Name="CustomHeader4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CustomHeader5" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="InvoiceRef" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="InvoiceDate" Type="DateTime" Precision="0" />
+          <Property Name="InvoiceDate" Type="DateTime" Precision="0" Nullable="false" />
           <Property Name="InvoiceMonth" Type="DateTime" Precision="0" />
           <NavigationProperty Name="InvoiceDetails" Relationship="Team2_GiellyGreenModel.FK_InvoiceDetails_Invoices" FromRole="Invoice" ToRole="InvoiceDetail" />
           <Property Name="VATPercent" Type="Decimal" Precision="4" Scale="2" />

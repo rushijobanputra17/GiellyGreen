@@ -27,7 +27,7 @@ namespace DataAccessLayer.Model
         public string CustomHeader4 { get; set; }
         public string CustomHeader5 { get; set; }
         public string InvoiceRef { get; set; }
-        public Nullable<System.DateTime> InvoiceDate { get; set; }
+        public System.DateTime InvoiceDate { get; set; }
         public Nullable<System.DateTime> InvoiceMonth { get; set; }
         public Nullable<decimal> VATPercent { get; set; }
     
