@@ -36,22 +36,22 @@ namespace DataAccessLayer.Services
             return invoiceDetail;
         }
 
-        public dynamic GetAllInvoice(DateTime InvoiceMonth)
+        public dynamic GetAllInvoice(DateTime invoiceMonth)
         {
             AutoMapper.MapperConfiguration configList = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<GetSupplier_Result, GetAllInvoice_Result>());
             Mapper mapper = new Mapper(configList);
-            var MonthlyInvoiceList = objDataAccess.GetAllInvoice(InvoiceMonth).ToList();
-            var GetActiveSupplierList = objDataAccess.GetSupplier(true).ToList();
-            foreach (var supplier in GetActiveSupplierList)
+            var monthlyInvoiceList = objDataAccess.GetAllInvoice(invoiceMonth).ToList();
+            var activeSupplierList = objDataAccess.GetSupplier(true).ToList();
+            foreach (var supplier in activeSupplierList)
             {
-                var objectMonth = MonthlyInvoiceList.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault();
-                if (MonthlyInvoiceList.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault() == null)
+                var objectMonth = monthlyInvoiceList.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault();
+                if (monthlyInvoiceList.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault() == null)
                 {
-                    MonthlyInvoiceList.Add(mapper.Map<GetAllInvoice_Result>(supplier));
+                    monthlyInvoiceList.Add(mapper.Map<GetAllInvoice_Result>(supplier));
                 }
             }
 
-            return MonthlyInvoiceList;
+            return monthlyInvoiceList;
         }
 
         public int? ApproveSelectedInvoices(List<int> selectedIds, DateTime selectedDate)
@@ -63,6 +63,5 @@ namespace DataAccessLayer.Services
         {
             return objDataAccess.GetInvoicesForPdf(String.Join(",", selectedSupplierIds), invoiceDate).ToList();
         }
-
     }
 }
