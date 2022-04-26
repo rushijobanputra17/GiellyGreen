@@ -220,52 +220,6 @@ namespace DataAccessLayer.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInvoiceDetails_Result>("GetInvoiceDetails", invoiceIdParameter);
         }
     
-        public virtual ObjectResult<GetInvoices_Result> GetInvoices(Nullable<System.DateTime> invoiceMonth)
-        {
-            var invoiceMonthParameter = invoiceMonth.HasValue ?
-                new ObjectParameter("InvoiceMonth", invoiceMonth) :
-                new ObjectParameter("InvoiceMonth", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInvoices_Result>("GetInvoices", invoiceMonthParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> InsertInvoice(Nullable<int> invoiceId, string invoiceRef, Nullable<System.DateTime> invoiceDate, string customCol1, string customCol2, string customCol3, string customCol4, string customCol5)
-        {
-            var invoiceIdParameter = invoiceId.HasValue ?
-                new ObjectParameter("InvoiceId", invoiceId) :
-                new ObjectParameter("InvoiceId", typeof(int));
-    
-            var invoiceRefParameter = invoiceRef != null ?
-                new ObjectParameter("InvoiceRef", invoiceRef) :
-                new ObjectParameter("InvoiceRef", typeof(string));
-    
-            var invoiceDateParameter = invoiceDate.HasValue ?
-                new ObjectParameter("InvoiceDate", invoiceDate) :
-                new ObjectParameter("InvoiceDate", typeof(System.DateTime));
-    
-            var customCol1Parameter = customCol1 != null ?
-                new ObjectParameter("CustomCol1", customCol1) :
-                new ObjectParameter("CustomCol1", typeof(string));
-    
-            var customCol2Parameter = customCol2 != null ?
-                new ObjectParameter("CustomCol2", customCol2) :
-                new ObjectParameter("CustomCol2", typeof(string));
-    
-            var customCol3Parameter = customCol3 != null ?
-                new ObjectParameter("CustomCol3", customCol3) :
-                new ObjectParameter("CustomCol3", typeof(string));
-    
-            var customCol4Parameter = customCol4 != null ?
-                new ObjectParameter("CustomCol4", customCol4) :
-                new ObjectParameter("CustomCol4", typeof(string));
-    
-            var customCol5Parameter = customCol5 != null ?
-                new ObjectParameter("CustomCol5", customCol5) :
-                new ObjectParameter("CustomCol5", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("InsertInvoice", invoiceIdParameter, invoiceRefParameter, invoiceDateParameter, customCol1Parameter, customCol2Parameter, customCol3Parameter, customCol4Parameter, customCol5Parameter);
-        }
-    
         public virtual int InsertUpdateProfile(Nullable<int> profileId, string companyName, string addressLine, string city, string zipCode, string country, Nullable<decimal> defaultVAT)
         {
             var profileIdParameter = profileId.HasValue ?
@@ -302,6 +256,52 @@ namespace DataAccessLayer.Model
         public virtual ObjectResult<GetProfile_Result> GetProfile()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProfile_Result>("GetProfile");
+        }
+    
+        public virtual ObjectResult<GetInvoices_Result> GetInvoices(Nullable<System.DateTime> invoiceMonth)
+        {
+            var invoiceMonthParameter = invoiceMonth.HasValue ?
+                new ObjectParameter("InvoiceMonth", invoiceMonth) :
+                new ObjectParameter("InvoiceMonth", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInvoices_Result>("GetInvoices", invoiceMonthParameter);
+        }
+    
+        public virtual ObjectResult<InsertInvoice_Result> InsertInvoice(Nullable<int> invoiceId, string invoiceRef, Nullable<System.DateTime> invoiceDate, string customCol1, string customCol2, string customCol3, string customCol4, string customCol5)
+        {
+            var invoiceIdParameter = invoiceId.HasValue ?
+                new ObjectParameter("InvoiceId", invoiceId) :
+                new ObjectParameter("InvoiceId", typeof(int));
+    
+            var invoiceRefParameter = invoiceRef != null ?
+                new ObjectParameter("InvoiceRef", invoiceRef) :
+                new ObjectParameter("InvoiceRef", typeof(string));
+    
+            var invoiceDateParameter = invoiceDate.HasValue ?
+                new ObjectParameter("InvoiceDate", invoiceDate) :
+                new ObjectParameter("InvoiceDate", typeof(System.DateTime));
+    
+            var customCol1Parameter = customCol1 != null ?
+                new ObjectParameter("CustomCol1", customCol1) :
+                new ObjectParameter("CustomCol1", typeof(string));
+    
+            var customCol2Parameter = customCol2 != null ?
+                new ObjectParameter("CustomCol2", customCol2) :
+                new ObjectParameter("CustomCol2", typeof(string));
+    
+            var customCol3Parameter = customCol3 != null ?
+                new ObjectParameter("CustomCol3", customCol3) :
+                new ObjectParameter("CustomCol3", typeof(string));
+    
+            var customCol4Parameter = customCol4 != null ?
+                new ObjectParameter("CustomCol4", customCol4) :
+                new ObjectParameter("CustomCol4", typeof(string));
+    
+            var customCol5Parameter = customCol5 != null ?
+                new ObjectParameter("CustomCol5", customCol5) :
+                new ObjectParameter("CustomCol5", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsertInvoice_Result>("InsertInvoice", invoiceIdParameter, invoiceRefParameter, invoiceDateParameter, customCol1Parameter, customCol2Parameter, customCol3Parameter, customCol4Parameter, customCol5Parameter);
         }
     }
 }

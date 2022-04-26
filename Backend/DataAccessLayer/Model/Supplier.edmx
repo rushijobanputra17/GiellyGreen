@@ -253,19 +253,6 @@
           <FunctionImport Name="GetInvoiceDetails" ReturnType="Collection(Team2_GiellyGreenModel.GetInvoiceDetails_Result)">
           <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetInvoices" ReturnType="Collection(Team2_GiellyGreenModel.GetInvoices_Result)">
-          <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="InsertInvoice" ReturnType="Collection(Int32)">
-            <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
-            <Parameter Name="InvoiceRef" Mode="In" Type="String" />
-            <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
-            <Parameter Name="CustomCol1" Mode="In" Type="String" />
-            <Parameter Name="CustomCol2" Mode="In" Type="String" />
-            <Parameter Name="CustomCol3" Mode="In" Type="String" />
-            <Parameter Name="CustomCol4" Mode="In" Type="String" />
-            <Parameter Name="CustomCol5" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="InsertUpdateProfile">
             <Parameter Name="ProfileId" Mode="In" Type="Int32" />
             <Parameter Name="CompanyName" Mode="In" Type="String" />
@@ -277,6 +264,19 @@
           </FunctionImport>
           <EntitySet Name="Profiles" EntityType="Team2_GiellyGreenModel.Profile" />
           <FunctionImport Name="GetProfile" ReturnType="Collection(Team2_GiellyGreenModel.GetProfile_Result)" />
+          <FunctionImport Name="GetInvoices" ReturnType="Collection(Team2_GiellyGreenModel.GetInvoices_Result)">
+            <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="InsertInvoice" ReturnType="Collection(Team2_GiellyGreenModel.InsertInvoice_Result)">
+            <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
+            <Parameter Name="InvoiceRef" Mode="In" Type="String" />
+            <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
+            <Parameter Name="CustomCol1" Mode="In" Type="String" />
+            <Parameter Name="CustomCol2" Mode="In" Type="String" />
+            <Parameter Name="CustomCol3" Mode="In" Type="String" />
+            <Parameter Name="CustomCol4" Mode="In" Type="String" />
+            <Parameter Name="CustomCol5" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DeleteSupplier_Result">
           <Property Type="Int32" Name="ResponseStatus" Nullable="true" />
@@ -431,17 +431,6 @@
           <Property Type="Boolean" Name="Approved" Nullable="true" />
           <Property Type="Int32" Name="InvoiceId" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="GetInvoices_Result">
-          <Property Type="Int32" Name="InvoiceId" Nullable="false" />
-          <Property Type="String" Name="CustomHeader1" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CustomHeader2" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CustomHeader3" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CustomHeader4" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CustomHeader5" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="InvoiceRef" Nullable="true" MaxLength="15" />
-          <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
-          <Property Type="Decimal" Name="VATPercent" Nullable="true" Precision="4" Scale="2" />
-        </ComplexType>
         <EntityType Name="Profile">
           <Key>
             <PropertyRef Name="ProfileId" />
@@ -462,6 +451,20 @@
           <Property Type="String" Name="ZipCode" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="Country" Nullable="true" MaxLength="50" />
           <Property Type="Decimal" Name="DefaultVAT" Nullable="true" Precision="4" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="GetInvoices_Result">
+          <Property Type="Int32" Name="InvoiceId" Nullable="false" />
+          <Property Type="String" Name="CustomHeader1" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CustomHeader2" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CustomHeader3" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CustomHeader4" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CustomHeader5" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="InvoiceRef" Nullable="true" MaxLength="15" />
+          <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
+          <Property Type="Decimal" Name="VATPercent" Nullable="true" Precision="4" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="InsertInvoice_Result">
+          <Property Type="Int32" Name="InvoiceId" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -619,22 +622,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetInvoices" FunctionName="Team2_GiellyGreenModel.Store.GetInvoices">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetInvoices_Result">
-                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
-                <ScalarProperty Name="CustomHeader1" ColumnName="CustomHeader1" />
-                <ScalarProperty Name="CustomHeader2" ColumnName="CustomHeader2" />
-                <ScalarProperty Name="CustomHeader3" ColumnName="CustomHeader3" />
-                <ScalarProperty Name="CustomHeader4" ColumnName="CustomHeader4" />
-                <ScalarProperty Name="CustomHeader5" ColumnName="CustomHeader5" />
-                <ScalarProperty Name="InvoiceRef" ColumnName="InvoiceRef" />
-                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
-                <ScalarProperty Name="VATPercent" ColumnName="VATPercent" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="InsertInvoice" FunctionName="Team2_GiellyGreenModel.Store.InsertInvoice" />
           <FunctionImportMapping FunctionImportName="InsertUpdateProfile" FunctionName="Team2_GiellyGreenModel.Store.InsertUpdateProfile" />
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="Team2_GiellyGreenModel.Profile">
@@ -659,6 +646,28 @@
                 <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="DefaultVAT" ColumnName="DefaultVAT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetInvoices" FunctionName="Team2_GiellyGreenModel.Store.GetInvoices">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetInvoices_Result">
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+                <ScalarProperty Name="CustomHeader1" ColumnName="CustomHeader1" />
+                <ScalarProperty Name="CustomHeader2" ColumnName="CustomHeader2" />
+                <ScalarProperty Name="CustomHeader3" ColumnName="CustomHeader3" />
+                <ScalarProperty Name="CustomHeader4" ColumnName="CustomHeader4" />
+                <ScalarProperty Name="CustomHeader5" ColumnName="CustomHeader5" />
+                <ScalarProperty Name="InvoiceRef" ColumnName="InvoiceRef" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="VATPercent" ColumnName="VATPercent" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertInvoice" FunctionName="Team2_GiellyGreenModel.Store.InsertInvoice" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.InsertInvoice_Result">
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
