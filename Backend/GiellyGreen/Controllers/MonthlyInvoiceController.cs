@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace GiellyGreen.Controllers
 {
-   // [Authorize]
+    [Authorize]
     public class MonthlyInvoiceController : ApiController
     {
         public static MonthlyInvoiceRepository monthlyInvoiceRepository = new MonthlyInvoiceRepository();

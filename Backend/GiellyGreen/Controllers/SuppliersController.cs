@@ -206,5 +206,34 @@ namespace GiellyGreen.Controllers
 
             return objResponse;
         }
+
+        [Route("supplier/UpdateStatus")]
+        public JsonResponse UpdateStatus(bool status, int supplierId)
+        {
+            try
+            {
+                if (supplierRepository.UpdateStatus(status, supplierId) == 1)
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(1, "Status updated successfully", supplierId);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Something went wrong", null);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException.Message != null)
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
+                }
+            }
+
+            return objResponse;
+        }
     }
 }

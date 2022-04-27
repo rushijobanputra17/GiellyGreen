@@ -11,7 +11,7 @@ using System.Web.Routing;
 
 namespace GiellyGreen.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class EmailController : ApiController
     {
         public static MonthlyInvoiceRepository monthlyInvoiceRepository = new MonthlyInvoiceRepository();
