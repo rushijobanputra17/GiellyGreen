@@ -1,6 +1,5 @@
 ﻿using DataAccessLayer.Model;
 using GiellyGreen.Models;
-using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace GiellyGreen.Controllers
