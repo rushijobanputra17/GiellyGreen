@@ -58,12 +58,14 @@ export class SuppliersComponent implements OnInit {
     this.SidebarIsVisible = true;
    }
   }
-
+  
+//#region delete logo
   deletelogo(){
     console.log("deletelogo");
     this.uploadedlogo=null;
     this.logoFile.nativeElement.value = "";
   }
+//#endregion
 
   ngOnInit(): void {
     //validate form
@@ -225,6 +227,7 @@ export class SuppliersComponent implements OnInit {
         this.message.error("Server Error! Please Reload Your Page", {
           nzDuration: 5000
         });
+        this.showLoader = false;
       },
       () => console.log("done")
     );
@@ -411,7 +414,6 @@ export class SuppliersComponent implements OnInit {
 
   }
 //#endregion
-
 
 //#region logout
 logout(){

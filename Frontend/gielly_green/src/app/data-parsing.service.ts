@@ -9,7 +9,7 @@ export class DataParsingService {
  
   constructor(private http: HttpClient) { }
 
-   APIURL="https://8a13-106-201-236-89.ngrok.io";
+   APIURL="https://8a73-106-201-236-89.ngrok.io";
 
 SupplierBody=
   {
@@ -52,7 +52,7 @@ SupplierBody=
     "CustomHeader3": "string",
     "CustomHeader4": "string",
     "CustomHeader5": "string",
-    "InvoiceRef": "string",
+    "InvoiceReference": "string",
     "InvoiceDate": "2022-04-20T09:44:00.790Z",
     "InvoiceId": 0
   }
@@ -102,7 +102,7 @@ SupplierBody=
     supplierStatusUpdate(status:any,id:any): Observable<any>{
       let token=sessionStorage.getItem("logged_user");
       const header=new HttpHeaders().set("authorization", "bearer "+ token);
-      return this.http.patch<any>(`${this.APIURL}/api/Suppliers?status=${status}&supplierId=${id}`,{headers:header});
+      return this.http.patch<any>(`${this.APIURL}/api/Suppliers?status=${status}&supplierId=${id}`,{},{headers:header});
     }
   
     AddSupplier(): Observable<any>{

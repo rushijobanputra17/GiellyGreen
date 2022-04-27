@@ -38,10 +38,15 @@
                 <div class="col-6">
                   <label>Comapany Name</label>
                   <nz-form-item>
-                    <nz-form-control>
+                    <nz-form-control  [nzErrorTip]="ComapanyNameError">
                       <nz-input-group>
                         <input type="text" nz-input class="input-design" formControlName="Name" />
                       </nz-input-group>
+                      <ng-template #ComapanyNameError let-control>
+                        <ng-container *ngIf="control.hasError('required')">
+                          Please input Comapany Name.
+                        </ng-container>
+                      </ng-template>
                     </nz-form-control>
                   </nz-form-item>
                 </div>

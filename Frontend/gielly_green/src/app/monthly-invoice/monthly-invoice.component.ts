@@ -14,10 +14,12 @@ import { DataParsingService } from '../data-parsing.service';
   styleUrls: ['./monthly-invoice.component.css']
 })
 export class MonthlyInvoiceComponent implements OnInit {
+
 //#region varaibles/Propertites
   showLoader = false;
   isCollapsed = false;
   month: any;
+  isButoonVisible=false;
   invoiceDate: any;
   customHeader1: any;
   customHeader2: any;
@@ -65,6 +67,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   }
 
   changeValue(data:any){
+    this.isButoonVisible=false;
     debugger
     console.log(this.MonthlyInvoiceDataChanged);
     if(this.MonthlyInvoiceDataChanged.length != 0){
@@ -225,6 +228,7 @@ Approved(){
 
 //#region save invoice
 saveInvoice(){
+  this.isButoonVisible=true;
   console.log(this.MonthalyInvoiceData);
   this.httpService.InvoiceBody.invoiceDetails = this.MonthalyInvoiceData;
   this.httpService.InvoiceBody.CustomHeader1 = this.customHeader1;
@@ -232,7 +236,7 @@ saveInvoice(){
   this.httpService.InvoiceBody.CustomHeader3 =  this.customHeader3;
   this.httpService.InvoiceBody.CustomHeader4 =  this.customHeader4;
   this.httpService.InvoiceBody.CustomHeader5 =  this.customHeader5;
-  this.httpService.InvoiceBody.InvoiceRef = this.invoiceReferenceNumber;
+  this.httpService.InvoiceBody.InvoiceReference = this.invoiceReferenceNumber;
   this.httpService.InvoiceBody.InvoiceDate = this.invoiceDate;
  
  
@@ -271,6 +275,8 @@ saveInvoice(){
   );
 }
 //#endregion
+
+//#region download combine Pdf
 downloadPdf(base64String:any,fileName:any){
   const source = `data:application/pdf;base64,${base64String}`;
   const link = document.createElement("a");
@@ -278,6 +284,7 @@ downloadPdf(base64String:any,fileName:any){
   link.download = `${fileName}.pdf`
   link.click();
 }
+//#endregion
 
 //#region print report
 printInvoice(){
@@ -297,6 +304,7 @@ printInvoice(){
 }
 //#endregion
 
+//#region combine pdf API Call
 CombinePDF(){
   this.httpService.CombinePDfOFSupplier(this.invoiceDate,this.setOfCheckedId,this.invoiceReferenceNumber).subscribe(
     (response) => {
@@ -330,7 +338,9 @@ CombinePDF(){
     () => console.log("done")
   );
 }
+//#endregion
 
+//#region Invoice Calculations
 getVAT(data:any){
   let netvalue=this.getNet(data)
   return data.VAT=netvalue*this.Vat/100;
@@ -392,4 +402,5 @@ getTotalBalanceDue(data:any){
   return total;
 }
 
+//#endregion 
 }

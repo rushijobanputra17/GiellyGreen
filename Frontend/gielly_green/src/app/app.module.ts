@@ -36,6 +36,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { MonthlyInvoiceComponent } from './monthly-invoice/monthly-invoice.component';
 import { ProfileComponent } from './profile/profile.component';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
 
 
@@ -72,7 +73,8 @@ registerLocaleData(en);
     NzLayoutModule,
     FontAwesomeModule,
     NzSwitchModule,
-    NzUploadModule
+    NzUploadModule,
+    NzInputNumberModule
 
 
   ],

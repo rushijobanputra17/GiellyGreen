@@ -11,13 +11,15 @@ import { DataParsingService } from '../data-parsing.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+
+//#region Varaibles
   isCollapsed = false;
   invoice= faFileInvoice;
   supplier = faUser;
   validateProfileForm!: FormGroup;
   profileID:any;
   showLoader = false;
-
+//#endregion
 
   constructor(private fb: FormBuilder, private message: NzMessageService, private router: Router, private httpService: DataParsingService) { }
 
@@ -30,7 +32,7 @@ export class ProfileComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     this.validateProfileForm = this.fb.group({
-      Name: [null],
+      Name: [null,[Validators.required]],
       Address: [null],
       city: [null],
       Zipcode: [null],
@@ -41,7 +43,7 @@ export class ProfileComponent implements OnInit {
     this.getProfile();
   }
 
-  //#region getProfile Data
+//#region getProfile Data
 getProfile(){
   this.showLoader = true;
   this.httpService.getProfile().subscribe(
@@ -68,35 +70,45 @@ getProfile(){
 }
   //#endregion
 
-
 //#region submit profile
 submitProfile(){
-  this.showLoader = true;
-  const ProfileDetail = this.validateProfileForm.controls
-  const profile = this.httpService.ProfileBody
-  profile.CompanyName = ProfileDetail["Name"].value;
-  profile.AddressLine = ProfileDetail["Address"].value;
-  profile.City = ProfileDetail["city"].value;
-  profile.ZipCode = ProfileDetail["Zipcode"].value;
-  profile.Country = ProfileDetail["Country"].value;
-  profile.DefaultVAT = ProfileDetail["VAT"].value;
-  profile.ProfileId = this.profileID;
-
-
-  this.httpService.setProfile().subscribe(
-    (response) => {
-      this.message.success("Data Saved Successfully!", {
-        nzDuration: 5000
-      });
-      this.showLoader = false;
-    },
-    (error: any) => {
-      this.message.error("Server Error! Please Reload Your Page", {
-        nzDuration: 5000
-      });
-    },
-    () => console.log("done")
-  );
+  if (this.validateProfileForm.valid){
+    this.showLoader = true;
+    const ProfileDetail = this.validateProfileForm.controls
+    const profile = this.httpService.ProfileBody
+    profile.CompanyName = ProfileDetail["Name"].value;
+    profile.AddressLine = ProfileDetail["Address"].value;
+    profile.City = ProfileDetail["city"].value;
+    profile.ZipCode = ProfileDetail["Zipcode"].value;
+    profile.Country = ProfileDetail["Country"].value;
+    profile.DefaultVAT = ProfileDetail["VAT"].value;
+    profile.ProfileId = this.profileID;
+  
+  
+    this.httpService.setProfile().subscribe(
+      (response) => {
+        this.message.success("Data Saved Successfully!", {
+          nzDuration: 5000
+        });
+        this.showLoader = false;
+      },
+      (error: any) => {
+        this.message.error("Server Error! Please Reload Your Page", {
+          nzDuration: 5000
+        });
+      },
+      () => console.log("done")
+    );
+  }
+  else{
+    Object.values(this.validateProfileForm.controls).forEach(control => {
+      if (control.invalid) {
+        control.markAsDirty();
+        control.updateValueAndValidity({ onlySelf: true });
+      }
+    });
+  }
+ 
 }
 //#endregion
 
