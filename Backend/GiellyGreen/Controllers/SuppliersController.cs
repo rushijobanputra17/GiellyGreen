@@ -15,9 +15,9 @@ namespace GiellyGreen.Controllers
     public class SuppliersController : ApiController
     {
         public static SupplierRepository supplierRepository = new SupplierRepository();
+
         public static AutoMapper.MapperConfiguration config = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<SupplierViewModel, Supplier>());
         public static Mapper mapper = new Mapper(config);
-        public static Team2_GiellyGreenEntities objDataAccess = new Team2_GiellyGreenEntities();
 
         public JsonResponse objResponse;
 
@@ -32,6 +32,7 @@ namespace GiellyGreen.Controllers
                 {
                     Directory.CreateDirectory(path);
                 }
+
                 suppliers.ForEach(supplier =>
                 {
                     if (!string.IsNullOrEmpty(supplier.Logo) && supplier.Logo != "null")
@@ -83,7 +84,7 @@ namespace GiellyGreen.Controllers
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while adding record", ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList());
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Some input is invalid", ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList());
                 }
             }
             catch (Exception ex)
@@ -125,7 +126,7 @@ namespace GiellyGreen.Controllers
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while adding record", ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList());
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Some input is invalid", ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList());
                 }
             }
             catch (Exception ex)
@@ -179,35 +180,6 @@ namespace GiellyGreen.Controllers
 
         //PATCH suppliers/update/5
         public JsonResponse Patch(bool status, int supplierId)
-        {
-            try
-            {
-                if (supplierRepository.UpdateStatus(status, supplierId) == 1)
-                {
-                    objResponse = JsonResponseHelper.GetJsonResponse(1, "Status updated successfully", supplierId);
-                }
-                else
-                {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Something went wrong", null);
-                }
-            }
-            catch (Exception ex)
-            {
-                if (ex.InnerException.Message != null)
-                {
-                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.InnerException.Message);
-                }
-                else
-                {
-                    objResponse = JsonResponseHelper.GetJsonResponse(2, "Exception", ex.Message);
-                }
-            }
-
-            return objResponse;
-        }
-
-        [Route("supplier/UpdateStatus")]
-        public JsonResponse UpdateStatus(bool status, int supplierId)
         {
             try
             {

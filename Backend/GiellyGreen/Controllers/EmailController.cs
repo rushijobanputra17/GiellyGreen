@@ -23,8 +23,10 @@ namespace GiellyGreen.Controllers
         {
             try
             {
-                PdfViewModel pdfViewModel = new PdfViewModel();
-                pdfViewModel.CompanyProfile = ProfileRepository.GetProfileInfo();
+                PdfViewModel pdfViewModel = new PdfViewModel
+                {
+                    CompanyProfile = ProfileRepository.GetProfileInfo()
+                };
 
                 var invoiceDetails = monthlyInvoiceRepository.GetInvoicesForPDF(invoiceDate, selectedSupplierIds);
                 pdfContoller.ControllerContext = EmailHelper.GetPdfContext("GetPDFBytes");
@@ -81,8 +83,7 @@ namespace GiellyGreen.Controllers
                     combinePdfViewModel.CompanyProfile = ProfileRepository.GetProfileInfo();
                     combinePdfViewModel.InvoiceDetails = invoiceDetails;
                     pdfContoller.ControllerContext = EmailHelper.GetPdfContext("GetPDFBytesForCombine");
-                    var pdfBytesList = pdfContoller.GetPDFBytesForCombine(combinePdfViewModel);
-                    string pdfBase64String = Convert.ToBase64String(pdfBytesList);
+                    string pdfBase64String = Convert.ToBase64String(pdfContoller.GetPDFBytesForCombine(combinePdfViewModel));
                     objResponse = JsonResponseHelper.GetJsonResponse(1, invoiceDate.ToString("MMMM") + "_Invoice", pdfBase64String);
                 }
                 else
