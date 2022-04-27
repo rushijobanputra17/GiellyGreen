@@ -75,3 +75,12 @@ table {
 .padding-left{
     padding-left:5px;
 }
+
+
+.pageFinish {
+    page-break-before: always;
+}
+
+    .pageFinish:first-child {
+        page-break-before: avoid;
+    }
