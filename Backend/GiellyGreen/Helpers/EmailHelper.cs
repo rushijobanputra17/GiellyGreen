@@ -13,12 +13,11 @@ namespace GiellyGreen.Helpers
         public static void SendEmail(string emailAddress, DateTime invoiceDate, string supplierName, Attachment attachment)
         {
             MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["FromMailAddress"].ToString());
+            mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["FromMailAddress"].ToString(), "GiellyGreen");
             mailMessage.Subject = "Your invoice for the " + invoiceDate.ToString("MMMM,yyyy");
             mailMessage.Body = "Please find attached a self-billed invoice to "+ supplierName + " , prepared on your behalf, as per the agreement.Regard Gielly Green Limited";
             mailMessage.IsBodyHtml = true;
             mailMessage.Attachments.Add(attachment);
-            //string[] ToMuliId = toEmails.Split(',');
             mailMessage.CC.Add(new MailAddress("harshmungra21@gmail.com"));
             mailMessage.To.Add(new MailAddress(emailAddress));
             SmtpClient smtp = new SmtpClient();
