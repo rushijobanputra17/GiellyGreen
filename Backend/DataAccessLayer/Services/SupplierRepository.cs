@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using DataAccessLayer.Interface;
 using DataAccessLayer.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.Services
 {
@@ -45,6 +42,5 @@ namespace DataAccessLayer.Services
         {
             return objDataAccess.UpdateStatus(status, supplierId);
         }
-
     }
 }

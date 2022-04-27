@@ -1,0 +1,86 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Dax"
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 150px;
+}
+
+.columnHeader {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 70px; 
+}
+
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+th, td {
+    padding: 5px;
+}
+
+.widthcol {
+    width: 60%;
+}
+
+table {
+    border: none
+}
+
+.borderCell {
+    border: 1px solid gray;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left{
+    text-align:left;
+}
+
+.margin-bottom {
+    margin-bottom: 3px;
+}
+
+.tr-padding {
+    padding: 3px;
+}
+
+.text-center{
+    text-align:center;
+}
+
+.cell-border-left {
+    border-left: 0px;
+}
+
+
+.padding-right{
+    padding-right:6px;
+}
+
+.padding-left{
+    padding-left:5px;
+}
+
+
+.pageFinish {
+    page-break-before: always;
+}
+
+    .pageFinish:first-child {
+        page-break-before: avoid;
+    }

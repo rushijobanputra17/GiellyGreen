@@ -12,13 +12,12 @@ using System.Web.Http;
 namespace GiellyGreen.Controllers
 {
     [Authorize]
-    //[RoutePrefix("suppliers")]
     public class SuppliersController : ApiController
     {
         public static SupplierRepository supplierRepository = new SupplierRepository();
+
         public static AutoMapper.MapperConfiguration config = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<SupplierViewModel, Supplier>());
         public static Mapper mapper = new Mapper(config);
-        public static Team2_GiellyGreenEntities objDataAccess = new Team2_GiellyGreenEntities();
 
         public JsonResponse objResponse;
 
@@ -33,6 +32,7 @@ namespace GiellyGreen.Controllers
                 {
                     Directory.CreateDirectory(path);
                 }
+
                 suppliers.ForEach(supplier =>
                 {
                     if (!string.IsNullOrEmpty(supplier.Logo) && supplier.Logo != "null")
@@ -84,7 +84,7 @@ namespace GiellyGreen.Controllers
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while adding record", ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList());
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Some input is invalid", ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList());
                 }
             }
             catch (Exception ex)
@@ -126,7 +126,7 @@ namespace GiellyGreen.Controllers
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while adding record", ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList());
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Some input is invalid", ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList());
                 }
             }
             catch (Exception ex)

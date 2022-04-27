@@ -20,6 +20,8 @@ namespace DataAccessLayer.Model
         public string Logo { get; set; }
         public string TAXReference { get; set; }
         public string VATNumber { get; set; }
+        public string CompanyRegisteredAddress { get; set; }
+        public string CompanyRegisteredNumber { get; set; }
         public string CustomHeader1 { get; set; }
         public string CustomHeader2 { get; set; }
         public string CustomHeader3 { get; set; }

@@ -198,19 +198,6 @@ namespace DataAccessLayer.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ApproveInvoices_Result>("ApproveInvoices", selectedIdsParameter, selectedDateParameter);
         }
     
-        public virtual ObjectResult<GetInvoicesForPdf_Result> GetInvoicesForPdf(string selectedIds, Nullable<System.DateTime> selectedDate)
-        {
-            var selectedIdsParameter = selectedIds != null ?
-                new ObjectParameter("SelectedIds", selectedIds) :
-                new ObjectParameter("SelectedIds", typeof(string));
-    
-            var selectedDateParameter = selectedDate.HasValue ?
-                new ObjectParameter("SelectedDate", selectedDate) :
-                new ObjectParameter("SelectedDate", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInvoicesForPdf_Result>("GetInvoicesForPdf", selectedIdsParameter, selectedDateParameter);
-        }
-    
         public virtual ObjectResult<GetInvoiceDetails_Result> GetInvoiceDetails(Nullable<int> invoiceId)
         {
             var invoiceIdParameter = invoiceId.HasValue ?
@@ -307,6 +294,19 @@ namespace DataAccessLayer.Model
         public virtual ObjectResult<GetVATPercent_Result> GetVATPercent()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetVATPercent_Result>("GetVATPercent");
+        }
+    
+        public virtual ObjectResult<GetInvoicesForPdf_Result> GetInvoicesForPdf(string selectedIds, Nullable<System.DateTime> selectedDate)
+        {
+            var selectedIdsParameter = selectedIds != null ?
+                new ObjectParameter("SelectedIds", selectedIds) :
+                new ObjectParameter("SelectedIds", typeof(string));
+    
+            var selectedDateParameter = selectedDate.HasValue ?
+                new ObjectParameter("SelectedDate", selectedDate) :
+                new ObjectParameter("SelectedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInvoicesForPdf_Result>("GetInvoicesForPdf", selectedIdsParameter, selectedDateParameter);
         }
     }
 }

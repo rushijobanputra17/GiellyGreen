@@ -4,8 +4,6 @@ using DataAccessLayer.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.Services
 {
@@ -33,6 +31,7 @@ namespace DataAccessLayer.Services
                     invoiceDetail = objDataAccess.InsertUpdateInvoiceDetails(0, invoieDetail.SupplierId, invoieDetail.HairServices, invoieDetail.BeautyServices, invoieDetail.CustomService1, invoieDetail.CustomService2, invoieDetail.CustomService3, invoieDetail.CustomService4, invoieDetail.CustomService5, invoieDetail.Net, invoieDetail.VAT, invoieDetail.Gross, invoieDetail.AdvancePaid, invoieDetail.BalanceDue, invoieDetail.Approved, invoiceidValue);
                 }
             }
+
             return invoiceDetail;
         }
 
@@ -40,10 +39,14 @@ namespace DataAccessLayer.Services
         {
             AutoMapper.MapperConfiguration config = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<GetInvoices_Result, Invoices>());
             Mapper mapper = new Mapper(config);
+
             var activeSupplierList = objDataAccess.GetSupplier(true).ToList();
+
             AutoMapper.MapperConfiguration supplierConfig = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<GetSupplier_Result, GetInvoiceDetails_Result>());
             Mapper supplierMapper = new Mapper(supplierConfig);
+
             Invoices invoices = mapper.Map<Invoices>(objDataAccess.GetInvoices(invoiceMonth).FirstOrDefault());
+
             if (invoices != null)
             {
                 invoices.InvoiceDetails = objDataAccess.GetInvoiceDetails(invoices.InvoiceId).ToList();
@@ -53,7 +56,7 @@ namespace DataAccessLayer.Services
                 invoices = new Invoices()
                 {
                     InvoiceDetails = new List<GetInvoiceDetails_Result>(),
-                    VATPercent = objDataAccess.GetProfile().FirstOrDefault().DefaultVAT // objDataAccess.GetVATPercent().FirstOrDefault().DefaultVAT
+                    VATPercent = objDataAccess.GetProfile().FirstOrDefault().DefaultVAT 
                 };
             }
 
@@ -64,6 +67,7 @@ namespace DataAccessLayer.Services
                     invoices.InvoiceDetails.Add(supplierMapper.Map<GetInvoiceDetails_Result>(supplier));
                 }
             }
+
             return invoices;
         }
 

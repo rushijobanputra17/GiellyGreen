@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace GiellyGreen.Controllers
 {
-   // [Authorize]
+    [Authorize]
     public class MonthlyInvoiceController : ApiController
     {
         public static MonthlyInvoiceRepository monthlyInvoiceRepository = new MonthlyInvoiceRepository();
@@ -36,7 +36,7 @@ namespace GiellyGreen.Controllers
             return objResponse;
         }
 
-        public JsonResponse post(InvoiceModels invoiceModel)
+        public JsonResponse Post(InvoiceModels invoiceModel)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace GiellyGreen.Controllers
                     var monthlyInvoice = monthlyInvoiceRepository.AddInvoice(invoiceModel);
                     if (monthlyInvoice == 0)
                     {
-                        objResponse = JsonResponseHelper.GetJsonResponse(0, "Something Went Wrong while Adding table header", monthlyInvoice);
+                        objResponse = JsonResponseHelper.GetJsonResponse(0, "Something went wrong while adding the invoices", monthlyInvoice);
                     }
                     else
                     {
@@ -55,7 +55,7 @@ namespace GiellyGreen.Controllers
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "There was an error while adding record", ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList());
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Some input is invalid", ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList());
                 }
             }
             catch (Exception ex)
@@ -102,3 +102,4 @@ namespace GiellyGreen.Controllers
         }
     }
 }
+
