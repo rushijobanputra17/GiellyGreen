@@ -39,6 +39,7 @@ export class SuppliersComponent implements OnInit {
   EditedSupplier: any;
   uploadedlogo: any;
   @ViewChild('logo') logoFile:any;
+  isMenuOpen = false;
 
 
 
@@ -256,7 +257,7 @@ export class SuppliersComponent implements OnInit {
     if (this.isEdit != true) {
       if (this.validateSupplierForm.valid) {
         this.showLoader = true;
-
+        this.isVisible = false;
         const SupplierDetail = this.validateSupplierForm.controls
         this.httpService.SupplierBody.SupplierName = SupplierDetail["Name"].value;
         this.httpService.SupplierBody.SupplierReferenceNumber = SupplierDetail["Reference"].value;
@@ -415,10 +416,5 @@ export class SuppliersComponent implements OnInit {
   }
 //#endregion
 
-//#region logout
-logout(){
-  sessionStorage.removeItem("logged_user");
-  this.router.navigate(['/login']);
-}
-//#endregion
+
 }

@@ -67,7 +67,100 @@
     border-color: #00C897 !important;
   }  
 
- 
+/* -----------------------------------HEADER-------------------------------------------------------------------- */
+.nzHeader{
+  background-color: #2C2B29;
+  width: 100%; /* Can be in percentage also. */
+  height: 80px;
+  margin: 0 !important;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.InnerNzheader{
+  height: 100%;
+  position: relative;
+}
+
+.ant-menu-light .ant-menu-item:hover{
+  color: #c99d4a !important;
+ }
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: #2C2B29!important;
+}
+
+.LiCustom{
+  font-size:18px;
+  color: #c99d4a !important;
+}
+
+
+.logo{
+  margin-top:5px;
+  height: 70px;
+  width: 180px;
+ }
+
+ul{
+  margin-top:10px;
+  background-color:#2C2B29!important;
+}
+
+li{
+    font-size:16px;
+    color:#C99D4A;
+    font-family:'Dax-Regular'!important;
+}
+
+.menuIcon{
+  color: #c99d4a !important;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 30px;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.HeaderOptions{
+  position: absolute;
+  right: 30px;
+  color: #c99d4a !important;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.sideMenu{
+  background-color: #2C2B29;
+  height: 100vh;
+  width: 250px;
+  position: fixed;
+  left: -250px;
+  transition: 0.5s;
+  transition-timing-function: ease-in-out;
+  z-index: 98;
+  overflow: hidden;
+}
+
+.ant-menu-inline .ant-menu-item::after, .ant-menu-vertical .ant-menu-item::after, .ant-menu-vertical-left .ant-menu-item::after, .ant-menu-vertical-right .ant-menu-item::after {
+  border-right: 3px solid #2C2B29!important;
+}
+
+.menuOpen{
+  left:0;
+}
+
+.nzContent{
+  padding: 20px;
+  width: 100%;
+  overflow-x: hidden;
+  font-family:'Dax-Regular'!important;
+}
+/* ------------------------------------------------------------------------------------------------------------- */
 
   @media print {
     body{
@@ -75,7 +168,11 @@
       
     }
 
-    nz-layout{
+    .nzHeader{
+      display: none !important;
+    }
+
+   .nzContent{
         display: none!important;
     }
 
