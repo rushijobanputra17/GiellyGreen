@@ -20,6 +20,11 @@
                 {
                     <img src="@Model.Invoice.Logo" width="200" height="100" alt=@Model.Invoice.Logo />
                 }
+                else
+                {
+                    <h4>@Model.Invoice.SupplierName</h4>
+                    <h4>@Model.Invoice.BusinessAddress</h4>
+                }
             </div>
             <div class="columnHeader text-right">
                 <h1>Self Billed Invoice</h1>
@@ -28,8 +33,11 @@
         <br />
         <div class="row ">
             <div class="column text-left">
-                <h4>@Model.Invoice.SupplierName</h4>
-                <h4>@Model.Invoice.BusinessAddress</h4>
+                @if (@Model.Invoice.Logo != null)
+                {
+                    <h4>@Model.Invoice.SupplierName</h4>
+                    <h4>@Model.Invoice.BusinessAddress</h4>
+                }
             </div>
             <div class="column text-right">
                 <h4> Invoice Date :  @Convert.ToDateTime(Model.Invoice.InvoiceDate).ToString("dd-MM-yyyy")</h4>
