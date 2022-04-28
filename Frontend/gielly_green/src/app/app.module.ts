@@ -37,6 +37,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { MonthlyInvoiceComponent } from './monthly-invoice/monthly-invoice.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { SideMenuComponent } from './side-menu/side-menu.component';
 
 
 
@@ -48,7 +49,8 @@ registerLocaleData(en);
     LoginComponent,
     SuppliersComponent,
     MonthlyInvoiceComponent,
-    ProfileComponent
+    ProfileComponent,
+    SideMenuComponent
   ],
   imports: [
     BrowserModule,

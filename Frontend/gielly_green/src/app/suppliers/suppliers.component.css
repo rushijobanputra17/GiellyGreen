@@ -21,33 +21,12 @@
       min-height: 100%!important;  
   }
 
-
-  .LiCustom{
-     font-size:18px;
-     color: #c99d4a !important;
-  }
-  .profile-custom{
-    font-size:20px;
-    color: #c99d4a !important;
-  }
-
+  
   nz-header{
     background-color:#2C2B29!important;
     height: 80px !important;
   }
 
-  ul{
-    margin-top:10px;;
-    background-color:#2C2B29!important;
-  }
-
-
-
-  li{
-      font-size:16px;
-      color:#C99D4A;
-      font-family:'Dax-Regular'!important;
-  }
 
 
 
@@ -62,15 +41,7 @@
   
 
 
-  .logo{
-   margin-top:5px;
-   height: 70px;
-   width: 180px;
-  }
 
-  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-    background-color: #2C2B29!important;
-}
 
 
 .search-box input {
@@ -116,10 +87,7 @@
 }
 
 .table-design{
-  width: 120vw;
-  height:570px;
-  overflow-y:scroll!important;
-  overflow-x:hidden!important;
+  width: 100%;
 }
 
 .thead-design{
@@ -184,25 +152,6 @@ table {
 }
 
 
-
-::-webkit-scrollbar {
-    width: 4px;
-    height: 5px;
-  }
-  
-
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-  }
-   
-
-  ::-webkit-scrollbar-thumb {
-    background:#2C2B29;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }
 
   .save-btn{
       background-color:black;

@@ -6,6 +6,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import Swal from 'sweetalert2';
 import { DataParsingService } from '../data-parsing.service';
+import { faPlus, faPen, faTrash,faArrowUpFromBracket,faFileInvoice,faUser} from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   showLoader = false;
   isCollapsed = false;
   month: any;
-  isButoonVisible=false;
+  isButoonVisible=true;
   invoiceDate: any;
   customHeader1: any;
   customHeader2: any;
@@ -28,6 +29,14 @@ export class MonthlyInvoiceComponent implements OnInit {
   customHeader5: any;
   invoiceReferenceNumber: any;
   isVisible = false;
+  isMenuOpen = false;
+
+  plusIcon = faPlus;
+  pen = faPen;
+  del = faTrash;
+  upload = faArrowUpFromBracket;
+  invoice= faFileInvoice;
+  supplier = faUser;
 
   dateAndInvoiceForm!: FormGroup;
   checked = false;
@@ -69,6 +78,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   changeValue(data:any){
     this.isButoonVisible=false;
     debugger
+    console.log(data);
     console.log(this.MonthlyInvoiceDataChanged);
     if(this.MonthlyInvoiceDataChanged.length != 0){
       var ExistingId:any=this.MonthlyInvoiceDataChanged.filter((key: { SupplierId: any; }) => key.SupplierId == data.SupplierId);
@@ -83,6 +93,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   
 //#region date onchange
 onChange(date: any) {
+  
   this.isVisible = true;
   this.showLoader = true;
   let monthYearFilter = date.getFullYear() + "-" + (date.getMonth()+1);
@@ -91,10 +102,18 @@ onChange(date: any) {
   this.invoiceDate = this.datepipe.transform(lastdate, 'yyyy-MM-dd');
   this.invoiceReferenceNumber = date.toLocaleString('en-us', { month: 'long' }) + String(date.getFullYear());
   this.counter++;
-
   this.httpService.getInvoiceData(monthYearFilter).subscribe(
     (response) => {
       console.log(response);
+      if(response.Result.InvoiceId==0){
+        this.isButoonVisible=false;     
+      }
+      else{
+        this.isButoonVisible=true;
+        this.invoiceReferenceNumber=response.Result.InvoiceRef;
+        this.invoiceDate=response.Result.InvoiceDate;
+
+      }
       this.MonthalyInvoiceData = response.Result.InvoiceDetails;
       console.log(this.MonthalyInvoiceData);
       this.showLoader = false;
@@ -152,32 +171,37 @@ refreshCheckedStatus(): void {
 
 //#region send email
 sendEmail() {
+  this.showLoader = true;
   this.httpService.EmailSelectedSupplier(this.invoiceDate,this.setOfCheckedId,this.invoiceReferenceNumber).subscribe(
     (response) => {
       console.log(response);
       if(response.ResponseStatus==0){
         Swal.fire(
           'Error!',
-          'No record found',
+          'Email cannot be sent because selected invoices have no data',
           'error'
         )
+        this.showLoader = false;
       }
       else if(response.ResponseStatus==0){
         this.message.error(response.Message, {
           nzDuration: 5000
         });
+        this.showLoader = false;
       }
     
       else{
         this.message.success("Email send Successfully", {
           nzDuration: 5000
         });
+        this.showLoader = false;
     }
   },
     (error: any) => {
       this.message.error("Server Error! Please Reload Your Page", {
         nzDuration: 5000
       });
+      this.showLoader = false;
     },
     () => console.log("done")
   );
@@ -194,7 +218,7 @@ Approved(){
   if(response.ResponseStatus==0){
     Swal.fire(
       'Error!',
-      'No record found',
+      'selected invoices have no data',
       'error'
     )
   }
@@ -228,7 +252,7 @@ Approved(){
 
 //#region save invoice
 saveInvoice(){
-  this.isButoonVisible=true;
+  this.showLoader = true;
   console.log(this.MonthalyInvoiceData);
   this.httpService.InvoiceBody.invoiceDetails = this.MonthalyInvoiceData;
   this.httpService.InvoiceBody.CustomHeader1 = this.customHeader1;
@@ -238,6 +262,7 @@ saveInvoice(){
   this.httpService.InvoiceBody.CustomHeader5 =  this.customHeader5;
   this.httpService.InvoiceBody.InvoiceReference = this.invoiceReferenceNumber;
   this.httpService.InvoiceBody.InvoiceDate = this.invoiceDate;
+  console.log(this.invoiceDate);
  
  
   this.httpService.saveInvoiceData().subscribe(
@@ -247,22 +272,27 @@ saveInvoice(){
         this.message.success(response.Message, {
           nzDuration: 3000
         });
+        this.showLoader = false;
+        this.isButoonVisible=true;
       }
       else if(response.ResponseStatus==0){
         this.message.error(response.Result[0], {
           nzDuration: 3000
         });
+        this.showLoader = false;
       }
       else{
         if(response.Result.includes("UQ_InvoiceRef")){
           this.message.error("Invoice Reference already exists", {
             nzDuration: 3000
           });
+          this.showLoader = false;
         }
         else{
           this.message.error(response.result, {
             nzDuration: 3000
           });
+          this.showLoader = false;
         }
       }
     },
@@ -270,6 +300,7 @@ saveInvoice(){
       this.message.error("Server Error! Please Reload Your Page", {
         nzDuration: 5000
       });
+      this.showLoader = false;
     },
     () => console.log("done")
   );
@@ -306,6 +337,7 @@ printInvoice(){
 
 //#region combine pdf API Call
 CombinePDF(){
+  this.showLoader = true;
   this.httpService.CombinePDfOFSupplier(this.invoiceDate,this.setOfCheckedId,this.invoiceReferenceNumber).subscribe(
     (response) => {
       console.log(response);
@@ -313,14 +345,16 @@ CombinePDF(){
       if(response.ResponseStatus==0){
         Swal.fire(
           'Error!',
-          'No record found',
+          'Selected invoices have no data so they cannot be combined and downloaded',
           'error'
         )
+        this.showLoader = false;
       }
       else if(response.ResponseStatus==0){
         this.message.error(response.Message, {
           nzDuration: 5000
         });
+        this.showLoader = false;
       }
     
       else{
@@ -328,12 +362,14 @@ CombinePDF(){
           nzDuration: 5000
         });
         this.downloadPdf(response.Result,response.Message);
+        this.showLoader = false;
     }
     },
     (error: any) => {
       this.message.error("Server Error! Please Reload Your Page", {
         nzDuration: 5000
       });
+      this.showLoader = false;
     },
     () => console.log("done")
   );
@@ -403,4 +439,12 @@ getTotalBalanceDue(data:any){
 }
 
 //#endregion 
+
+//#region logout
+logout(){
+  sessionStorage.removeItem("logged_user");
+  this.router.navigate(['/login']);
 }
+//#endregion
+}
+

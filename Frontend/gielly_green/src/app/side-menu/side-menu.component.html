@@ -1,0 +1,27 @@
+<div class="nzHeader">
+    <div class="InnerNzheader">
+        <span *ngIf="isMenuOpen"><i nz-icon nzType="menu-fold" nzTheme="outline" class="menuIcon" (click)="isMenuOpen = !isMenuOpen"></i></span>
+        <span *ngIf="!isMenuOpen"><i nz-icon nzType="menu-unfold" nzTheme="outline" class="menuIcon" (click)="isMenuOpen = !isMenuOpen"></i></span>
+    </div>
+    <div class="HeaderOptions">
+        <i nz-icon nzType="menu" nzTrigger="click" nz-dropdown [nzDropdownMenu]="menu" class="profile-custom p-4" nzTheme="outline"></i>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu style="width:200px;height:100px">
+              <li nz-menu-item  routerLink="/profile"><i nz-icon nzType="user" class="LiCustom p-2" nzTheme="outline"></i>&nbsp;&nbsp;PROFILE</li>
+              <li nz-menu-item (click)="logout()"><i nz-icon nzType="logout" class="LiCustom p-2" nzTheme="outline" ></i>&nbsp;&nbsp;LOG OUT</li>
+            </ul>
+          </nz-dropdown-menu>
+            <img src="assets/logo.png" class="logo">
+    </div>
+</div>
+
+<div class="sideMenu" [ngClass]="{'menuOpen': isMenuOpen}">
+    <ul nz-menu  nzMode="inline">
+        <li>
+          <ul>
+            <li nz-menu-item style="padding-left:20px;" routerLink="/monthly-invoice"> <fa-icon [icon]="invoice" class="p-3"></fa-icon>MONTHLY INVOICE</li>
+            <li nz-menu-item style="padding-left:20px;" routerLink="/suppliers"><fa-icon [icon]="supplier" class="p-3"></fa-icon> SUPPLIER LIST</li>
+          </ul>
+        </li>
+      </ul>
+</div>
