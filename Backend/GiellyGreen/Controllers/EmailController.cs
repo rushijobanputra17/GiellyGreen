@@ -51,7 +51,7 @@ namespace GiellyGreen.Controllers
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Email cannot be send because selected invoices have no data", null);
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Email cannot be sent because selected invoices have no data", null);
                 }
             }
             catch (Exception ex)
