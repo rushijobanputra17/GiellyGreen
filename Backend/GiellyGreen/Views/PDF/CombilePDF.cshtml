@@ -32,7 +32,7 @@
                         else
                         {
                             <h3 class="padding-top">@item.SupplierName</h3>
-                           
+
                         }
                     </td>
                     <td class="font-size text-right">Self-Billed Invoice</td>
@@ -93,42 +93,88 @@
                                 <td class="borderCell"></td>
                                 <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.BeautyServices).ToString("N2")</td>
                             </tr>
-                            @if (!string.IsNullOrWhiteSpace(item.CustomHeader1) || item.CustomService1 != 0)
+                            @if (item.CustomService1 > 0)
                             {
                                 <tr class="borderCell">
-                                    <td class="borderCell padding-left" colspan="2">@item.CustomHeader1</td>
+                                    <td class="borderCell padding-left" colspan="2">
+                                        @if (@item.CustomHeader1 != null)
+                                        {
+                                            @item.CustomHeader1
+                                        }
+                                        else
+                                        {
+                                            <span>Custom 1</span>
+                                        }
+
+                                    </td>
                                     <td class="borderCell"></td>
                                     <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.CustomService1).ToString("N2")</td>
                                 </tr>
                             }
-                            @if (!string.IsNullOrWhiteSpace(item.CustomHeader2) || item.CustomService2 != 0)
+                            @if (item.CustomService2 > 0)
                             {
                                 <tr class="borderCell">
-                                    <td class="borderCell padding-left" colspan="2">@item.CustomHeader2</td>
+                                    <td class="borderCell padding-left" colspan="2">
+                                        @if (@item.CustomHeader2 != null)
+                                        {
+                                            @item.CustomHeader2
+                                        }
+                                        else
+                                        {
+                                            <span>Custom 2</span>
+                                        }
+                                    </td>
                                     <td class="borderCell"></td>
                                     <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.CustomService2).ToString("N2")</td>
                                 </tr>
                             }
-                            @if (!string.IsNullOrWhiteSpace(item.CustomHeader3) || item.CustomService3 != 0)
+                            @if (item.CustomService3 > 0)
                             {
                                 <tr class="borderCell">
-                                    <td class="borderCell padding-left" colspan="2">@item.CustomHeader3</td>
+                                    <td class="borderCell padding-left" colspan="2">
+                                        @if (@item.CustomHeader3 != null)
+                                        {
+                                            @item.CustomHeader3
+                                        }
+                                        else
+                                        {
+                                            <span>Custom 3</span>
+                                        }
+                                    </td>
                                     <td class="borderCell"></td>
                                     <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.CustomService3).ToString("N2")</td>
                                 </tr>
                             }
-                            @if (!string.IsNullOrWhiteSpace(item.CustomHeader4) || item.CustomService4 != 0)
+                            @if (item.CustomService4 > 0)
                             {
                                 <tr class="borderCell ">
-                                    <td class="borderCell padding-left" colspan="2">@item.CustomHeader4</td>
+                                    <td class="borderCell padding-left" colspan="2">
+                                        @if (@item.CustomHeader4 != null)
+                                        {
+                                            @item.CustomHeader4
+                                        }
+                                        else
+                                        {
+                                            <span>Custom 4</span>
+                                        }
+                                    </td>
                                     <td class="borderCell"></td>
                                     <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.CustomService4).ToString("N2")</td>
                                 </tr>
                             }
-                            @if (!string.IsNullOrWhiteSpace(item.CustomHeader5) || item.CustomService5 != 0)
+                            @if (item.CustomService5 > 0)
                             {
                                 <tr class="borderCell ">
-                                    <td class="borderCell padding-left" colspan="2">@item.CustomHeader5</td>
+                                    <td class="borderCell padding-left" colspan="2">
+                                        @i@if (@item.CustomHeader5 != null)
+                                        {
+                                            @item.CustomHeader5
+                                        }
+                                        else
+                                        {
+                                            <span>Custom 5</span>
+                                        }
+                                    </td>
                                     <td class="borderCell"></td>
                                     <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.CustomService5).ToString("N2")</td>
                                 </tr>

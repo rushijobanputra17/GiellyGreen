@@ -22,7 +22,7 @@
                     else
                     {
                         <h3 class="padding-top">@Model.Invoice.SupplierName</h3>
-                       
+
                     }
                 </td>
                 <td class="font-size text-right">Self-Billed Invoice</td>
@@ -84,42 +84,90 @@
                             <td class="borderCell"></td>
                             <td class="borderCell text-right padding-right">@Convert.ToDecimal(Model.Invoice.BeautyServices).ToString("N2")</td>
                         </tr>
-                        @if (Model.Invoice.CustomHeader1 != null && Model.Invoice.CustomService1 != 0)
+                        @if (Model.Invoice.CustomService1 > 0)
                         {
+
+
                             <tr class="borderCell">
-                                <td class="borderCell padding-left" colspan="2">@Model.Invoice.CustomHeader1</td>
+                                <td class="borderCell padding-left" colspan="2">
+                                    @if (@Model.Invoice.CustomHeader1 != null)
+                                    {
+                                        @Model.Invoice.CustomHeader1
+                                    }
+                                    else
+                                    {
+                                         <span>Custom 1 </span> 
+                                    }
+
+                                </td>
                                 <td class="borderCell"></td>
                                 <td class="borderCell text-right padding-right">@Convert.ToDecimal(Model.Invoice.CustomService1).ToString("N2")</td>
                             </tr>
                         }
-                        @if (Model.Invoice.CustomHeader2 != null && Model.Invoice.CustomService2 != 0)
+                        @if (Model.Invoice.CustomService2 > 0)
                         {
                             <tr class="borderCell">
-                                <td class="borderCell padding-left" colspan="2">@Model.Invoice.CustomHeader2</td>
+                                <td class="borderCell padding-left" colspan="2">
+                                    @if (@Model.Invoice.CustomHeader2 != null)
+                                    {
+                                        @Model.Invoice.CustomHeader2
+                                    }
+                                    else
+                                    {
+                                        <span>Custom 2 </span>
+                                    }
+                                </td>
                                 <td class="borderCell"></td>
                                 <td class="borderCell text-right padding-right">@Convert.ToDecimal(Model.Invoice.CustomService2).ToString("N2")</td>
                             </tr>
                         }
-                        @if (Model.Invoice.CustomHeader3 != null && Model.Invoice.CustomService3 != 0)
+                        @if (Model.Invoice.CustomService3 > 0)
                         {
                             <tr class="borderCell">
-                                <td class="borderCell padding-left" colspan="2">@Model.Invoice.CustomHeader3</td>
+                                <td class="borderCell padding-left" colspan="2">
+                                    @if (@Model.Invoice.CustomHeader3 != null)
+                                    {
+                                        @Model.Invoice.CustomHeader3
+                                    }
+                                    else
+                                    {
+                                        <span>Custom 3 </span>
+                                    }
+                                </td>
                                 <td class="borderCell"></td>
                                 <td class="borderCell text-right padding-right">@Convert.ToDecimal(Model.Invoice.CustomService3).ToString("N2")</td>
                             </tr>
                         }
-                        @if (Model.Invoice.CustomHeader4 != null && Model.Invoice.CustomService4 != 0)
+                        @if (Model.Invoice.CustomService4 > 0)
                         {
                             <tr class="borderCell">
-                                <td class="borderCell padding-left" colspan="2">@Model.Invoice.CustomHeader4</td>
+                                <td class="borderCell padding-left" colspan="2">
+                                    @if (@Model.Invoice.CustomHeader4 != null)
+                                    {
+                                        @Model.Invoice.CustomHeader4
+                                    }
+                                    else
+                                    {
+                                        <span>Custom 4 </span>
+                                    }
+                                </td>
                                 <td class="borderCell"></td>
                                 <td class="borderCell text-right padding-right">@Convert.ToDecimal(Model.Invoice.CustomService4).ToString("N2")</td>
                             </tr>
                         }
-                        @if (Model.Invoice.CustomHeader5 != null && Model.Invoice.CustomService5 != 0)
+                        @if (Model.Invoice.CustomService5 > 0)
                         {
                             <tr class="borderCell">
-                                <td class="borderCell padding-left" colspan="2">@Model.Invoice.CustomHeader5</td>
+                                <td class="borderCell padding-left" colspan="2">
+                                    @if (@Model.Invoice.CustomHeader5 != null)
+                                    {
+                                        @Model.Invoice.CustomHeader5
+                                    }
+                                    else
+                                    {
+                                        <span>Custom 5 </span>
+                                    }
+                                </td>
                                 <td class="borderCell"></td>
                                 <td class="borderCell text-right padding-right">@Convert.ToDecimal(Model.Invoice.CustomService5).ToString("N2")</td>
                             </tr>
