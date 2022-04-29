@@ -7,6 +7,7 @@ namespace GiellyGreen.Controllers
     public class LoginController : ApiController
     {
         // POST /login
+        [Route("login")]
         public JsonResponse Post(LoginViewModel model)
         {
             if (model.Username == WebConfigurationManager.AppSettings["Username"] && model.Password == WebConfigurationManager.AppSettings["LoginPassword"])

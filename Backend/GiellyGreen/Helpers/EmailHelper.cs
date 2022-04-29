@@ -16,11 +16,11 @@ namespace GiellyGreen.Helpers
             {
                 From = new MailAddress(ConfigurationManager.AppSettings["FromMailAddress"].ToString(), "GiellyGreen"),
                 Subject = "Your invoice for the " + invoiceDate.ToString("MMMM,yyyy"),
-                Body = "Please find attached a self-billed invoice to " + supplierName + " , prepared on your behalf, as per the agreement.Regard Gielly Green Limited",
+                Body = "Please find attached a self-billed invoice to " + supplierName + " , prepared on your behalf, as per the agreement.\nRegard\n Gielly Green Limited",
                 IsBodyHtml = true
             };
             mailMessage.Attachments.Add(attachment);
-            mailMessage.CC.Add(new MailAddress("harshmungra21@gmail.com"));
+            mailMessage.CC.Add(new MailAddress("rushijobanputra1712001@gmail.com"));
             mailMessage.To.Add(new MailAddress(emailAddress));
             SmtpClient smtp = new SmtpClient
             {

@@ -43,7 +43,7 @@ namespace GiellyGreen.Controllers
                                 invoice.Logo = Path.Combine(path, invoice.Logo);
                             }
                             pdfViewModel.Invoice = invoice;
-                            Attachment attachment = new Attachment(new MemoryStream(pdfContoller.GetPDFBytes(pdfViewModel)), "Invoice.pdf");
+                            Attachment attachment = new Attachment(new MemoryStream(pdfContoller.GetPDFBytes(pdfViewModel)), invoice.SupplierReferenceNumber + ".pdf");
                             EmailHelper.SendEmail(invoice.EmailAddress, invoice.InvoiceDate, invoice.SupplierName, attachment);
                         }
                     }
@@ -51,7 +51,7 @@ namespace GiellyGreen.Controllers
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Email cannot be send because selected invoices have no data", null);
+                    objResponse = JsonResponseHelper.GetJsonResponse(0, "Email cannot be sent because selected invoices have no data", null);
                 }
             }
             catch (Exception ex)
