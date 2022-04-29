@@ -51,7 +51,7 @@
                             <div class="table-responsive" >
                                 <nz-table id="InvoiceTable" #rowSelectionTable [nzData]="MonthalyInvoiceData" [nzPageSize]="100"
                                     #hhtpTable (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
-                                    [nzScroll]="{ x: '1900px'}">
+                                    [nzScroll]="{ x: '1200px'}">
                                     <thead>
                                         <tr>
                                             <th [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
@@ -82,7 +82,7 @@
                                             <td  type="checkbox" class="select" [nzChecked]="setOfCheckedId.has(data.SupplierId)"
                                                 (nzCheckedChange)="onItemChecked(data.SupplierId, $event)" nzLeft>
                                             </td>
-                                            <td nzLeft>{{data.SupplierName}}</td>
+                                            <td [nzEllipsis] nz-tooltip [nzTooltipTitle]="data.SupplierName" nzTooltipColor="rgb(49,145,151)" nzLeft>{{data.SupplierName}}</td>
                                             <td><input type="number" class="w-100" nz-input [(ngModel)]="data.HairServices"   (ngModelChange)="changeValue(data)" [disabled]="data.Approved"></td>
                                             <td><input type="number" class="w-100" nz-input [(ngModel)]="data.BeautyServices" (ngModelChange)="changeValue(data)" [disabled]="data.Approved"></td>
                                             <td><input type="number" class="w-100" nz-input [(ngModel)]="data.CustomService1" (ngModelChange)="changeValue(data)" [disabled]="data.Approved">
@@ -95,22 +95,23 @@
                                             </td>
                                             <td><input type="number" class="w-100" nz-input [(ngModel)]="data.CustomService5" (ngModelChange)="changeValue(data)" [disabled]="data.Approved">
                                             </td>
-                                            <td>{{getNet(data) | number :'1.2-2'}}</td>
-                                            <td>{{getVAT(data) | number :'1.2-2'}}</td>
-                                            <td>{{getGross(data) | number :'1.2-2'}}</td>
-                                            <td><input type="number" class="w-100" nz-input [(ngModel)]="data.AdvancePaid"></td>
-                                            <td>  {{getBalanceDue(data) >= 0 ? (getBalanceDue(data) | number :
+                                            <td [nzEllipsis] >{{getNet(data) | number :'1.2-2'}}</td>
+                                            <td [nzEllipsis]>{{getVAT(data) | number :'1.2-2'}}</td>
+                                            <td [nzEllipsis]>{{getGross(data) | number :'1.2-2'}}</td>
+                                            <td [nzEllipsis]><nz-input-number [nzFormatter]="formatterDollar"
+                                                [nzParser]="parserDollar" class="w-100" nz-input  [(ngModel)]="data.AdvancePaid==null?'0.00':data.AdvancePaid"></nz-input-number></td>
+                                            <td [nzEllipsis]>  {{getBalanceDue(data) >= 0 ? (getBalanceDue(data) | number :
                                                 '1.2-2') : '(' + getBalanceDue(data).toFixed(2) + ')'}}</td>
-                                            <td nzRight style="text-align:center"><input class="check" type="checkbox" disabled [checked]="data.Approved"></td>
+                                            <td [nzEllipsis] nzRight style="text-align:center"><input class="check" type="checkbox" disabled [checked]="data.Approved"></td>
                                         </tr>
                                         <tr>
                                             <td [colSpan]="9" class="fs-6"><b
                                                     class="d-flex justify-content-end">TOTAL:</b></td>
-                                            <td>{{getTotalNET(hhtpTable.data) | number :'1.2-2'}}</td>
-                                            <td>{{getTotalVET(hhtpTable.data) | number :'1.2-2'}}</td>
-                                            <td>{{getTotalGross(hhtpTable.data) | number :'1.2-2'}}</td>
-                                            <td>{{getTotalAdvancePay(hhtpTable.data) | number :'1.2-2'}}</td>
-                                            <td>{{getTotalBalanceDue(hhtpTable.data) | number :'1.2-2'}}</td>
+                                            <td [nzEllipsis]  nz-tooltip [nzTooltipTitle]="getTotalNET(hhtpTable.data)" nzTooltipColor="rgb(49,145,151)">{{getTotalNET(hhtpTable.data) | number :'1.2-2'}}</td>
+                                            <td [nzEllipsis]  nz-tooltip [nzTooltipTitle]="getTotalVET(hhtpTable.data)" nzTooltipColor="rgb(49,145,151)">{{getTotalVET(hhtpTable.data) | number :'1.2-2'}}</td>
+                                            <td [nzEllipsis]  nz-tooltip [nzTooltipTitle]="getTotalGross(hhtpTable.data)" nzTooltipColor="rgb(49,145,151)">{{getTotalGross(hhtpTable.data) | number :'1.2-2'}}</td>
+                                            <td [nzEllipsis]  nz-tooltip [nzTooltipTitle]="getTotalAdvancePay(hhtpTable.data)" nzTooltipColor="rgb(49,145,151)">{{getTotalAdvancePay(hhtpTable.data) | number :'1.2-2'}}</td>
+                                            <td [nzEllipsis]  nz-tooltip [nzTooltipTitle]="getTotalBalanceDue(hhtpTable.data)" nzTooltipColor="rgb(49,145,151)">{{getTotalBalanceDue(hhtpTable.data) | number :'1.2-2'}}</td>
                                         </tr>
                                     </tbody>
                                 </nz-table>
@@ -211,7 +212,7 @@
             <td>{{data.Net | number :'1.2-2'}}</td>
             <td >{{(data.HairServices+data.BeautyServices+data.CustomService1+data.CustomService2+data.CustomService3+data.CustomService4+data.CustomService5) | number :'1.2-2'}}</td>
             <td >{{data.Gross | number :'1.2-2'}}</td>
-            <td>( {{data.AdvancePaid | number :'1.2-2'}} )</td>
+            <td>{{data.AdvancePaid==null ? '-': '('+data.AdvancePaid.toFixed(2)+')'}}</td>
             <td> {{getBalanceDue(data) >= 0 ? (getBalanceDue(data) | number :
                 '1.2-2') : '(' + getBalanceDue(data).toFixed(2) + ')'}}</td>
         </tr>

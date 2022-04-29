@@ -30,7 +30,8 @@ export class MonthlyInvoiceComponent implements OnInit {
   invoiceReferenceNumber: any;
   isVisible = false;
   isMenuOpen = false;
-
+  parserDollar = (value: string): string => value.replace('( ', '');
+  formatterDollar = (value: number): string => `( ${value} )`;  
   plusIcon = faPlus;
   pen = faPen;
   del = faTrash;
@@ -211,6 +212,7 @@ sendEmail() {
 
 //#region approved Supllier
 Approved(){
+  this.showLoader = true;
   console.log(this.setOfCheckedId);
   this.httpService.ApprovedSelectedSupplier(this.invoiceDate,this.setOfCheckedId).subscribe(
     (response) => {
@@ -221,11 +223,13 @@ Approved(){
       'selected invoices have no data',
       'error'
     )
+    this.showLoader = false;
   }
   else if(response.ResponseStatus==0){
     this.message.error(response.Message, {
       nzDuration: 5000
     });
+    this.showLoader = false;
   }
 
   else{
@@ -234,6 +238,7 @@ Approved(){
       'you just approved invoices',
       'success'
     )
+    this.showLoader = false;
     this.onChange(this.month);  
   }
       // this.message.success("Supplier Approved Successfully", {
@@ -244,6 +249,7 @@ Approved(){
       this.message.error("Server Error! Please Reload Your Page", {
         nzDuration: 5000
       });
+      this.showLoader = false;
     },
     () => console.log("done")
   );
@@ -350,8 +356,8 @@ CombinePDF(){
         )
         this.showLoader = false;
       }
-      else if(response.ResponseStatus==0){
-        this.message.error(response.Message, {
+      else if(response.ResponseStatus==2){
+        this.message.error(response.Result, {
           nzDuration: 5000
         });
         this.showLoader = false;
@@ -394,6 +400,7 @@ getGross(data:any){
 }
 
 getBalanceDue(data:any){
+  console.log(data.AdvancePaid);
   let GrossValue=this.getGross(data);
   return data.BalanceDue=GrossValue-data.AdvancePaid;
 }
@@ -403,7 +410,7 @@ getTotalNET(data:any){
   data.forEach((item:any)=>
   total+=item.Net
   );
-  return total;
+  return total as any;
 }
 
 getTotalVET(data:any){
@@ -411,7 +418,7 @@ getTotalVET(data:any){
   data.forEach((item:any)=>
   total+=item.VAT
   );
-  return total;
+  return total as any;
 }
 
 getTotalGross(data:any){
@@ -419,7 +426,7 @@ getTotalGross(data:any){
   data.forEach((item:any)=>
   total+=item.Gross
   );
-  return total;
+  return total as any;
 }
 
 getTotalAdvancePay(data:any){
@@ -427,7 +434,7 @@ getTotalAdvancePay(data:any){
   data.forEach((item:any)=>
   total+=item.AdvancePaid
   );
-  return total;
+  return total as any;
 }
 
 getTotalBalanceDue(data:any){
@@ -435,7 +442,7 @@ getTotalBalanceDue(data:any){
   data.forEach((item:any)=>
   total+=item.BalanceDue
   );
-  return total;
+  return total as any;
 }
 
 //#endregion 
