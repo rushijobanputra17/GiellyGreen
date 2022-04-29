@@ -253,6 +253,7 @@
   </ComplexType>
   <ComplexType Name="GetInvoicesForPdf_Result">
     <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="200" />
+    <Property Type="String" Name="SupplierReferenceNumber" Nullable="false" MaxLength="15" />
     <Property Type="Int32" Name="SupplierId" Nullable="false" />
     <Property Type="String" Name="BusinessAddress" Nullable="true" MaxLength="150" />
     <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="320" />

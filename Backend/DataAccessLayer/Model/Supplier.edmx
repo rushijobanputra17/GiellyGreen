@@ -442,6 +442,7 @@
         </ComplexType>
         <ComplexType Name="GetInvoicesForPdf_Result">
           <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="SupplierReferenceNumber" Nullable="false" MaxLength="15" />
           <Property Type="Int32" Name="SupplierId" Nullable="false" />
           <Property Type="String" Name="BusinessAddress" Nullable="true" MaxLength="150" />
           <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="320" />
@@ -654,6 +655,7 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="Team2_GiellyGreenModel.GetInvoicesForPdf_Result">
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="SupplierReferenceNumber" ColumnName="SupplierReferenceNumber" />
                 <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
                 <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />

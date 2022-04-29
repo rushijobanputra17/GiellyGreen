@@ -9,63 +9,64 @@
     <title>Invoice</title>
     <link href="http://fonts.cdnfonts.com/css/dax" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/PdfStyle.css" />
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
     <div class="container">
+        <table width="100%">
+            <tr>
+                <td>
+                    @if (@Model.Invoice.Logo != null && @Model.Invoice.Logo != "")
+                    {
+                        <img src="@Model.Invoice.Logo" width="200" height="100" />
+                    }
+                    else
+                    {
+                        <h3 class="padding-top">@Model.Invoice.SupplierName</h3>
+                       
+                    }
+                </td>
+                <td class="font-size text-right">Self-Billed Invoice</td>
+            </tr>
+            <tr>
+                <td class=" text-left" style="vertical-align:top">
+                    @if (@Model.Invoice.Logo != null)
+                    {
+                        <h4>@Model.Invoice.SupplierName</h4>
+                        <h4>@Model.Invoice.BusinessAddress</h4>
+                    }
+                    else
+                    {
+                        <div class="customwordbreak">@Model.Invoice.BusinessAddress</div>
+                    }
+                </td>
+                <td class=" text-right ">
+                    <h4 class="font-weight-normal"> Invoice Date :  @Convert.ToDateTime(Model.Invoice.InvoiceDate).ToString("dd-MM-yyyy")</h4>
+                    <h4 class="font-weight-normal">Invoice Referance :@Model.Invoice.SupplierReferenceNumber-@Model.Invoice.InvoiceRef</h4>
+                    <br />
+                    @if (Model.Invoice.TAXReference != null)
+                    {
+                        <h4 class="font-weight-normal"> TAX Referance : @Model.Invoice.TAXReference</h4>
+                    }
+                    @if (Model.Invoice.VATNumber != null)
+                    {
+                        <h4 class="font-weight-normal"> TAX VATNumber : @Model.Invoice.VATNumber</h4>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="">
+                    <h4>To : @Model.CompanyProfile.CompanyName</h4>
+                    <h4 class="font-weight-normal">@Model.CompanyProfile.AddressLine</h4>
+                    <h4 class="font-weight-normal">@Model.CompanyProfile.City - @Model.CompanyProfile.ZipCode</h4>
+                    <h4 class="font-weight-normal">@Model.CompanyProfile.Country</h4>
+                </td>
+            </tr>
+        </table>
+
+        <br />
         <div class="row margin-bottom">
-            <div class="columnHeader">
-                @if (@Model.Invoice.Logo != null)
-                {
-                    <img src="@Model.Invoice.Logo" width="200" height="100" alt=@Model.Invoice.Logo />
-                }
-                else
-                {
-                    <h4>@Model.Invoice.SupplierName</h4>
-                    <h4>@Model.Invoice.BusinessAddress</h4>
-                }
-            </div>
-            <div class="columnHeader text-right">
-                <h1>Self Billed Invoice</h1>
-            </div>
-        </div>
-        <br />
-        <div class="row ">
-            <div class="column text-left">
-                @if (@Model.Invoice.Logo != null)
-                {
-                    <h4>@Model.Invoice.SupplierName</h4>
-                    <h4>@Model.Invoice.BusinessAddress</h4>
-                }
-            </div>
-            <div class="column text-right">
-                <h4> Invoice Date :  @Convert.ToDateTime(Model.Invoice.InvoiceDate).ToString("dd-MM-yyyy")</h4>
-                <h4>Invoice Referance : @Model.Invoice.InvoiceRef</h4>
-                <br />
-                @if (Model.Invoice.TAXReference != null)
-                {
-                    <h4> TAX Referance : @Model.Invoice.TAXReference</h4>
-                }
-                @if (Model.Invoice.VATNumber != null)
-                {
-                    <h4> TAX VATNumber : @Model.Invoice.VATNumber</h4>
-                }
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="column">
-                <h4>To : @Model.CompanyProfile.CompanyName</h4>
-                <h4>@Model.CompanyProfile.AddressLine</h4>
-                <h4>@Model.CompanyProfile.City - @Model.CompanyProfile.ZipCode</h4>
-                <h4>@Model.CompanyProfile.Country</h4>
-            </div>
-        </div>
-        <br />
-        <div class="row margin-bottom">
-            <div class="col-md-12">
-                <table class="table-bord" style="width:100%">
+            <div class="col-md-12 table-height">
+                <table class="table-bord" style="width:100%;border-collapse:collapse">
                     <thead>
                         <tr class="borderCell tr-padding">
                             <th class="borderCell text-center " colspan="3">Description</th>
@@ -125,22 +126,24 @@
                         }
                         <tr>
                             <td colspan="2" style="border:0px"></td>
-                            <td class="text-right padding-right">Subtotal(Net)</td>
+                            <td class="text-right padding-right font-weight-bold">Subtotal(Net)</td>
                             <td class="borderCell text-right padding-right">@Convert.ToDecimal(Model.Invoice.Net).ToString("N2")</td>
                         </tr>
                         <tr>
                             <td colspan="2"></td>
-                            <td class="text-right padding-right">VAT</td>
+                            <td class="text-right padding-right font-weight-bold">VAT</td>
                             <td class="borderCell text-right padding-right">@Convert.ToDecimal(Model.Invoice.VAT).ToString("N2")</td>
                         </tr>
                         <tr>
                             <td colspan="2"></td>
-                            <td class="text-right padding-right">Advance Paid</td>
-                            <td class="borderCell text-right padding-right">@Convert.ToDecimal(Model.Invoice.AdvancePaid).ToString("N2")</td>
+                            <td class="text-right padding-right font-weight-bold">Advance Paid</td>
+                            <td class="borderCell text-right padding-right">
+                                <span> (@Convert.ToDecimal(Model.Invoice.AdvancePaid).ToString("N2"))</span>
+                            </td>
                         </tr>
                         <tr>
                             <td colspan="2"></td>
-                            <td class="text-right padding-right">Balance Due</td>
+                            <td class="text-right padding-right font-weight-bold">Balance Due</td>
                             <td class="borderCell text-right padding-right">@Convert.ToDecimal(Model.Invoice.BalanceDue).ToString("N2")</td>
                         </tr>
                     </tbody>

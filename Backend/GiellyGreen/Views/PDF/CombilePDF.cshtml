@@ -21,154 +21,156 @@
             String path = HttpContext.Current.Server.MapPath("~/ImageStorage");
             item.Logo = Path.Combine(path, item.Logo);
         }
-    <div class="container pageFinish">
-        <div class="row margin-bottom">
-            <div class="columnHeader">
-                @if (item.Logo != null)
-                {
-                    <img src="@item.Logo" width="200" height="100" alt=@item.Logo />
-                }
-                else
-                {
-                    <h4>@item.SupplierName</h4>
-                    <h4>@item.BusinessAddress</h4>
-                }
-            </div>
-            <div class="columnHeader text-right">
-                <h1>Self Billed Invoice</h1>
-            </div>
-        </div>
-        <br />
-        <div class="row ">
-            <div class="column text-left">
-                @if (item.Logo != null)
-                {
-                    <h4>@item.SupplierName</h4>
-                    <h4>@item.BusinessAddress</h4>
-                }
-            </div>
-            <div class="column text-right">
-                <h4> Invoice Date : @Convert.ToDateTime(@item.InvoiceDate).ToString("dd-MM-yyyy") </h4>
-                <h4>Invoice Referance : @item.InvoiceRef</h4>
-                <br />
-                @if (item.TAXReference != null)
-                {
-                    <h4> TAX Referance : @item.TAXReference</h4>
-                }
-                @if (item.VATNumber != null)
-                {
-                    <h4> TAX VATNumber : @item.VATNumber</h4>
-                }
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="column">
-                <h4>To : @Model.CompanyProfile.CompanyName</h4>
-                <h4>@Model.CompanyProfile.AddressLine</h4>
-                <h4>@Model.CompanyProfile.City - @Model.CompanyProfile.ZipCode</h4>
-                <h4>@Model.CompanyProfile.Country</h4>
-            </div>
-        </div>
-        <br />
-        <div class="row" style="margin-bottom:3px;">
-            <div class="col-md-12">
-                <table class="table-bord" style="width:100%">
-                    <thead>
-                        <tr class="borderCell tr-padding">
-                            <th class="borderCell text-center" colspan="3" style="text-align:center">Description</th>
-                            <th class="borderCell text-right cell-border-left padding-right">Amount(GBP)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="borderCell">
-                            <td colspan="2" class="widthcol borderCell padding-left">Hair Services</td>
-                            <td class="borderCell"></td>
-                            <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.HairServices).ToString("N2")</td>
-                        </tr>
-                        <tr class="borderCell">
-                            <td class="borderCell padding-left" colspan="2">Beauty Services</td>
-                            <td class="borderCell"></td>
-                            <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.BeautyServices).ToString("N2")</td>
-                        </tr>
-                        @if (!string.IsNullOrWhiteSpace(item.CustomHeader1)|| item.CustomService1 != 0)
+        <div class="container pageFinish">
+            <table width="100%">
+                <tr>
+                    <td>
+                        @if (item.Logo != null && item.Logo != "")
                         {
+                            <img src="@item.Logo" width="200" height="100" />
+                        }
+                        else
+                        {
+                            <h3 class="padding-top">@item.SupplierName</h3>
+                           
+                        }
+                    </td>
+                    <td class="font-size text-right">Self-Billed Invoice</td>
+                </tr>
+                <tr>
+                    <td class=" text-left" style="vertical-align:top">
+                        @if (@item.Logo != null)
+                        {
+                            <h4>@item.SupplierName</h4>
+                            <h4>@item.BusinessAddress</h4>
+                        }
+                        else
+                        {
+                            <div class="customwordbreak">@item.BusinessAddress</div>
+                        }
+                    </td>
+                    <td class=" text-right ">
+                        <h4 class="font-weight-normal"> Invoice Date :  @Convert.ToDateTime(item.InvoiceDate).ToString("dd-MM-yyyy")</h4>
+                        <h4 class="font-weight-normal">Invoice Referance :@item.SupplierReferenceNumber-@item.InvoiceRef</h4>
+                        <br />
+                        @if (item.TAXReference != null)
+                        {
+                            <h4 class="font-weight-normal"> TAX Referance : @item.TAXReference</h4>
+                        }
+                        @if (item.VATNumber != null)
+                        {
+                            <h4 class="font-weight-normal"> TAX VATNumber : @item.VATNumber</h4>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="">
+                        <h4 class="font-weight-bold">To : @Model.CompanyProfile.CompanyName</h4>
+                        <h4 class="font-weight-normal">@Model.CompanyProfile.AddressLine</h4>
+                        <h4 class="font-weight-normal">@Model.CompanyProfile.City - @Model.CompanyProfile.ZipCode</h4>
+                        <h4 class="font-weight-normal">@Model.CompanyProfile.Country</h4>
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <div class="row" style="margin-bottom:3px;">
+                <div class="col-md-12 table-height">
+                    <table class="table-bord" style="width:100%">
+                        <thead>
+                            <tr class="borderCell tr-padding">
+                                <th class="borderCell text-center" colspan="3" style="text-align:center">Description</th>
+                                <th class="borderCell text-right cell-border-left padding-right">Amount(GBP)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <tr class="borderCell">
-                                <td class="borderCell padding-left" colspan="2">@item.CustomHeader1</td>
+                                <td colspan="2" class="widthcol borderCell padding-left">Hair Services</td>
                                 <td class="borderCell"></td>
-                                <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.CustomService1).ToString("N2")</td>
+                                <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.HairServices).ToString("N2")</td>
                             </tr>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(item.CustomHeader2) || item.CustomService2 != 0)
-                        {
                             <tr class="borderCell">
-                                <td class="borderCell padding-left" colspan="2">@item.CustomHeader2</td>
+                                <td class="borderCell padding-left" colspan="2">Beauty Services</td>
                                 <td class="borderCell"></td>
-                                <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.CustomService2).ToString("N2")</td>
+                                <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.BeautyServices).ToString("N2")</td>
                             </tr>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(item.CustomHeader3) || item.CustomService3 != 0)
-                        {
-                            <tr class="borderCell">
-                                <td class="borderCell padding-left" colspan="2">@item.CustomHeader3</td>
-                                <td class="borderCell"></td>
-                                <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.CustomService3).ToString("N2")</td>
+                            @if (!string.IsNullOrWhiteSpace(item.CustomHeader1) || item.CustomService1 != 0)
+                            {
+                                <tr class="borderCell">
+                                    <td class="borderCell padding-left" colspan="2">@item.CustomHeader1</td>
+                                    <td class="borderCell"></td>
+                                    <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.CustomService1).ToString("N2")</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(item.CustomHeader2) || item.CustomService2 != 0)
+                            {
+                                <tr class="borderCell">
+                                    <td class="borderCell padding-left" colspan="2">@item.CustomHeader2</td>
+                                    <td class="borderCell"></td>
+                                    <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.CustomService2).ToString("N2")</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(item.CustomHeader3) || item.CustomService3 != 0)
+                            {
+                                <tr class="borderCell">
+                                    <td class="borderCell padding-left" colspan="2">@item.CustomHeader3</td>
+                                    <td class="borderCell"></td>
+                                    <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.CustomService3).ToString("N2")</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(item.CustomHeader4) || item.CustomService4 != 0)
+                            {
+                                <tr class="borderCell ">
+                                    <td class="borderCell padding-left" colspan="2">@item.CustomHeader4</td>
+                                    <td class="borderCell"></td>
+                                    <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.CustomService4).ToString("N2")</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(item.CustomHeader5) || item.CustomService5 != 0)
+                            {
+                                <tr class="borderCell ">
+                                    <td class="borderCell padding-left" colspan="2">@item.CustomHeader5</td>
+                                    <td class="borderCell"></td>
+                                    <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.CustomService5).ToString("N2")</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td colspan="2" style="border:0px"></td>
+                                <td class="text-right padding-right font-weight-bold">Subtotal(Net)</td>
+                                <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.Net).ToString("N2")</td>
                             </tr>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(item.CustomHeader4) || item.CustomService4 != 0)
-                        {
-                            <tr class="borderCell ">
-                                <td class="borderCell padding-left" colspan="2">@item.CustomHeader4</td>
-                                <td class="borderCell"></td>
-                                <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.CustomService4).ToString("N2")</td>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td class="text-right padding-right font-weight-bold">VAT</td>
+                                <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.VAT).ToString("N2")</td>
                             </tr>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(item.CustomHeader5) || item.CustomService5 != 0)
-                        {
-                            <tr class="borderCell ">
-                                <td class="borderCell padding-left" colspan="2">@item.CustomHeader5</td>
-                                <td class="borderCell"></td>
-                                <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.CustomService5).ToString("N2")</td>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td class="text-right padding-right font-weight-bold">Advance Paid</td>
+                                <td class="borderCell text-right padding-right">(@Convert.ToDecimal(item.AdvancePaid).ToString("N2"))</td>
                             </tr>
-                        }
-                        <tr>
-                            <td colspan="2" style="border:0px"></td>
-                            <td class="text-right padding-right">Subtotal(Net)</td>
-                            <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.Net).ToString("N2")</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td class="text-right padding-right">VAT</td>
-                            <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.VAT).ToString("N2")</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td class="text-right padding-right">Advance Paid</td>
-                            <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.AdvancePaid).ToString("N2")</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td class="text-right padding-right">Balance Due</td>
-                            <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.BalanceDue).ToString("N2")</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td class="text-right padding-right font-weight-bold">Balance Due</td>
+                                <td class="borderCell text-right padding-right">@Convert.ToDecimal(item.BalanceDue).ToString("N2")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-        </div>
-        <div class="row ">
-            <div class="column">
-                @if (@item.CompanyRegisteredNumber != null)
-                {
-                    <h4>Company Reg no: @item.CompanyRegisteredNumber</h4>
-                }
-                @if (@item.CompanyRegisteredAddress != null)
-                {
-                    <h4>Company Reg address : @item.CompanyRegisteredAddress</h4>
-                }
+            </div>
+            <div class="row ">
+                <div class="column">
+                    @if (@item.CompanyRegisteredNumber != null)
+                    {
+                        <h4>Company Reg no: @item.CompanyRegisteredNumber</h4>
+                    }
+                    @if (@item.CompanyRegisteredAddress != null)
+                    {
+                        <h4>Company Reg address : @item.CompanyRegisteredAddress</h4>
+                    }
+                </div>
             </div>
         </div>
-    </div>
     }
 
     @Scripts.Render("~/bundles/jquery")

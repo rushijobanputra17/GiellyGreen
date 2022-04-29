@@ -14,6 +14,7 @@ namespace DataAccessLayer.Model
     public partial class GetInvoicesForPdf_Result
     {
         public string SupplierName { get; set; }
+        public string SupplierReferenceNumber { get; set; }
         public int SupplierId { get; set; }
         public string BusinessAddress { get; set; }
         public string EmailAddress { get; set; }

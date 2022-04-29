@@ -20,7 +20,7 @@ namespace GiellyGreen.Helpers
                 IsBodyHtml = true
             };
             mailMessage.Attachments.Add(attachment);
-            mailMessage.CC.Add(new MailAddress("harshmungra18112000@gmail.com"));
+            mailMessage.CC.Add(new MailAddress("rushijobanputra1712001@gmail.com"));
             mailMessage.To.Add(new MailAddress(emailAddress));
             SmtpClient smtp = new SmtpClient
             {
