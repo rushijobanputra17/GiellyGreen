@@ -99,7 +99,7 @@
                                             <td [nzEllipsis]>{{getVAT(data) | number :'1.2-2'}}</td>
                                             <td [nzEllipsis]>{{getGross(data) | number :'1.2-2'}}</td>
                                             <td [nzEllipsis]><nz-input-number [nzFormatter]="formatterDollar"
-                                                [nzParser]="parserDollar" class="w-100" nz-input  [(ngModel)]="data.AdvancePaid==null?'0.00':data.AdvancePaid"></nz-input-number></td>
+                                                [nzParser]="parserDollar" class="w-100" nz-input  [(ngModel)]="data.AdvancePaid"></nz-input-number></td>
                                             <td [nzEllipsis]>  {{getBalanceDue(data) >= 0 ? (getBalanceDue(data) | number :
                                                 '1.2-2') : '(' + getBalanceDue(data).toFixed(2) + ')'}}</td>
                                             <td [nzEllipsis] nzRight style="text-align:center"><input class="check" type="checkbox" disabled [checked]="data.Approved"></td>

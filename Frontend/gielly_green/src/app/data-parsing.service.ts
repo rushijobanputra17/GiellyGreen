@@ -9,7 +9,7 @@ export class DataParsingService {
  
   constructor(private http: HttpClient) { }
 
-   APIURL="https://1002-106-201-236-89.ngrok.io";
+   APIURL="https://3822-106-201-236-89.ngrok.io";
 
 SupplierBody=
   {

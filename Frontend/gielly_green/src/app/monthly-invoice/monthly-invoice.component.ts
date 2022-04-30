@@ -79,7 +79,10 @@ export class MonthlyInvoiceComponent implements OnInit {
   changeValue(data:any){
     this.isButoonVisible=false;
     debugger
-    console.log(data);
+    console.log(data.HairServices);
+    if(data.HairServices<0 || data.HairServices==null){
+      data.HairServices=0;
+    }
     console.log(this.MonthlyInvoiceDataChanged);
     if(this.MonthlyInvoiceDataChanged.length != 0){
       var ExistingId:any=this.MonthlyInvoiceDataChanged.filter((key: { SupplierId: any; }) => key.SupplierId == data.SupplierId);
@@ -94,7 +97,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   
 //#region date onchange
 onChange(date: any) {
-  
+  debugger
   this.isVisible = true;
   this.showLoader = true;
   let monthYearFilter = date.getFullYear() + "-" + (date.getMonth()+1);
@@ -115,6 +118,12 @@ onChange(date: any) {
         this.invoiceDate=response.Result.InvoiceDate;
 
       }
+      response.Result.InvoiceDetails.forEach((item: any) => {
+        if (item.AdvancePaid == null || item.AdvancePaid==" ") {
+           item.AdvancePaid = 0;
+        }
+      }
+      );
       this.MonthalyInvoiceData = response.Result.InvoiceDetails;
       console.log(this.MonthalyInvoiceData);
       this.showLoader = false;
@@ -384,8 +393,14 @@ CombinePDF(){
 
 //#region Invoice Calculations
 getVAT(data:any){
-  let netvalue=this.getNet(data)
-  return data.VAT=netvalue*this.Vat/100;
+  if(data.VATNumber==" " || data.VATNumber==null){
+    return 0.00
+  }
+  else{
+    let netvalue=this.getNet(data)
+    return data.VAT=netvalue*this.Vat/100;
+  }
+ 
 }
 
 getNet(data:any){
@@ -400,9 +415,13 @@ getGross(data:any){
 }
 
 getBalanceDue(data:any){
-  console.log(data.AdvancePaid);
   let GrossValue=this.getGross(data);
-  return data.BalanceDue=GrossValue-data.AdvancePaid;
+  if(data.AdvancePaid!=null || data.AdvancePaid!=""){
+    return data.BalanceDue=GrossValue-data.AdvancePaid;
+  }
+  else{
+    return data.BalanceDue=GrossValue;
+  }
 }
 
 getTotalNET(data:any){
