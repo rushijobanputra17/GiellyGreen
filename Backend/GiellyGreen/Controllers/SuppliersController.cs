@@ -37,9 +37,16 @@ namespace GiellyGreen.Controllers
                 {
                     if (!string.IsNullOrEmpty(supplier.Logo) && supplier.Logo != "null")
                     {
-                        string imgPath = Path.Combine(path, supplier.Logo);
-                        byte[] imgBytes = File.ReadAllBytes(imgPath);
-                        supplier.Logo = Convert.ToBase64String(imgBytes);
+                        try
+                        {
+                            string imgPath = Path.Combine(path, supplier.Logo);
+                            byte[] imgBytes = File.ReadAllBytes(imgPath);
+                            supplier.Logo = Convert.ToBase64String(imgBytes);
+                        }
+                        catch
+                        {
+                            supplier.Logo = null;
+                        }
                     }
                 });
 

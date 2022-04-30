@@ -14,6 +14,7 @@ namespace DataAccessLayer.Model
     public partial class GetInvoiceDetails_Result
     {
         public string SupplierName { get; set; }
+        public string VATNumber { get; set; }
         public Nullable<int> InvoiceDetailId { get; set; }
         public Nullable<int> SupplierId { get; set; }
         public Nullable<decimal> HairServices { get; set; }

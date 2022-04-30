@@ -237,3 +237,8 @@ D:\GiellyGreen\Backend\GiellyGreen\bin\roslyn\System.Numerics.Vectors.dll
 D:\GiellyGreen\Backend\GiellyGreen\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
 D:\GiellyGreen\Backend\GiellyGreen\bin\Rotativa.dll
 D:\GiellyGreen\Backend\GiellyGreen\bin\Slapper.dll
+D:\GiellyGreen\Backend\GiellyGreen\bin\Postal.dll
+D:\GiellyGreen\Backend\GiellyGreen\bin\RazorEngine.dll
+D:\GiellyGreen\Backend\GiellyGreen\bin\Postal.xml
+D:\GiellyGreen\Backend\GiellyGreen\bin\RazorEngine.pdb
+D:\GiellyGreen\Backend\GiellyGreen\bin\RazorEngine.xml

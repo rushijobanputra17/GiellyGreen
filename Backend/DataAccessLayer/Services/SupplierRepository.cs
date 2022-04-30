@@ -31,11 +31,12 @@ namespace DataAccessLayer.Services
 
         }
 
-        public List<Supplier> GetSuppliers(bool isActive)
+        public List<GetSupplier_Result> GetSuppliers(bool isActive)
         {
-            AutoMapper.MapperConfiguration configList = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<GetSupplier_Result, Supplier>());
-            Mapper mapper = new Mapper(configList);
-            return mapper.Map<List<Supplier>>(objDataAccess.GetSupplier(isActive).ToList());
+            //AutoMapper.MapperConfiguration configList = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<GetSupplier_Result, Supplier>());
+            //Mapper mapper = new Mapper(configList);
+            //return mapper.Map<List<Supplier>>(objDataAccess.GetSupplier(isActive).ToList());
+            return objDataAccess.GetSupplier(isActive).ToList();
         }
 
         public int UpdateStatus(bool status, int supplierId)

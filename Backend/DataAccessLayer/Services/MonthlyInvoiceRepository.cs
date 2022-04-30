@@ -42,8 +42,9 @@ namespace DataAccessLayer.Services
 
             var activeSupplierList = objDataAccess.GetSupplier(true).ToList();
 
-            AutoMapper.MapperConfiguration supplierConfig = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<GetSupplier_Result, GetInvoiceDetails_Result>());
-            Mapper supplierMapper = new Mapper(supplierConfig);
+            //AutoMapper.MapperConfiguration supplierConfig = new AutoMapper.MapperConfiguration(cgf => cgf.CreateMap<GetSupplier_Result, GetInvoiceDetails_Result>());
+            //Mapper supplierMapper = new Mapper(supplierConfig);
+            var invoiceHeaders = objDataAccess.GetInvoices(invoiceMonth).FirstOrDefault();
 
             Invoices invoices = mapper.Map<Invoices>(objDataAccess.GetInvoices(invoiceMonth).FirstOrDefault());
 
@@ -56,7 +57,7 @@ namespace DataAccessLayer.Services
                 invoices = new Invoices()
                 {
                     InvoiceDetails = new List<GetInvoiceDetails_Result>(),
-                    VATPercent = objDataAccess.GetProfile().FirstOrDefault().DefaultVAT 
+                    VATPercent = objDataAccess.GetProfile().FirstOrDefault().DefaultVAT
                 };
             }
 
@@ -64,7 +65,8 @@ namespace DataAccessLayer.Services
             {
                 if (invoices.InvoiceDetails.Where(i => i.SupplierId == supplier.SupplierId).FirstOrDefault() == null)
                 {
-                    invoices.InvoiceDetails.Add(supplierMapper.Map<GetInvoiceDetails_Result>(supplier));
+                    //invoices.InvoiceDetails.Add(supplierMapper.Map<GetInvoiceDetails_Result>(supplier));
+                    invoices.InvoiceDetails.Add(new GetInvoiceDetails_Result() { SupplierId = supplier.SupplierId, SupplierName = supplier.SupplierName, VATNumber = supplier.VATNumber });
                 }
             }
 

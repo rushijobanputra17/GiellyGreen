@@ -198,15 +198,6 @@ namespace DataAccessLayer.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ApproveInvoices_Result>("ApproveInvoices", selectedIdsParameter, selectedDateParameter);
         }
     
-        public virtual ObjectResult<GetInvoiceDetails_Result> GetInvoiceDetails(Nullable<int> invoiceId)
-        {
-            var invoiceIdParameter = invoiceId.HasValue ?
-                new ObjectParameter("InvoiceId", invoiceId) :
-                new ObjectParameter("InvoiceId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInvoiceDetails_Result>("GetInvoiceDetails", invoiceIdParameter);
-        }
-    
         public virtual int InsertUpdateProfile(Nullable<int> profileId, string companyName, string addressLine, string city, string zipCode, string country, Nullable<decimal> defaultVAT)
         {
             var profileIdParameter = profileId.HasValue ?
@@ -307,6 +298,15 @@ namespace DataAccessLayer.Model
                 new ObjectParameter("SelectedDate", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInvoicesForPdf_Result>("GetInvoicesForPdf", selectedIdsParameter, selectedDateParameter);
+        }
+    
+        public virtual ObjectResult<GetInvoiceDetails_Result> GetInvoiceDetails(Nullable<int> invoiceId)
+        {
+            var invoiceIdParameter = invoiceId.HasValue ?
+                new ObjectParameter("InvoiceId", invoiceId) :
+                new ObjectParameter("InvoiceId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInvoiceDetails_Result>("GetInvoiceDetails", invoiceIdParameter);
         }
     }
 }

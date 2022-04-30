@@ -9,7 +9,7 @@ namespace DataAccessLayer.Interface
 {
     internal interface ISupplierRepository
     {
-        List<Supplier> GetSuppliers(bool isActive);
+        List<GetSupplier_Result> GetSuppliers(bool isActive);
 
         int AddSupplier(Supplier supplier);
 
