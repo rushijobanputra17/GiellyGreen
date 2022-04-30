@@ -30,7 +30,8 @@ export class MonthlyInvoiceComponent implements OnInit {
   invoiceReferenceNumber: any;
   isVisible = false;
   isMenuOpen = false;
-
+  parserDollar = (value: string): string => value.replace('( ', '');
+  formatterDollar = (value: number): string => `( ${value} )`;  
   plusIcon = faPlus;
   pen = faPen;
   del = faTrash;
@@ -78,7 +79,10 @@ export class MonthlyInvoiceComponent implements OnInit {
   changeValue(data:any){
     this.isButoonVisible=false;
     debugger
-    console.log(data);
+    console.log(data.HairServices);
+    if(data.HairServices<0 || data.HairServices==null){
+      data.HairServices=0;
+    }
     console.log(this.MonthlyInvoiceDataChanged);
     if(this.MonthlyInvoiceDataChanged.length != 0){
       var ExistingId:any=this.MonthlyInvoiceDataChanged.filter((key: { SupplierId: any; }) => key.SupplierId == data.SupplierId);
@@ -93,7 +97,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   
 //#region date onchange
 onChange(date: any) {
-  
+  debugger
   this.isVisible = true;
   this.showLoader = true;
   let monthYearFilter = date.getFullYear() + "-" + (date.getMonth()+1);
@@ -114,6 +118,12 @@ onChange(date: any) {
         this.invoiceDate=response.Result.InvoiceDate;
 
       }
+      response.Result.InvoiceDetails.forEach((item: any) => {
+        if (item.AdvancePaid == null || item.AdvancePaid==" ") {
+           item.AdvancePaid = 0;
+        }
+      }
+      );
       this.MonthalyInvoiceData = response.Result.InvoiceDetails;
       console.log(this.MonthalyInvoiceData);
       this.showLoader = false;
@@ -211,6 +221,7 @@ sendEmail() {
 
 //#region approved Supllier
 Approved(){
+  this.showLoader = true;
   console.log(this.setOfCheckedId);
   this.httpService.ApprovedSelectedSupplier(this.invoiceDate,this.setOfCheckedId).subscribe(
     (response) => {
@@ -221,11 +232,13 @@ Approved(){
       'selected invoices have no data',
       'error'
     )
+    this.showLoader = false;
   }
   else if(response.ResponseStatus==0){
     this.message.error(response.Message, {
       nzDuration: 5000
     });
+    this.showLoader = false;
   }
 
   else{
@@ -234,6 +247,7 @@ Approved(){
       'you just approved invoices',
       'success'
     )
+    this.showLoader = false;
     this.onChange(this.month);  
   }
       // this.message.success("Supplier Approved Successfully", {
@@ -244,6 +258,7 @@ Approved(){
       this.message.error("Server Error! Please Reload Your Page", {
         nzDuration: 5000
       });
+      this.showLoader = false;
     },
     () => console.log("done")
   );
@@ -350,8 +365,8 @@ CombinePDF(){
         )
         this.showLoader = false;
       }
-      else if(response.ResponseStatus==0){
-        this.message.error(response.Message, {
+      else if(response.ResponseStatus==2){
+        this.message.error(response.Result, {
           nzDuration: 5000
         });
         this.showLoader = false;
@@ -378,8 +393,14 @@ CombinePDF(){
 
 //#region Invoice Calculations
 getVAT(data:any){
-  let netvalue=this.getNet(data)
-  return data.VAT=netvalue*this.Vat/100;
+  if(data.VATNumber==" " || data.VATNumber==null){
+    return 0.00
+  }
+  else{
+    let netvalue=this.getNet(data)
+    return data.VAT=netvalue*this.Vat/100;
+  }
+ 
 }
 
 getNet(data:any){
@@ -395,7 +416,12 @@ getGross(data:any){
 
 getBalanceDue(data:any){
   let GrossValue=this.getGross(data);
-  return data.BalanceDue=GrossValue-data.AdvancePaid;
+  if(data.AdvancePaid!=null || data.AdvancePaid!=""){
+    return data.BalanceDue=GrossValue-data.AdvancePaid;
+  }
+  else{
+    return data.BalanceDue=GrossValue;
+  }
 }
 
 getTotalNET(data:any){
@@ -403,7 +429,7 @@ getTotalNET(data:any){
   data.forEach((item:any)=>
   total+=item.Net
   );
-  return total;
+  return total as any;
 }
 
 getTotalVET(data:any){
@@ -411,7 +437,7 @@ getTotalVET(data:any){
   data.forEach((item:any)=>
   total+=item.VAT
   );
-  return total;
+  return total as any;
 }
 
 getTotalGross(data:any){
@@ -419,7 +445,7 @@ getTotalGross(data:any){
   data.forEach((item:any)=>
   total+=item.Gross
   );
-  return total;
+  return total as any;
 }
 
 getTotalAdvancePay(data:any){
@@ -427,7 +453,7 @@ getTotalAdvancePay(data:any){
   data.forEach((item:any)=>
   total+=item.AdvancePaid
   );
-  return total;
+  return total as any;
 }
 
 getTotalBalanceDue(data:any){
@@ -435,7 +461,7 @@ getTotalBalanceDue(data:any){
   data.forEach((item:any)=>
   total+=item.BalanceDue
   );
-  return total;
+  return total as any;
 }
 
 //#endregion 

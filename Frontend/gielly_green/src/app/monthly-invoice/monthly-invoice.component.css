@@ -136,6 +136,7 @@ th {
 
 td{
   width:5px;
+  padding: 10px !important;;
 }
 
 .customFooterButton {
